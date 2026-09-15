@@ -1,0 +1,140 @@
+/* ════════════════════════════════════════════════════════════════════════
+   BLUVER — TOKENS
+   ────────────────────────────────────────────────────────────────────────
+   FONTE ÚNICA DA IDENTIDADE. Nada de cor, tipo ou escala é definido
+   fora deste arquivo. Trocar a identidade = editar este bloco.
+
+   STATUS
+   · COR ......... OFICIAL. Paleta da marca Bluver aplicada.
+   · TIPOGRAFIA .. provisória — trocar em src/app/fonts.ts quando a
+                   fonte oficial for definida.
+   · LOGO ........ provisório — substituir por
+                   public/media/brand/logo.svg.
+   · FOTOGRAFIA .. pendente — slots declarados em src/content/*.
+   ════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── COR ──────────────────────────────────────────────────────────────
+     IDENTIDADE OFICIAL DA BLUVER (aplicada a partir da marca).
+       Preto      #070707
+       Claro      #F2F2F2
+       Ciano      #00FFE2   ─┐
+       Teal       #00B4CE    ├─ gradiente da marca
+       Azul       #007AEE   ─┘
+
+     DISCIPLINA DE USO — o gradiente é um SINAL, não um plano de fundo.
+     Aparece em réguas finas, marcadores de progresso, estados ativos e
+     no símbolo. Nunca como fundo de seção inteira, nunca em texto
+     corrido, nunca em vários elementos da mesma tela. Densidade alvo:
+     no máximo ~5% da área visível.
+
+     CONTRASTE (WCAG):
+     · Ciano #00FFE2 sobre preto → ~15:1. Uso livre, inclusive texto.
+     · Azul  #007AEE sobre claro → ~4.0:1. NÃO usar em texto corrido;
+       reservado a título grande (≥24px) e elementos não textuais (≥3:1).
+     · Ciano sobre claro é ilegível — proibido. Ciano só sobre escuro.   */
+
+  --bv-ink:         #070707;  /* preto da marca                          */
+  --bv-ink-raised:  #101012;  /* superfície elevada sobre preto          */
+  --bv-ink-line:    #232326;  /* linha/divisor sobre preto               */
+
+  --bv-paper:       #F2F2F2;  /* claro da marca — fundo padrão           */
+  --bv-paper-pure:  #FFFFFF;  /* branco puro — parcimônia                */
+  --bv-paper-line:  #D8D8D8;  /* linha/divisor sobre claro               */
+
+  --bv-signal:      #007AEE;  /* azul — sinal sobre CLARO                */
+  --bv-signal-mid:  #00B4CE;  /* teal — meio do gradiente                */
+  --bv-signal-lift: #00FFE2;  /* ciano — sinal sobre ESCURO              */
+  --bv-signal-deep: #001A2E;  /* azul profundo — superfície de imersão   */
+
+  /* Gradiente da marca. Único lugar onde ele é declarado. */
+  --bv-gradient: linear-gradient(90deg, var(--bv-signal-lift) 0%, var(--bv-signal-mid) 50%, var(--bv-signal) 100%);
+
+  /* Texto derivado — contraste verificado (AA/AAA) */
+  --bv-on-paper:        var(--bv-ink);
+  --bv-on-paper-muted:  #5A5A5E;  /* 6.4:1 sobre claro                   */
+  --bv-on-ink:          #F2F2F2;
+  --bv-on-ink-muted:    #9A9A9E;  /* 7.4:1 sobre preto                   */
+
+  --bv-focus: var(--bv-signal);
+
+  /* ── TIPOGRAFIA ───────────────────────────────────────────────────────
+     Duas famílias. Nada mais.
+     DISPLAY — grotesca variável: precisão técnica, escala grande.
+     TEXT    — serifa editorial: autoria, tese, citação, números.        */
+
+  --bv-font-display: var(--font-display), "Helvetica Neue", Arial, sans-serif;
+  --bv-font-text:    var(--font-text), Georgia, "Times New Roman", serif;
+
+  /* Escala fluida 375px → 1440px. Sem media query para tamanho de fonte. */
+  --bv-t-display-1: clamp(3.4rem, 1.2rem + 9.4vw, 9.75rem);
+  --bv-t-display-2: clamp(2.6rem, 1.1rem + 6.4vw, 6.75rem);
+  --bv-t-display-3: clamp(2rem, 1.1rem + 3.9vw, 4.25rem);
+  --bv-t-title:     clamp(1.5rem, 1.1rem + 1.7vw, 2.5rem);
+  --bv-t-lead:      clamp(1.125rem, 1rem + 0.65vw, 1.5rem);
+  --bv-t-body:      clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --bv-t-small:     0.875rem;
+  --bv-t-eyebrow:   0.75rem;
+  --bv-t-index:     clamp(3rem, 1rem + 8vw, 8rem); /* numerais editoriais */
+
+  --bv-lh-display: 0.92;
+  --bv-lh-title:   1.08;
+  --bv-lh-body:    1.6;
+
+  --bv-track-display: -0.035em;
+  --bv-track-title:   -0.02em;
+  --bv-track-eyebrow: 0.14em;
+
+  /* ── ESPAÇO E GRID ────────────────────────────────────────────────────
+     Ritmo vertical em 4 densidades. A alternância entre elas é o que dá
+     respiração ao scroll — seções densas e seções de silêncio.          */
+
+  --bv-gutter:   clamp(1rem, 0.4rem + 2.6vw, 3.5rem);
+  --bv-max:      92.5rem;   /* 1480px */
+  --bv-measure:  38rem;     /* medida de leitura confortável */
+
+  --bv-pad-xs: clamp(2rem, 1rem + 4vw, 4rem);
+  --bv-pad-sm: clamp(3.5rem, 2rem + 6vw, 7rem);
+  --bv-pad-md: clamp(5rem, 2.5rem + 9vw, 10.5rem);
+  --bv-pad-lg: clamp(7rem, 3rem + 13vw, 15rem);
+
+  --bv-rule: 1px;
+
+  /* ── MOVIMENTO ────────────────────────────────────────────────────────
+     Curvas discretas. Nenhuma animação existe para impressionar.        */
+  --bv-ease:      cubic-bezier(0.22, 1, 0.36, 1);
+  --bv-ease-firm: cubic-bezier(0.65, 0, 0.35, 1);
+  --bv-dur-fast:  180ms;
+  --bv-dur:       460ms;
+  --bv-dur-slow:  900ms;
+}
+
+/* Inversão de superfície: qualquer bloco pode virar "tinta" sem que os
+   componentes internos precisem saber disso. */
+[data-surface="ink"] {
+  --bv-bg: var(--bv-ink);
+  --bv-fg: var(--bv-on-ink);
+  --bv-fg-muted: var(--bv-on-ink-muted);
+  --bv-line: var(--bv-ink-line);
+  --bv-accent: var(--bv-signal-lift);
+  background-color: var(--bv-bg);
+  color: var(--bv-fg);
+}
+[data-surface="paper"] {
+  --bv-bg: var(--bv-paper);
+  --bv-fg: var(--bv-on-paper);
+  --bv-fg-muted: var(--bv-on-paper-muted);
+  --bv-line: var(--bv-paper-line);
+  --bv-accent: var(--bv-signal);
+  background-color: var(--bv-bg);
+  color: var(--bv-fg);
+}
+[data-surface="deep"] {
+  --bv-bg: var(--bv-signal-deep);
+  --bv-fg: var(--bv-on-ink);
+  --bv-fg-muted: #9FA9D6;
+  --bv-line: #1B224D;
+  --bv-accent: var(--bv-signal-lift);
+  background-color: var(--bv-bg);
+  color: var(--bv-fg);
+}

@@ -1,0 +1,245 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* ── Ponte tokens → Tailwind v4 ──────────────────────────────────────────
+   Os tokens continuam sendo a fonte da verdade; aqui apenas expomos como
+   utilitários para não escrever CSS repetido nos componentes.           */
+@theme inline {
+  --color-ink: var(--bv-ink);
+  --color-ink-raised: var(--bv-ink-raised);
+  --color-ink-line: var(--bv-ink-line);
+  --color-paper: var(--bv-paper);
+  --color-paper-pure: var(--bv-paper-pure);
+  --color-paper-line: var(--bv-paper-line);
+  --color-signal: var(--bv-signal);
+  --color-signal-lift: var(--bv-signal-lift);
+  --color-signal-deep: var(--bv-signal-deep);
+
+  /* Cores contextuais: mudam conforme [data-surface] do ancestral. */
+  --color-bg: var(--bv-bg, var(--bv-paper));
+  --color-fg: var(--bv-fg, var(--bv-on-paper));
+  --color-fg-muted: var(--bv-fg-muted, var(--bv-on-paper-muted));
+  --color-line: var(--bv-line, var(--bv-paper-line));
+  --color-accent: var(--bv-accent, var(--bv-signal));
+
+  --font-display: var(--bv-font-display);
+  --font-text: var(--bv-font-text);
+
+  --text-display-1: var(--bv-t-display-1);
+  --text-display-2: var(--bv-t-display-2);
+  --text-display-3: var(--bv-t-display-3);
+  --text-title: var(--bv-t-title);
+  --text-lead: var(--bv-t-lead);
+  --text-body: var(--bv-t-body);
+  --text-index: var(--bv-t-index);
+
+  --spacing-gutter: var(--bv-gutter);
+  --spacing-pad-xs: var(--bv-pad-xs);
+  --spacing-pad-sm: var(--bv-pad-sm);
+  --spacing-pad-md: var(--bv-pad-md);
+  --spacing-pad-lg: var(--bv-pad-lg);
+
+  --color-signal-mid: var(--bv-signal-mid);
+
+  --ease-bv: var(--bv-ease);
+  --ease-bv-firm: var(--bv-ease-firm);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Compensa o header fixo em âncoras internas. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bv-paper);
+    color: var(--bv-on-paper);
+    font-family: var(--bv-font-display);
+    font-size: var(--bv-t-body);
+    line-height: var(--bv-lh-body);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Nunca permitir scroll horizontal — requisito de mobile. */
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, figure, blockquote { margin: 0; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+  img, video, svg { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  /* Foco visível e consistente em todo o site. */
+  :focus-visible {
+    outline: 2px solid var(--bv-accent, var(--bv-signal));
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  ::selection {
+    background: var(--bv-signal);
+    color: var(--bv-paper-pure);
+  }
+}
+
+/* ── Utilitários de composição ────────────────────────────────────────── */
+@layer components {
+  /* Container editorial: 12 colunas reais, gutter fluido. */
+  .bv-shell {
+    width: 100%;
+    max-width: var(--bv-max);
+    margin-inline: auto;
+    padding-inline: var(--bv-gutter);
+  }
+
+  .bv-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--bv-gutter);
+  }
+  @media (max-width: 47.9375rem) {
+    /* Mobile é desenhado em 6 colunas, não em 12 empilhadas. */
+    .bv-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  }
+
+  .bv-display {
+    font-family: var(--bv-font-display);
+    font-weight: 500;
+    line-height: var(--bv-lh-display);
+    letter-spacing: var(--bv-track-display);
+    text-wrap: balance;
+  }
+
+  .bv-serif {
+    font-family: var(--bv-font-text);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .bv-eyebrow {
+    font-family: var(--bv-font-display);
+    font-size: var(--bv-t-eyebrow);
+    font-weight: 500;
+    letter-spacing: var(--bv-track-eyebrow);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  /* Numerais editoriais: tabulares, para índices e etapas. */
+  .bv-numeral {
+    font-family: var(--bv-font-display);
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 0.8;
+  }
+
+  .bv-measure { max-width: var(--bv-measure); }
+
+  /* Régua de SINAL: o gradiente da marca reduzido a 2px.
+     É o uso mais contido possível de um gradiente neon — e o suficiente
+     para a identidade ser reconhecível sem o logotipo. */
+  .bv-rule-signal {
+    height: 2px;
+    width: 100%;
+    border: 0;
+    background: var(--bv-gradient);
+  }
+
+  /* Texto com o gradiente da marca. Reservado a UMA palavra por página,
+     em escala display. Fallback em cor sólida quando background-clip
+     não é suportado. */
+  .bv-gradient-text {
+    color: var(--bv-accent);
+  }
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    .bv-gradient-text {
+      background: var(--bv-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  /* Régua fina — o divisor estrutural do sistema. */
+  .bv-rule {
+    height: var(--bv-rule);
+    width: 100%;
+    background-color: var(--bv-line, var(--bv-paper-line));
+    border: 0;
+  }
+
+  /* Link de texto com sublinhado que cresce a partir da origem. */
+  .bv-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size var(--bv-dur-fast) var(--bv-ease);
+    padding-bottom: 0.12em;
+  }
+  .bv-link:hover,
+  .bv-link:focus-visible { background-size: 100% 1px; }
+
+  /* Pula para o conteúdo — acessibilidade por teclado. */
+  .bv-skip {
+    position: absolute;
+    left: var(--bv-gutter);
+    top: 0.75rem;
+    z-index: 999;
+    transform: translateY(-200%);
+    background: var(--bv-ink);
+    color: var(--bv-paper);
+    padding: 0.75rem 1.25rem;
+    transition: transform var(--bv-dur-fast) var(--bv-ease);
+  }
+  .bv-skip:focus { transform: translateY(0); }
+}
+
+/* ── Movimento ────────────────────────────────────────────────────────────
+   Revelações controladas por IntersectionObserver (ver useReveal).
+   O estado padrão é VISÍVEL: sem JS, nada some.                          */
+@layer utilities {
+  [data-reveal] {
+    opacity: 1;
+  }
+  html.bv-js [data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  html.bv-js [data-reveal] {
+    transition:
+      opacity var(--bv-dur-slow) var(--bv-ease),
+      transform var(--bv-dur-slow) var(--bv-ease);
+    transition-delay: var(--bv-reveal-delay, 0ms);
+  }
+  html.bv-js [data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.bv-js [data-reveal],
+  html.bv-js [data-reveal="pending"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

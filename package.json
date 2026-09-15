@@ -1,0 +1,27 @@
+{
+  "name": "bluver-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bluver — Autoridade que movimenta negócios. Site institucional e infraestrutura comercial.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "postcss": "8.5.6",
+    "typescript": "5.9.3",
+    "@types/node": "22.18.8",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.1"
+  }
+}
