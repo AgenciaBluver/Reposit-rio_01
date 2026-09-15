@@ -53,7 +53,7 @@ export function Thesis() {
           </div>
         </div>
 
-        <ol className="mt-[clamp(3rem,7vw,7rem)]">
+        <ol className="mt-[clamp(1.5rem,3vw,3rem)]">
           {thesis.map((item, i) => {
             const isActive = !enabled || i === active;
             return (
@@ -89,7 +89,7 @@ export function Thesis() {
                     }`}
                   >
                     {item.term}
-                    <span className="bv-serif block italic text-fg-muted">{item.verb}.</span>
+                    <span className="bv-serif block text-fg-muted">{item.verb}.</span>
                   </h3>
                 </div>
                 <p

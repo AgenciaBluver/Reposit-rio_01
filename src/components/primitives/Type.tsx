@@ -9,7 +9,7 @@ export function Eyebrow({
 }: {
   children: ReactNode;
   className?: string;
-  as?: "p" | "span" | "h2" | "div";
+  as?: "p" | "span" | "h2" | "h3" | "div";
 }) {
   return <Tag className={`bv-eyebrow text-fg-muted ${className}`}>{children}</Tag>;
 }

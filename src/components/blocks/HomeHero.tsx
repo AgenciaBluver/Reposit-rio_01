@@ -51,17 +51,20 @@ export function HomeHero() {
           </div>
 
           {/* ── Imagem ─────────────────────────────────────────────── */}
-          <div className="col-span-6 mt-[clamp(2.5rem,5vw,0rem)] lg:col-span-4 lg:col-start-9 lg:-mt-[clamp(3rem,9vw,9rem)]">
+          <div className="col-span-6 mt-[clamp(2.25rem,4vw,0rem)] lg:col-span-4 lg:col-start-9 lg:-mt-[clamp(1rem,3vw,3rem)]">
             <Media
               media={heroMedia}
               priority
               sizes="(max-width: 1024px) 100vw, 33vw"
               cinematic
+              /* 4:3 no celular, retrato no desktop: o corte acompanha a
+                 composição em vez de empurrar o CTA para fora da tela. */
+              ratioOverride="aspect-[4/3] lg:aspect-[3/4]"
             />
           </div>
 
           {/* ── Subheadline e ações ────────────────────────────────── */}
-          <div className="col-span-6 mt-[clamp(2.5rem,5vw,4rem)] lg:col-span-5">
+          <div className="col-span-6 mt-[clamp(2.25rem,4vw,3rem)] lg:col-span-6">
             <p className="text-lead leading-relaxed text-fg/80">{site.description}</p>
 
             <div className="mt-[clamp(2rem,3.5vw,3rem)] flex flex-wrap items-center gap-x-8 gap-y-5">
@@ -78,7 +81,7 @@ export function HomeHero() {
           <div className="col-span-6 mt-[clamp(2.5rem,5vw,4rem)] self-end lg:col-span-3 lg:col-start-10">
             <p className="bv-serif text-[clamp(1.25rem,1.9vw,1.625rem)] leading-[1.25] text-fg-muted">
               Tornar o valor
-              <span className="block italic text-fg">visível.</span>
+              <span className="block text-fg">visível.</span>
             </p>
           </div>
         </div>

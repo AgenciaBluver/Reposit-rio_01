@@ -30,6 +30,7 @@ export function Media({
   className = "",
   sizes = "100vw",
   priority = false,
+  ratioOverride,
   /** Tratamento cinematográfico sutil: contraste e leve dessaturação.
    *  NUNCA altera tom de pele de forma agressiva — é um ajuste discreto. */
   cinematic = false,
@@ -39,8 +40,12 @@ export function Media({
   sizes?: string;
   priority?: boolean;
   cinematic?: boolean;
+  /** Sobrescreve a proporção com classes próprias — permite enquadramento
+   *  diferente por breakpoint (um retrato 3:4 no desktop raramente é o
+   *  melhor corte no celular). */
+  ratioOverride?: string;
 }) {
-  const ratio = ratioClass[media.ratio ?? "3:2"] ?? ratioClass["3:2"];
+  const ratio = ratioOverride ?? ratioClass[media.ratio ?? "3:2"] ?? ratioClass["3:2"];
 
   if (!media.src) {
     return (

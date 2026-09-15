@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./fonts.css";
 @import "./tokens.css";
 
 /* ── Ponte tokens → Tailwind v4 ──────────────────────────────────────────
@@ -65,7 +66,9 @@
     font-family: var(--bv-font-display);
     font-size: var(--bv-t-body);
     line-height: var(--bv-lh-body);
-    font-synthesis-weight: none;
+    /* A Atipla ND não tem itálico nem pesos além dos carregados:
+       impedimos que o navegador invente ambos. */
+    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     /* Nunca permitir scroll horizontal — requisito de mobile. */
@@ -119,10 +122,14 @@
     text-wrap: balance;
   }
 
+  /* Registro editorial: mesma fonte, peso leve e tracking aberto.
+     É o contraponto de voz aos títulos — sem recorrer a uma segunda
+     família e sem itálico sintético, que a Atipla ND não possui. */
   .bv-serif {
     font-family: var(--bv-font-text);
     font-weight: 400;
-    letter-spacing: -0.01em;
+    font-style: normal;
+    letter-spacing: 0.002em;
   }
 
   .bv-eyebrow {

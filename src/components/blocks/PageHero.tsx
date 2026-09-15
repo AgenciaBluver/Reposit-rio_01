@@ -56,8 +56,14 @@ export function PageHero({
           </div>
 
           {!stack && (
-            <div className="col-span-6 mt-[clamp(2.5rem,5vw,0rem)] lg:col-span-4 lg:col-start-9 lg:-mt-[clamp(2rem,6vw,5rem)]">
-              <Media media={media} priority sizes="(max-width: 1024px) 100vw, 33vw" cinematic />
+            <div className="col-span-6 mt-[clamp(2.25rem,4vw,0rem)] lg:col-span-4 lg:col-start-9 lg:-mt-[clamp(0.5rem,2vw,2rem)]">
+              <Media
+                media={media}
+                priority
+                sizes="(max-width: 1024px) 100vw, 33vw"
+                cinematic
+                ratioOverride="aspect-[4/3] lg:aspect-[3/4]"
+              />
             </div>
           )}
 
@@ -75,7 +81,13 @@ export function PageHero({
 
         {stack && (
           <div className="mt-[clamp(3rem,6vw,5rem)]">
-            <Media media={media} priority sizes="100vw" cinematic />
+            <Media
+              media={media}
+              priority
+              sizes="100vw"
+              cinematic
+              ratioOverride="aspect-[4/3] lg:aspect-[21/9]"
+            />
           </div>
         )}
       </Shell>

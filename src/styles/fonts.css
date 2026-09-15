@@ -1,0 +1,39 @@
+/* ════════════════════════════════════════════════════════════════════════
+   ATIPLA ND — tipografia oficial da Bluver
+   ────────────────────────────────────────────────────────────────────────
+   ⚠ LICENÇA — AÇÃO NECESSÁRIA ANTES DE PUBLICAR
+   Os arquivos fornecidos vieram de ifonts.xyz com a licença
+   "Demo for Personal Use", que NÃO autoriza uso comercial. Antes de
+   colocar o site no ar é preciso adquirir a licença web (webfont) da
+   Atipla ND junto à fundição.
+   Enquanto isso, o site funciona: a pilha de fallback abaixo mantém a
+   composição legível e com métricas próximas caso a fonte seja removida.
+
+   Três pesos, auto-hospedados em WOFF2 (~29 KB cada). Book e Black não
+   foram incluídos: nenhum é usado na hierarquia definida, e cada arquivo
+   extra custa banda sem benefício.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Atipla ND";
+  src: url("/fonts/AtiplaND-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atipla ND";
+  src: url("/fonts/AtiplaND-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atipla ND";
+  src: url("/fonts/AtiplaND-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}

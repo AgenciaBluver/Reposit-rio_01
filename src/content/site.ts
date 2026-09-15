@@ -22,11 +22,40 @@ export const site = {
   },
 } as const;
 
-export const primaryCta: Cta = {
-  label: "Conversar com a Bluver",
-  href: "/contato",
-  event: "cta_click",
-};
+/** CTAs aprovados no documento mestre. Nenhuma página inventa um CTA novo:
+ *  todas escolhem um destes, para que a marca fale sempre igual. */
+export const ctas = {
+  talk: { label: "Fale com a Bluver", href: "/contato", event: "cta_click" },
+  challenge: { label: "Apresente seu desafio", href: "/contato", event: "cta_click" },
+  positioning: {
+    label: "Conversar sobre o seu posicionamento",
+    href: "/contato",
+    event: "cta_click",
+  },
+  projects: { label: "Conhecer nossos projetos", href: "/projetos", event: "cta_click" },
+  method: { label: "Entender o Método Bluver", href: "/metodo", event: "cta_click" },
+} as const satisfies Record<string, Cta>;
+
+export const primaryCta: Cta = ctas.talk;
+
+/** Ressalva institucional. Aparece onde houver promessa de crescimento —
+ *  a Bluver influencia demanda e oportunidades, não garante faturamento. */
+export const disclaimer =
+  "A Bluver influencia demanda e oportunidades. Parte do resultado depende da operação comercial do cliente — por isso não prometemos faturamento garantido.";
+
+/** Tradução de entregável em significado (documento mestre, seção 06).
+ *  É o antídoto contra o site virar lista de serviços. */
+export const translation = [
+  { deliverable: "Vídeos", meaning: "Presença audiovisual coerente com o posicionamento." },
+  { deliverable: "Mídia paga", meaning: "Ampliação da autoridade diante das pessoas certas." },
+  { deliverable: "Conteúdo", meaning: "Narrativa que sustenta familiaridade, confiança e relevância." },
+  { deliverable: "Design", meaning: "Materialização visual da estratégia." },
+  {
+    deliverable: "Planejamento",
+    meaning: "Definição de como o negócio precisa ser percebido antes do que será produzido.",
+  },
+  { deliverable: "Eventos", meaning: "Presença e desdobramento estratégico do momento." },
+] as const;
 
 /** A tese da casa. Aparece na home como assinatura visual e é referenciada
  *  (não reescrita) por produtos e segmentos. */

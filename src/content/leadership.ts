@@ -6,7 +6,7 @@ export const leadership: Leader[] = [
   {
     slug: "beatriz",
     name: "Beatriz",
-    role: "Cofundadora",
+    role: "Cofundadora e Diretora de Estratégia e Crescimento",
     discipline: "Estratégia e Crescimento",
     bio: "Trabalha do lado onde a comunicação encontra o negócio: como a empresa vende, quanto custa adquirir um cliente e o que precisa mudar para que a conta feche. Vem de operações de mídia de grande volume — e traz para a Bluver o rigor de quem responde por investimento.",
     territories: [
@@ -24,7 +24,8 @@ export const leadership: Leader[] = [
       "Mais de R$ 30 milhões gerenciados em mídia",
       "Operações com investimento superior a R$ 1 milhão/mês",
       "Experiência em B2B, B2C e e-commerce",
-      "Geração de leads, lançamentos e campanhas internacionais",
+      "Geração de leads e lançamentos",
+      "Campanhas internacionais com veiculação em mais de 100 países",
     ],
     portrait: {
       src: null,
@@ -37,7 +38,7 @@ export const leadership: Leader[] = [
   {
     slug: "larissa",
     name: "Larissa",
-    role: "Cofundadora",
+    role: "Cofundadora e Diretora Criativa",
     discipline: "Direção Criativa",
     bio: "Decide o que a marca mostra e o que ela recusa mostrar. Conduz a direção do audiovisual da Bluver do roteiro ao corte final, e responde pelo padrão visual que separa um material que informa de um material que posiciona.",
     territories: [

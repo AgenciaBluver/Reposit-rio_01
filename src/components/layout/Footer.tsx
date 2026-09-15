@@ -35,7 +35,7 @@ export function Footer() {
             <p className="bv-serif mt-6 max-w-[24ch] text-[clamp(1.25rem,2vw,1.75rem)] leading-[1.25]">
               {site.signature}
             </p>
-            <address className="mt-8 not-italic text-[0.9375rem] leading-relaxed text-fg-muted">
+            <address className="mt-8 not-text-[0.9375rem] leading-relaxed text-fg-muted">
               {site.base}
               <br />
               {site.reach}

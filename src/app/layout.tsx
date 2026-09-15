@@ -1,7 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { fontDisplay, fontText } from "./fonts";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@/components/layout/Analytics";
 import { site } from "@/content/site";
 import { organizationSchema } from "@/lib/seo";
@@ -38,8 +35,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${fontDisplay.variable} ${fontText.variable}`}>
+    <html lang="pt-BR">
       <head>
+        {/* A fonte da marca é crítica para o primeiro paint do hero. */}
+        <link
+          rel="preload"
+          href="/fonts/AtiplaND-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         {/* Marca que o JS está ativo ANTES do primeiro paint. Sem isso, o
             estado inicial das revelações causaria flash de conteúdo. */}
         <script
@@ -56,9 +61,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#conteudo" className="bv-skip">
           Pular para o conteúdo
         </a>
-        <Header />
-        <main id="conteudo">{children}</main>
-        <Footer />
+        {/* Header, main e footer são definidos por cada grupo de rota:
+            (site) tem navegação completa; /lp tem chrome reduzido. */}
+        {children}
         <Analytics />
       </body>
     </html>

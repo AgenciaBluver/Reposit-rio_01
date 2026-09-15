@@ -61,7 +61,7 @@ export function Problem() {
                       className="col-span-6 hidden h-px self-center bg-line lg:col-span-2 lg:col-start-6 lg:block"
                     />
 
-                    <p className="bv-serif col-span-3 text-[clamp(1.0625rem,2.2vw,1.875rem)] italic leading-tight text-fg-muted lg:col-span-5 lg:col-start-8">
+                    <p className="bv-serif col-span-3 text-[clamp(1.0625rem,2.2vw,1.875rem)] leading-tight text-fg-muted lg:col-span-5 lg:col-start-8">
                       {row.perceived}
                     </p>
                   </div>

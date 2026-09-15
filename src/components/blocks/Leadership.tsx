@@ -34,7 +34,7 @@ export function Leadership({ surface = "paper" }: { surface?: "paper" | "ink" })
                   />
                   <div className="mt-8">
                     <h3 className="bv-display text-title">{leader.name}</h3>
-                    <p className="bv-serif mt-2 text-[clamp(1.125rem,1.6vw,1.5rem)] italic text-fg-muted">
+                    <p className="bv-serif mt-2 text-[clamp(1.125rem,1.6vw,1.5rem)] text-fg-muted">
                       {leader.discipline}
                     </p>
                     <p className="bv-eyebrow mt-4 text-fg-muted">{leader.role}</p>
