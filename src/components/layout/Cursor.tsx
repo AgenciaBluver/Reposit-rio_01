@@ -35,6 +35,7 @@ export function Cursor() {
     let cx = x;
     let cy = y;
     let raf = 0;
+    let lastSpot: HTMLElement | null = null;
 
     const loop = () => {
       // Interpolação: o visor persegue o ponteiro com um atraso curto.
@@ -53,9 +54,27 @@ export function Cursor() {
       const t = e.target as Element | null;
       const near = t?.closest("a, button, summary, input, textarea, select, [data-cursor]");
       el.dataset.state = near ? (near.getAttribute("data-cursor") ?? "link") : "idle";
+
+      // Holofote: a seção escura sob o ponteiro recebe a posição dele.
+      // Um único listener alimenta todas, em vez de uma por seção.
+      const spot = t?.closest<HTMLElement>(".bv-spot");
+      if (spot !== lastSpot) {
+        if (lastSpot) lastSpot.dataset.spot = "";
+        lastSpot = spot ?? null;
+      }
+      if (spot) {
+        const r = spot.getBoundingClientRect();
+        spot.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        spot.style.setProperty("--my", `${e.clientY - r.top}px`);
+        spot.dataset.spot = "1";
+      }
     };
     const onLeave = () => {
       el.dataset.on = "";
+      if (lastSpot) {
+        lastSpot.dataset.spot = "";
+        lastSpot = null;
+      }
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });

@@ -74,7 +74,7 @@ export const cases: CaseStudy[] = [
     },
     gallery: [
       { src: null, alt: "Detalhe de peça usinada por eletroerosão a fio.", ratio: "1:1", slot: "CASE Eletroerosão, 01 detalhe de peça", preview: "https://t4.ftcdn.net/jpg/06/73/22/29/1000_F_673222900_VfN8IE6DFYQBoeRcK5iwVy0XKFXVpvBB.jpg" },
-      { src: null, alt: "Operador acompanhando o processo de usinagem.", ratio: "3:4", slot: "CASE Eletroerosão, 02 operador", preview: "https://t4.ftcdn.net/jpg/07/50/64/49/1000_F_750644919_ihpW16nbJEwk1k3SlM0WmySk342ZRYLt.jpg" },
+      { src: null, alt: "Operador acompanhando o processo de usinagem.", ratio: "3:4", slot: "CASE Eletroerosão, 02 operador", preview: "https://t4.ftcdn.net/jpg/05/78/31/89/1000_F_578318978_WTnZMEnr4hudQnTlwKfeILwM0S88Bp3j.jpg" },
       { src: null, alt: "Vista geral do parque de máquinas.", ratio: "3:2", slot: "CASE Eletroerosão, 03 parque de máquinas", preview: "https://t4.ftcdn.net/jpg/04/80/10/27/1000_F_480102788_98monqK7hJqg0P5mXuz09O3Ndf0XeeFU.jpg" },
     ],
   },

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HomeHero } from "@/components/blocks/HomeHero";
 import { GapSlider } from "@/components/blocks/GapSlider";
+import { Questions } from "@/components/blocks/Questions";
 import { Thesis } from "@/components/blocks/Thesis";
 import { Method } from "@/components/blocks/Method";
 import { SegmentSelector } from "@/components/blocks/SegmentSelector";
@@ -45,7 +46,12 @@ export default function HomePage() {
       <GapSlider />
 
       <Thesis />
-      <Method compact surface="ink" />
+
+      {/* O device comercial da home: perguntas que o visitante já se fez
+          sozinho. Passar o ponteiro apaga as outras e revela a observação. */}
+      <Questions />
+
+      <Method compact surface="paper" />
 
       {/* A porta para as landing pages: escolha pela frase, não pelo setor. */}
       <SegmentSelector />

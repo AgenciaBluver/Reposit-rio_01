@@ -199,6 +199,28 @@
   .bv-link:hover,
   .bv-link:focus-visible { background-size: 100% 1px; }
 
+  /* ── Holofote ────────────────────────────────────────────────────────
+     Seções escuras ganham um foco de luz frio que segue o ponteiro. É a
+     leitura literal de "tornar o valor visível": a área sob o olhar fica
+     mais clara que o resto. Sutil de propósito, 6% de opacidade; passou
+     disso vira efeito e rouba a leitura do texto.                      */
+  .bv-spot { position: relative; isolation: isolate; }
+  .bv-spot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 500ms var(--bv-ease);
+    background: radial-gradient(
+      36rem circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in srgb, var(--bv-signal-lift) 6%, transparent),
+      transparent 70%
+    );
+  }
+  .bv-spot[data-spot="1"]::before { opacity: 1; }
+
   /* Progresso de leitura: a régua da marca virando indicador.
      Existe para dar noção de extensão numa página longa, não por enfeite. */
   .bv-progress {

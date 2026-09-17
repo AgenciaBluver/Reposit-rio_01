@@ -90,7 +90,7 @@ export const method: ProcessStep[] = [
       alt: "Reunião de revisão de resultados entre a Bluver e o cliente.",
       ratio: "4:3",
       slot: "METODO/05, Evolução: reunião de revisão com cliente",
-      preview: "https://t3.ftcdn.net/jpg/02/80/84/60/1000_F_280846031_1dCzkNKW1pjIFaB8RFlJiqpbDQSgb2HS.jpg",
+      preview: "https://t3.ftcdn.net/jpg/02/12/34/24/1000_F_212342499_FZA9KbUcE8C16eQOiXXKdEx1xlID0YY6.jpg",
     },
   },
 ];
