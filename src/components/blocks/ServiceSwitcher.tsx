@@ -19,7 +19,6 @@ import { Action } from "@/components/primitives/Action";
 export function ServiceSwitcher() {
   const items = servicesLanding.services;
   const [i, setI] = useState(0);
-  const s = items[i];
 
   const onKey = (e: React.KeyboardEvent) => {
     const last = items.length - 1;
@@ -85,53 +84,63 @@ export function ServiceSwitcher() {
           })}
         </div>
 
-        {/* Painel */}
-        <div
-          role="tabpanel"
-          id={`painel-${s.key}`}
-          aria-labelledby={`tab-${s.key}`}
-          className="mt-[clamp(2.5rem,6vw,5rem)] grid grid-cols-6 gap-x-gutter gap-y-10 lg:grid-cols-12"
-        >
-          <div className="col-span-6 lg:col-span-5">
-            <Media media={s.media} sizes="(max-width: 1024px) 100vw, 40vw" cinematic />
-            <p className="mt-6 text-[0.9375rem] leading-relaxed text-fg-muted">
-              <span className="bv-eyebrow block text-fg-muted">Faz mais sentido para</span>
-              <span className="mt-2 block">{s.bestFor}</span>
-            </p>
-          </div>
-
-          <div className="col-span-6 lg:col-span-6 lg:col-start-7">
-            <p className="bv-display text-display-3 max-w-[18ch]">{s.thesis}</p>
-
-            <div className="mt-[clamp(2rem,4vw,3rem)] border-t border-line pt-7">
-              <h3 className="bv-display text-title max-w-[22ch]">{s.mistake.headline}</h3>
-              <p className="mt-4 max-w-[52ch] leading-relaxed text-fg-muted">{s.mistake.body}</p>
-            </div>
-
-            <div className="mt-[clamp(2rem,4vw,3rem)]">
-              <Eyebrow as="h3">O que entra</Eyebrow>
-              <ul className="mt-5">
-                {s.includes.map((x) => (
-                  <li key={x} className="border-t border-line py-3 text-[0.9375rem] leading-snug text-fg/85">
-                    {x}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {s.note && (
-              <p className="mt-7 border-l-2 pl-4 text-[0.9375rem] leading-relaxed text-fg-muted" style={{ borderColor: "var(--bv-signal)" }}>
-                {s.note}
+        {/* Painéis: todos existem no HTML, os inativos ficam com
+            `hidden`. Sem JavaScript a página mostra o primeiro e os
+            demais continuam presentes para leitor de tela e indexação. */}
+        {items.map((item, k) => (
+          <div
+            key={item.key}
+            role="tabpanel"
+            id={`painel-${item.key}`}
+            aria-labelledby={`tab-${item.key}`}
+            hidden={k !== i}
+            className="mt-[clamp(2.5rem,6vw,5rem)] grid grid-cols-6 gap-x-gutter gap-y-10 lg:grid-cols-12"
+          >
+            <div className="col-span-6 lg:col-span-5">
+              <Media media={item.media} sizes="(max-width: 1024px) 100vw, 40vw" cinematic />
+              <p className="mt-6 text-[0.9375rem] leading-relaxed text-fg-muted">
+                <span className="bv-eyebrow block text-fg-muted">Faz mais sentido para</span>
+                <span className="mt-2 block">{item.bestFor}</span>
               </p>
-            )}
+            </div>
 
-            <div className="mt-[clamp(2rem,4vw,3rem)]">
-              <Action href={`/contato?interesse=${s.key}`} payload={{ location: `lp_servicos_${s.key}` }}>
-                {s.cta}
-              </Action>
+            <div className="col-span-6 lg:col-span-6 lg:col-start-7">
+              <p className="bv-display text-display-3 max-w-[18ch]">{item.thesis}</p>
+
+              <div className="mt-[clamp(2rem,4vw,3rem)] border-t border-line pt-7">
+                <h3 className="bv-display text-title max-w-[22ch]">{item.mistake.headline}</h3>
+                <p className="mt-4 max-w-[52ch] leading-relaxed text-fg-muted">{item.mistake.body}</p>
+              </div>
+
+              <div className="mt-[clamp(2rem,4vw,3rem)]">
+                <Eyebrow as="h3">O que entra</Eyebrow>
+                <ul className="mt-5">
+                  {item.includes.map((x) => (
+                    <li key={x} className="border-t border-line py-3 text-[0.9375rem] leading-snug text-fg/85">
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {item.note && (
+                <p
+                  className="mt-7 border-l-2 pl-4 text-[0.9375rem] leading-relaxed text-fg-muted"
+                  style={{ borderColor: "var(--bv-signal)" }}
+                >
+                  {item.note}
+                </p>
+              )}
+
+              <div className="mt-[clamp(2rem,4vw,3rem)]">
+                <Action href={`/contato?interesse=${item.key}`} payload={{ location: `lp_servicos_${item.key}` }}>
+                  {item.cta}
+                </Action>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
+
       </Shell>
     </Section>
   );
