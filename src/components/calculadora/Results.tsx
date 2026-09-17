@@ -43,10 +43,15 @@ export function PriceControl({
   price,
   onChange,
   suggested,
+  units,
+  pricePerUnit,
 }: {
   price: number;
   onChange: (n: number) => void;
   suggested: number | null;
+  /** Peças no anúncio. Acima de 1, o preço é do kit. */
+  units: number;
+  pricePerUnit: number;
 }) {
   const id = useId();
   const field = useNumericDraft(price, onChange, { decimalsOnBlur: 2 });
@@ -56,7 +61,7 @@ export function PriceControl({
   return (
     <div>
       <label htmlFor={id} className="bv-eyebrow text-fg-muted">
-        Preço de venda
+        {units > 1 ? "Preço do anúncio (kit)" : "Preço de venda"}
       </label>
       <div className="mt-2 flex items-center gap-2 border border-fg/20 bg-bg px-4 py-3 focus-within:border-accent">
         <span className="text-[0.9375rem] text-fg-muted" aria-hidden>
@@ -88,6 +93,11 @@ export function PriceControl({
         <span>R$ 0</span>
         <span>{brl(max)}</span>
       </div>
+      {units > 1 && (
+        <p className="mt-2 text-[0.75rem] leading-snug text-fg-muted">
+          Kit com {units} peças — {brl(pricePerUnit)} por unidade.
+        </p>
+      )}
     </div>
   );
 }
@@ -121,7 +131,13 @@ export function ResultPanel({
       <div className="p-5 sm:p-6">
         <div className="flex items-baseline justify-between gap-3">
           <span className="bv-eyebrow text-fg-muted">
-            {loss ? "Prejuízo por unidade" : "Lucro por unidade"}
+            {result.units > 1
+              ? loss
+                ? "Prejuízo por anúncio"
+                : "Lucro por anúncio"
+              : loss
+                ? "Prejuízo por unidade"
+                : "Lucro por unidade"}
           </span>
           <span className={`text-[0.8125rem] font-medium ${VERDICT_COLOR[verdict.tone]}`}>
             {verdict.label}
@@ -138,10 +154,19 @@ export function ResultPanel({
 
         <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4">
           <Metric label="Margem líquida" value={pct(result.marginPct)} />
+          {result.units > 1 && (
+            <Metric
+              label={loss ? "Prejuízo por unidade" : "Lucro por unidade"}
+              value={brl(result.profitPerUnit)}
+            />
+          )}
           <Metric label="Markup sobre o custo" value={`${result.markup.toFixed(2)}×`} />
           <Metric label="Lucro por hora de impressora" value={brl(result.profitPerPrintHour)} />
           <Metric label="Retorno sobre o custo" value={pct(result.roiPct, 0)} />
-          <Metric label="Custo de produção" value={brl(result.production.total)} />
+          <Metric
+            label={result.units > 1 ? "Custo do kit" : "Custo de produção"}
+            value={brl(result.production.total)}
+          />
           <Metric label="Mercado Livre retém" value={brl(result.marketplaceTotal)} />
         </dl>
       </div>
@@ -271,26 +296,28 @@ export function Breakdown({
   onMonthlyUnits: (n: number) => void;
 }) {
   const p = result.production;
+  const kit = p.units > 1;
+  /** Número curto em português: 4,53 h, 135 g. */
+  const n = (x: number) => x.toLocaleString("pt-BR", { maximumFractionDigits: 2 });
+  const perPiece = kit ? ` × ${p.units} peças` : "";
+
   const rows: { label: string; value: number; note?: string }[] = [
     {
       label: "Filamento",
       value: p.material,
-      note: `${inputs.partWeightG} g a ${brl(inputs.filamentPricePerKg / 1000)}/g + ${pct(
-        inputs.wastePct,
-        0,
-      )} de perda`,
+      note: `${n(p.weightG)} g${kit ? " somadas" : ""} a ${brl(
+        inputs.filamentPricePerKg / 1000,
+      )}/g + ${pct(inputs.wastePct, 0)} de perda`,
     },
     {
       label: "Energia",
       value: p.energy,
-      note: `${inputs.printerWatts} W × ${inputs.printHours} h × ${brl(
-        inputs.energyPricePerKwh,
-      )}/kWh`,
+      note: `${inputs.printerWatts} W × ${n(p.hours)} h × ${brl(inputs.energyPricePerKwh)}/kWh`,
     },
     {
       label: "Máquina",
       value: p.machine,
-      note: `${inputs.printHours} h × ${brl(inputs.machineCostPerHour)}/h`,
+      note: `${n(p.hours)} h × ${brl(inputs.machineCostPerHour)}/h`,
     },
     {
       label: "Impressões perdidas",
@@ -300,10 +327,14 @@ export function Breakdown({
     {
       label: "Mão de obra",
       value: p.labor,
-      note: `${inputs.laborMinutes} min × ${brl(inputs.laborCostPerHour)}/h`,
+      note: `${inputs.laborMinutes} min${perPiece} × ${brl(inputs.laborCostPerHour)}/h`,
     },
-    { label: "Insumos extras", value: p.extras },
-    { label: "Embalagem", value: p.packaging },
+    {
+      label: "Insumos extras",
+      value: p.extras,
+      note: kit ? `${brl(inputs.extrasCost)} por peça${perPiece}` : undefined,
+    },
+    { label: "Embalagem", value: p.packaging, note: "Uma por venda, não por peça" },
   ].filter((r) => r.value > 0.0001);
 
   const monthly = monthlyUnits * result.profit;
@@ -329,7 +360,9 @@ export function Breakdown({
     {
       label: "Custo de produção",
       value: p.total,
-      note: "Filamento, energia, máquina, falhas, trabalho e embalagem",
+      note: kit
+        ? `As ${p.units} peças do anúncio: filamento, energia, máquina, falhas, trabalho e embalagem`
+        : "Filamento, energia, máquina, falhas, trabalho e embalagem",
     },
     {
       label: "Comissão do anúncio",
@@ -339,7 +372,7 @@ export function Breakdown({
         : `${LISTING_TYPES[inputs.listingType].label} · ${pct(inputs.commissionPct, 0)} sobre o preço`,
     },
     {
-      label: "Custo fixo por unidade",
+      label: "Custo fixo por venda",
       value: result.fixedFee,
       note: isFree
         ? "Anúncio grátis não tem custo fixo"
@@ -357,9 +390,9 @@ export function Breakdown({
           : `Comprador paga: preço abaixo de ${brl(threshold)}`,
     },
     {
-      label: "Logística por unidade",
+      label: "Logística por venda",
       value: result.logistics,
-      note: "Armazenagem no Full, coleta e deslocamento até a agência",
+      note: "Armazenagem no Full, coleta e deslocamento — uma vez por venda",
     },
     {
       label: "Imposto",
@@ -383,6 +416,11 @@ export function Breakdown({
       <div className="flex flex-col gap-gutter">
       <div className="border border-fg/12 bg-fg/[0.03] p-5 sm:p-6">
         <h2 className="bv-display text-[1.0625rem] font-medium">Custo de produção, linha a linha</h2>
+        {kit && (
+          <p className="mt-2 text-[0.8125rem] leading-relaxed text-fg-muted">
+            Anúncio com {p.units} peças: {n(p.weightG)} g e {n(p.hours)} h no total.
+          </p>
+        )}
         <table className="mt-4 w-full text-[0.875rem]">
           <caption className="sr-only">
             Composição do custo de produção de uma unidade
@@ -406,16 +444,27 @@ export function Breakdown({
             ))}
             <tr className="border-t border-fg/25">
               <th scope="row" className="py-3 text-left font-medium">
-                Custo por unidade
+                {kit ? "Custo do anúncio" : "Custo por unidade"}
               </th>
               <td className="py-3 text-right font-medium tabular-nums">{brl(p.total)}</td>
               <td className="py-3 text-right tabular-nums text-fg-muted">100%</td>
             </tr>
+            {kit && (
+              <tr>
+                <th scope="row" className="py-3 text-left font-normal text-fg-muted">
+                  Custo por peça
+                </th>
+                <td className="py-3 text-right tabular-nums">{brl(p.perUnit)}</td>
+                <td className="py-3 text-right tabular-nums text-fg-muted">
+                  {pct(100 / p.units, 0)}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         <p className="mt-4 text-[0.75rem] leading-relaxed text-fg-muted">
-          Custo por grama impresso: {brl(inputs.partWeightG > 0 ? p.total / inputs.partWeightG : 0)}.
-          Custo por hora de impressão: {brl(inputs.printHours > 0 ? p.total / inputs.printHours : 0)}.
+          Custo por grama impresso: {brl(p.weightG > 0 ? p.total / p.weightG : 0)}. Custo por hora
+          de impressão: {brl(p.hours > 0 ? p.total / p.hours : 0)}.
         </p>
       </div>
 
@@ -427,13 +476,36 @@ export function Breakdown({
           valor das outras.
         </p>
         <table className="mt-4 w-full text-[0.875rem]">
-          <caption className="sr-only">Do preço de venda ao lucro por unidade</caption>
+          <caption className="sr-only">Do preço de venda ao lucro</caption>
+          {kit && (
+            <thead>
+              <tr className="text-[0.75rem] text-fg-muted">
+                <th scope="col" className="pb-2 text-left font-normal">
+                  <span className="sr-only">Linha</span>
+                </th>
+                <th scope="col" className="pb-2 text-right font-normal">
+                  Por anúncio
+                </th>
+                <th scope="col" className="w-24 pb-2 text-right font-normal">
+                  Por peça
+                </th>
+                <th scope="col" className="w-16 pb-2 text-right font-normal">
+                  % do preço
+                </th>
+              </tr>
+            </thead>
+          )}
           <tbody>
             <tr className="border-b border-fg/25">
               <th scope="row" className="py-2.5 pr-3 text-left font-medium">
-                Preço de venda
+                {kit ? "Preço do anúncio" : "Preço de venda"}
               </th>
               <td className="py-2.5 text-right font-medium tabular-nums">{brl(result.price)}</td>
+              {kit && (
+                <td className="w-24 py-2.5 text-right font-medium tabular-nums">
+                  {brl(result.pricePerUnit)}
+                </td>
+              )}
               <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted">100%</td>
             </tr>
             {saleRows.map((r) => (
@@ -450,6 +522,11 @@ export function Breakdown({
                 <td className="py-2.5 text-right tabular-nums align-top whitespace-nowrap">
                   {r.value > 0.0001 ? `− ${brl(r.value)}` : brl(0)}
                 </td>
+                {kit && (
+                  <td className="w-24 py-2.5 text-right tabular-nums align-top whitespace-nowrap">
+                    {r.value > 0.0001 ? `− ${brl(r.value / p.units)}` : brl(0)}
+                  </td>
+                )}
                 <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted align-top">
                   {result.price > 0 ? pct((r.value / result.price) * 100, 0) : "—"}
                 </td>
@@ -457,7 +534,13 @@ export function Breakdown({
             ))}
             <tr className="border-t border-fg/25">
               <th scope="row" className="py-3 text-left font-medium">
-                {loss ? "Prejuízo por unidade" : "Lucro por unidade"}
+                {kit
+                  ? loss
+                    ? "Prejuízo por anúncio"
+                    : "Lucro por anúncio"
+                  : loss
+                    ? "Prejuízo por unidade"
+                    : "Lucro por unidade"}
               </th>
               <td
                 className={`py-3 text-right font-medium tabular-nums ${
@@ -466,6 +549,15 @@ export function Breakdown({
               >
                 {brl(result.profit)}
               </td>
+              {kit && (
+                <td
+                  className={`w-24 py-3 text-right font-medium tabular-nums ${
+                    loss ? "text-data-loss" : "text-data-profit"
+                  }`}
+                >
+                  {brl(result.profitPerUnit)}
+                </td>
+              )}
               <td
                 className={`py-3 text-right tabular-nums ${
                   loss ? "text-data-loss" : "text-data-profit"
@@ -482,7 +574,7 @@ export function Breakdown({
       <div className="border border-fg/12 bg-fg/[0.03] p-5 sm:p-6">
         <h2 className="bv-display text-[1.0625rem] font-medium">Projeção mensal</h2>
         <label htmlFor="volume" className="mt-4 block text-[0.8125rem] text-fg-muted">
-          Unidades vendidas por mês
+          {kit ? "Anúncios (kits) vendidos por mês" : "Unidades vendidas por mês"}
         </label>
         <input
           id="volume"
@@ -494,7 +586,9 @@ export function Breakdown({
           onChange={(e) => onMonthlyUnits(Number(e.target.value))}
           className="mt-2 w-full accent-accent"
         />
-        <p className="bv-numeral text-[1.5rem] tabular-nums">{monthlyUnits} un.</p>
+        <p className="bv-numeral text-[1.5rem] tabular-nums">
+          {monthlyUnits} {kit ? "kits" : "un."}
+        </p>
         <dl className="mt-5 space-y-3">
           <Line label="Faturamento" value={brl(monthlyUnits * result.price)} />
           <Line label="Custo total" value={brl(monthlyUnits * result.totalCost)} />
@@ -504,9 +598,12 @@ export function Breakdown({
             strong
             tone={monthly < 0 ? "loss" : "profit"}
           />
+          {kit && (
+            <Line label="Peças impressas" value={`${monthlyUnits * p.units} un.`} />
+          )}
           <Line
             label="Horas de impressora"
-            value={`${(monthlyUnits * inputs.printHours).toFixed(0)} h`}
+            value={`${(monthlyUnits * p.hours).toFixed(0)} h`}
           />
         </dl>
         <p className="mt-4 text-[0.75rem] leading-relaxed text-fg-muted">

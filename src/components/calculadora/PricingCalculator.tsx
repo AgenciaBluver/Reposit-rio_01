@@ -14,6 +14,7 @@ import {
   type ShippingRule,
 } from "@/lib/pricing/mercado-livre";
 import { Button, NumberField, Panel, SelectField } from "./Fields";
+import { KitEditor } from "./KitEditor";
 import { Breakdown, PriceControl, ResultPanel } from "./Results";
 import { Catalog, type SavedProduct } from "./Catalog";
 
@@ -100,6 +101,8 @@ export function PricingCalculator() {
               price={inputs.price}
               onChange={set("price")}
               suggested={suggested?.price ?? null}
+              units={result.units}
+              pricePerUnit={result.pricePerUnit}
             />
           </ResultPanel>
         </aside>
@@ -162,8 +165,19 @@ export function PricingCalculator() {
               onChange={set("failureRatePct")}
               unit="%"
               max={95}
-              span={2}
               hint="Peças que entopem, descolam ou saem fora de tolerância. Quem perde 10% imprime 11 para vender 10 — e as 10 pagam as 11."
+            />
+            <NumberField
+              label="Unidades desta peça no anúncio"
+              value={inputs.kitQty}
+              onChange={set("kitQty")}
+              min={1}
+              hint="Kit de 3 unidades iguais? Coloque 3 — o preço passa a ser o do kit."
+            />
+            <KitEditor
+              inputs={inputs}
+              onChange={set("kitPieces")}
+              unitCost={result.production.perUnit}
             />
           </Panel>
 
@@ -194,7 +208,7 @@ export function PricingCalculator() {
               hint="Preço da máquina ÷ horas de vida útil + peças de reposição."
             />
             <NumberField
-              label="Pós-processamento"
+              label="Pós-processamento por peça"
               value={inputs.laborMinutes}
               onChange={set("laborMinutes")}
               unit="min"
@@ -207,7 +221,7 @@ export function PricingCalculator() {
               unit="R$/h"
             />
             <NumberField
-              label="Insumos extras"
+              label="Insumos extras por peça"
               value={inputs.extrasCost}
               onChange={set("extrasCost")}
               unit="R$"
@@ -215,13 +229,13 @@ export function PricingCalculator() {
               hint="Ímãs, parafusos, tinta, cola, encarte."
             />
             <NumberField
-              label="Embalagem"
+              label="Embalagem por anúncio"
               value={inputs.packagingCost}
               onChange={set("packagingCost")}
               unit="R$"
               unitPosition="prefix"
               span={2}
-              hint="Caixa, plástico bolha, fita e etiqueta."
+              hint="Caixa, plástico bolha, fita e etiqueta. Uma por venda, mesmo que o anúncio leve várias peças."
             />
           </Panel>
 
@@ -286,7 +300,7 @@ export function PricingCalculator() {
               hint={`Frete no seu bolso hoje: ${brl(result.shipping)}.`}
             />
             <NumberField
-              label="Logística por unidade"
+              label="Logística por venda"
               value={inputs.logisticsCost}
               onChange={set("logisticsCost")}
               unit="R$"
@@ -399,13 +413,17 @@ export function PricingCalculator() {
               id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
               name,
               savedAt: Date.now(),
-              inputs,
+              inputs: { ...inputs, kitPieces: inputs.kitPieces.map((p) => ({ ...p })) },
             },
             ...prev,
           ])
         }
         onLoad={(item) => {
-          setInputs({ ...DEFAULT_INPUTS, ...item.inputs });
+          setInputs({
+            ...DEFAULT_INPUTS,
+            ...item.inputs,
+            kitPieces: (item.inputs.kitPieces ?? []).map((p) => ({ ...p })),
+          });
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         onDelete={(id) => setCatalog((prev) => prev.filter((p) => p.id !== id))}

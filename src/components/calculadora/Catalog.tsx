@@ -84,6 +84,7 @@ export function Catalog({
             <thead>
               <tr className="border-b border-fg/20 text-left text-[0.75rem] uppercase tracking-[0.1em] text-fg-muted">
                 <th scope="col" className="py-2.5 pr-3 font-medium">Produto</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Peças</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Peso</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Custo</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Preço</th>
@@ -104,7 +105,10 @@ export function Catalog({
                       {item.name}
                     </th>
                     <td className="py-3 pr-3 text-right tabular-nums text-fg-muted">
-                      {item.inputs.partWeightG} g
+                      {r.units}
+                    </td>
+                    <td className="py-3 pr-3 text-right tabular-nums text-fg-muted">
+                      {r.production.weightG.toLocaleString("pt-BR", { maximumFractionDigits: 0 })} g
                     </td>
                     <td className="py-3 pr-3 text-right tabular-nums">{brl(r.production.total)}</td>
                     <td className="py-3 pr-3 text-right tabular-nums">{brl(r.price)}</td>
@@ -145,6 +149,7 @@ function exportCsv(items: SavedProduct[]) {
   const num = (n: number) => n.toFixed(2).replace(".", ",");
   const head = [
     "Produto",
+    "Peças no anúncio",
     "Peso (g)",
     "Horas de impressão",
     "Custo de produção",
@@ -152,21 +157,24 @@ function exportCsv(items: SavedProduct[]) {
     "Taxas do Mercado Livre",
     "Imposto",
     "Publicidade",
-    "Lucro por unidade",
+    "Lucro por anúncio",
+    "Lucro por peça",
     "Margem (%)",
   ];
   const lines = items.map((item) => {
     const r = calculate(item.inputs);
     return [
       `"${item.name.replace(/"/g, '""')}"`,
-      num(item.inputs.partWeightG),
-      num(item.inputs.printHours),
+      String(r.units),
+      num(r.production.weightG),
+      num(r.production.hours),
       num(r.production.total),
       num(r.price),
       num(r.marketplaceTotal + r.logistics),
       num(r.tax),
       num(r.ads),
       num(r.profit),
+      num(r.profitPerUnit),
       num(r.marginPct),
     ].join(";");
   });

@@ -100,6 +100,7 @@ export function NumberField({
   min = 0,
   max,
   span = 1,
+  labelHidden = false,
 }: {
   label: string;
   value: number;
@@ -110,13 +111,20 @@ export function NumberField({
   min?: number;
   max?: number;
   span?: 1 | 2;
+  /** Mantém o rótulo para leitores de tela quando a coluna já o nomeia. */
+  labelHidden?: boolean;
 }) {
   const id = useId();
   const field = useNumericDraft(value, onChange, { min, max });
 
   return (
     <div className={span === 2 ? "sm:col-span-2" : undefined}>
-      <label htmlFor={id} className="mb-1.5 block text-[0.8125rem] leading-tight text-fg-muted">
+      <label
+        htmlFor={id}
+        className={
+          labelHidden ? "sr-only" : "mb-1.5 block text-[0.8125rem] leading-tight text-fg-muted"
+        }
+      >
         {label}
       </label>
       <div className="flex items-center border border-fg/15 bg-bg transition-colors focus-within:border-accent">
@@ -215,5 +223,42 @@ export function Button({
     <button type={type} onClick={onClick} disabled={disabled} className={`${base} ${skin} ${className}`}>
       {children}
     </button>
+  );
+}
+
+/** Campo de texto curto. Existe só para nomear as peças de um kit. */
+export function TextField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  labelHidden = false,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  labelHidden?: boolean;
+}) {
+  const id = useId();
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className={
+          labelHidden ? "sr-only" : "mb-1.5 block text-[0.8125rem] leading-tight text-fg-muted"
+        }
+      >
+        {label}
+      </label>
+      <input
+        id={id}
+        type="text"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full border border-fg/15 bg-bg px-3 py-2.5 text-[0.9375rem] outline-none transition-colors focus:border-accent"
+      />
+    </div>
   );
 }

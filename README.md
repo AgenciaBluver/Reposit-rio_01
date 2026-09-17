@@ -135,7 +135,7 @@ envio de dados. O que a pessoa digita é salvo no `localStorage` dela.
 
 | Bloco | Campos |
 |---|---|
-| A peça | preço do quilo do filamento, peso em gramas, perda de material, tempo de impressão, taxa de falha |
+| A peça | preço do quilo do filamento, peso em gramas, perda de material, tempo de impressão, taxa de falha, **composição do kit** |
 | Máquina e trabalho | consumo em watts, tarifa de kWh, depreciação por hora, minutos de pós-processamento, valor da hora, insumos extras, embalagem |
 | Anúncio e frete | tipo de anúncio (Grátis/Clássico/Premium), comissão, quem paga o frete, custo do frete, desconto de reputação, logística por unidade |
 | Impostos e extras | imposto, publicidade, outros percentuais, faixas de custo fixo do marketplace |
@@ -145,14 +145,27 @@ o custo, **lucro por hora de impressora**, composição visual do preço,
 custo de produção linha a linha, projeção mensal por volume, preço de
 equilíbrio e o caminho inverso — o preço necessário para uma margem alvo.
 
-**As duas decisões de modelagem que merecem atenção**
+**Kit**
+
+Um anúncio pode vender mais de uma peça: `kitQty` para N unidades da mesma
+peça e `kitPieces[]` para peças diferentes no mesmo anúncio. A divisão que
+faz o kit valer a pena está no custo de produção: filamento, energia,
+máquina, falhas, acabamento e insumos são **por peça**; embalagem, frete,
+logística e custo fixo do Mercado Livre são **por venda**. O preço passa a
+ser o do anúncio, e o resultado aparece nas duas leituras — por anúncio e
+por peça.
+
+**As três decisões de modelagem que merecem atenção**
 
 1. **Taxa de falha.** Quem perde 10% das impressões produz onze peças
    para vender dez. O custo é diluído nas peças boas
    (`custo × f / (1 − f)`), não somado como percentual simples — e incide
    só sobre material, energia e máquina, nunca sobre o acabamento de uma
    peça que não existiu.
-2. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
+2. **O kit não é estoque.** A diluição só existe quando o anúncio vende o
+   conjunto como um produto só. Manter três unidades em estoque num anúncio
+   avulso não dilui nada: cada venda paga as taxas de novo.
+3. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
    acima dele o custo fixo some e o frete vira do vendedor. Como as duas
    taxas são funções em degrau do próprio preço, o preço-alvo não sai de
    uma fórmula fechada: `solvePrice()` resolve a equação dentro de cada

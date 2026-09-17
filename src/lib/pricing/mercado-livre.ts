@@ -60,6 +60,16 @@ export const FILAMENT_PRESETS = [
 
 export type ShippingRule = "auto" | "vendedor" | "comprador";
 
+/** Uma peça adicional dentro do mesmo anúncio. Um kit de 3 unidades da
+ *  MESMA peça é `kitQty: 3`; um kit de peças diferentes soma linhas aqui. */
+export type KitPiece = {
+  id: string;
+  label: string;
+  weightG: number;
+  printHours: number;
+  qty: number;
+};
+
 export type PricingInputs = {
   /* ── Peça ── */
   filamentPricePerKg: number;
@@ -68,6 +78,10 @@ export type PricingInputs = {
    *  não vira produto. */
   wastePct: number;
   printHours: number;
+  /** Quantas unidades DESTA peça vão no mesmo anúncio. */
+  kitQty: number;
+  /** Outras peças que compõem o mesmo anúncio. */
+  kitPieces: KitPiece[];
   /** Percentual de impressões perdidas. Quem falha 10% das vezes imprime
    *  11 peças para vender 10 — o custo das 11 recai sobre as 10. */
   failureRatePct: number;
@@ -107,6 +121,8 @@ export const DEFAULT_INPUTS: PricingInputs = {
   partWeightG: 85,
   wastePct: 5,
   printHours: 4.5,
+  kitQty: 1,
+  kitPieces: [],
   failureRatePct: 6,
 
   printerWatts: 120,
@@ -143,16 +159,44 @@ export type ProductionCost = {
   extras: number;
   packaging: number;
   total: number;
+  /** Peças impressas neste anúncio (soma das quantidades do kit). */
+  units: number;
+  /** Gramas e horas somadas de todas as peças do anúncio. */
+  weightG: number;
+  hours: number;
+  /** Custo de uma unidade isolada — o que muda quando vira kit. */
+  perUnit: number;
 };
+
+/** Todas as peças do anúncio: a principal mais as adicionais do kit. */
+export function kitPieces(i: PricingInputs): { label: string; weightG: number; printHours: number; qty: number }[] {
+  const main = {
+    label: "Peça principal",
+    weightG: safe(i.partWeightG),
+    printHours: safe(i.printHours),
+    qty: Math.max(1, Math.round(safe(i.kitQty)) || 1),
+  };
+  const extra = (i.kitPieces ?? []).map((p) => ({
+    label: p.label || "Peça do kit",
+    weightG: safe(p.weightG),
+    printHours: safe(p.printHours),
+    qty: Math.max(1, Math.round(safe(p.qty)) || 1),
+  }));
+  return [main, ...extra];
+}
 
 const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
 const safe = (n: number) => (Number.isFinite(n) ? n : 0);
 
 export function productionCost(i: PricingInputs): ProductionCost {
-  const material =
-    safe(i.filamentPricePerKg) / 1000 * safe(i.partWeightG) * (1 + safe(i.wastePct) / 100);
-  const energy = (safe(i.printerWatts) / 1000) * safe(i.printHours) * safe(i.energyPricePerKwh);
-  const machine = safe(i.machineCostPerHour) * safe(i.printHours);
+  const pieces = kitPieces(i);
+  const units = pieces.reduce((sum, p) => sum + p.qty, 0);
+  const weightG = pieces.reduce((sum, p) => sum + p.weightG * p.qty, 0);
+  const hours = pieces.reduce((sum, p) => sum + p.printHours * p.qty, 0);
+
+  const material = (safe(i.filamentPricePerKg) / 1000) * weightG * (1 + safe(i.wastePct) / 100);
+  const energy = (safe(i.printerWatts) / 1000) * hours * safe(i.energyPricePerKwh);
+  const machine = safe(i.machineCostPerHour) * hours;
 
   // Falha consome máquina, energia e material — nunca a mão de obra de
   // acabamento, que só acontece depois da peça sair inteira.
@@ -160,10 +204,13 @@ export function productionCost(i: PricingInputs): ProductionCost {
   const f = clamp(safe(i.failureRatePct) / 100, 0, 0.95);
   const failure = printed * (f / (1 - f));
 
-  const labor = (safe(i.laborMinutes) / 60) * safe(i.laborCostPerHour);
-  const extras = safe(i.extrasCost);
+  // Trabalho e insumos são POR PEÇA; embalagem é POR ANÚNCIO — é o que faz
+  // o kit sair mais barato por unidade do que três vendas separadas.
+  const labor = (safe(i.laborMinutes) / 60) * safe(i.laborCostPerHour) * units;
+  const extras = safe(i.extrasCost) * units;
   const packaging = safe(i.packagingCost);
 
+  const total = printed + failure + labor + extras + packaging;
   return {
     material,
     energy,
@@ -172,7 +219,11 @@ export function productionCost(i: PricingInputs): ProductionCost {
     labor,
     extras,
     packaging,
-    total: printed + failure + labor + extras + packaging,
+    total,
+    units,
+    weightG,
+    hours,
+    perUnit: units > 0 ? total / units : total,
   };
 }
 
@@ -238,6 +289,12 @@ export type PricingResult = {
   roiPct: number;
   /** Quanto cada hora de impressora deixa de lucro nesta venda. */
   profitPerPrintHour: number;
+  /** Peças no anúncio. 1 quando não é kit. */
+  units: number;
+  /** O anúncio dividido pelo número de peças — a leitura que compara um
+   *  kit com a venda avulsa da mesma peça. */
+  pricePerUnit: number;
+  profitPerUnit: number;
   deductions: Deduction[];
 };
 
@@ -274,13 +331,16 @@ export function calculate(i: PricingInputs): PricingResult {
     marginPct: price > 0 ? (profit / price) * 100 : 0,
     markup: production.total > 0 ? price / production.total : 0,
     roiPct: production.total > 0 ? (profit / production.total) * 100 : 0,
-    profitPerPrintHour: safe(i.printHours) > 0 ? profit / safe(i.printHours) : 0,
+    profitPerPrintHour: production.hours > 0 ? profit / production.hours : 0,
+    units: production.units,
+    pricePerUnit: production.units > 0 ? price / production.units : price,
+    profitPerUnit: production.units > 0 ? profit / production.units : profit,
     deductions: ([
       { key: "producao", label: "Custo de produção", value: production.total, tone: "cost" },
       { key: "comissao", label: "Comissão do anúncio", value: commission, tone: "fee" },
-      { key: "fixo", label: "Custo fixo por unidade", value: fixedFee, tone: "fee" },
+      { key: "fixo", label: "Custo fixo por venda", value: fixedFee, tone: "fee" },
       { key: "frete", label: "Frete pago pelo vendedor", value: shipping, tone: "ship" },
-      { key: "logistica", label: "Logística por unidade", value: logistics, tone: "ship" },
+      { key: "logistica", label: "Logística por venda", value: logistics, tone: "ship" },
       { key: "imposto", label: "Imposto", value: tax, tone: "tax" },
       { key: "ads", label: "Publicidade", value: ads, tone: "ads" },
       { key: "outros", label: "Outros custos", value: other, tone: "tax" },
