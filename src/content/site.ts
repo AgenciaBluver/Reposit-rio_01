@@ -11,14 +11,16 @@ export const site = {
     "A Bluver constrói a percepção que posiciona negócios de alto valor, materializa seus diferenciais e amplia sua presença diante das pessoas certas.",
   base: "Joinville, Santa Catarina",
   reach: "Atuação nacional",
-  /** Fallback seguro: se NEXT_PUBLIC_SITE_URL não estiver definida, usamos o
-   *  domínio institucional para não emitir canonical quebrado. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.agenciabluver.com.br",
-  email: process.env.NEXT_PUBLIC_EMAIL ?? "contato@agenciabluver.com.br",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "",
+  /** Fallback seguro: `||` (não `??`) porque precisa cair no padrão tanto
+   *  se a variável não existir quanto se existir cadastrada com valor
+   *  vazio, o que aconteceu em produção e quebrava `new URL("")` no
+   *  build, derrubando o deploy inteiro. */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.agenciabluver.com.br",
+  email: process.env.NEXT_PUBLIC_EMAIL || "contato@agenciabluver.com.br",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "",
   social: {
-    instagram: process.env.NEXT_PUBLIC_INSTAGRAM ?? "https://www.instagram.com/agenciabluver",
-    linkedin: process.env.NEXT_PUBLIC_LINKEDIN ?? "",
+    instagram: process.env.NEXT_PUBLIC_INSTAGRAM || "https://www.instagram.com/agenciabluver",
+    linkedin: process.env.NEXT_PUBLIC_LINKEDIN || "",
   },
 } as const;
 
