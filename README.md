@@ -116,11 +116,61 @@ mostrar.
   /construtoras-e-mercado-imobiliario┘
 /metodo  /sobre  /projetos  /projetos/[slug]  /contato
 /lp/[slug]                           função: CONVERSÃO (noindex)
+/calculadora                         função: FERRAMENTA (chrome reduzido)
 ```
 
 As LPs ficam fora do grupo de rotas `(site)`: não herdam menu nem rodapé
 institucional — menos saída, mais intenção. São `noindex` para não
 disputarem o orgânico com a página de solução, que é a versão canônica.
+
+---
+
+## Calculadora de precificação — `/calculadora`
+
+Ferramenta aberta para quem vende **impressão 3D no Mercado Livre**.
+Roda 100% no navegador: página estática, sem backend, sem banco e sem
+envio de dados. O que a pessoa digita é salvo no `localStorage` dela.
+
+**O que entra na conta**
+
+| Bloco | Campos |
+|---|---|
+| A peça | preço do quilo do filamento, peso em gramas, perda de material, tempo de impressão, taxa de falha |
+| Máquina e trabalho | consumo em watts, tarifa de kWh, depreciação por hora, minutos de pós-processamento, valor da hora, insumos extras, embalagem |
+| Anúncio e frete | tipo de anúncio (Grátis/Clássico/Premium), comissão, quem paga o frete, custo do frete, desconto de reputação, logística por unidade |
+| Impostos e extras | imposto, publicidade, outros percentuais, faixas de custo fixo do marketplace |
+
+**O que sai**: lucro e margem líquida por unidade, markup, retorno sobre
+o custo, **lucro por hora de impressora**, composição visual do preço,
+custo de produção linha a linha, projeção mensal por volume, preço de
+equilíbrio e o caminho inverso — o preço necessário para uma margem alvo.
+
+**As duas decisões de modelagem que merecem atenção**
+
+1. **Taxa de falha.** Quem perde 10% das impressões produz onze peças
+   para vender dez. O custo é diluído nas peças boas
+   (`custo × f / (1 − f)`), não somado como percentual simples — e incide
+   só sobre material, energia e máquina, nunca sobre o acabamento de uma
+   peça que não existiu.
+2. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
+   acima dele o custo fixo some e o frete vira do vendedor. Como as duas
+   taxas são funções em degrau do próprio preço, o preço-alvo não sai de
+   uma fórmula fechada: `solvePrice()` resolve a equação dentro de cada
+   faixa e fica com a menor solução coerente com a sua própria faixa —
+   caindo na fronteira quando o degrau pula a solução.
+
+**Onde mexer**
+
+| Arquivo | O que guarda |
+|---|---|
+| `src/lib/pricing/mercado-livre.ts` | Todo o cálculo e os valores padrão. Puro: não conhece React nem DOM |
+| `src/components/calculadora/` | Campos, painel de resultado, detalhamento e catálogo |
+| `src/app/calculadora/` | Rota, chrome reduzido e as perguntas do `FAQPage` |
+
+⚠ **Comissões, custo fixo e limite de frete grátis são definidos pelo
+Mercado Livre** e mudam por categoria e por período. Os defaults são
+ponto de partida — todos editáveis na própria tela, inclusive as faixas
+de custo fixo.
 
 ---
 

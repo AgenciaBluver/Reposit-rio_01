@@ -29,5 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .filter((c) => c.status === "published")
       .map((c) => entry(`/projetos/${c.slug}`, 0.6)),
     entry("/contato", 0.8),
+    // Ferramenta aberta: entra no sitemap porque é conteúdo de busca.
+    entry("/calculadora", 0.6),
   ];
 }

@@ -58,6 +58,20 @@
 
   --bv-focus: var(--bv-signal);
 
+  /* ── DADOS ────────────────────────────────────────────────────────────
+     Cores de leitura de dados (calculadora de precificação). Um gráfico
+     exige DISTINÇÃO, não expressão — por isso esta escala existe fora do
+     gradiente da marca e nunca aparece em elemento institucional.
+     Todas verificadas sobre a superfície escura, onde os gráficos vivem
+     (≥ 3:1, suficiente para elemento não textual).                      */
+  --bv-data-cost:   #8A8B90;  /* custo de produção — neutro             */
+  --bv-data-fee:    #007AEE;  /* comissão e custo fixo do marketplace   */
+  --bv-data-ship:   #00B4CE;  /* frete e logística                      */
+  --bv-data-tax:    #9B7BE0;  /* imposto e outros                       */
+  --bv-data-ads:    #E0B341;  /* publicidade                            */
+  --bv-data-profit: #00FFE2;  /* lucro — o acento da marca              */
+  --bv-data-loss:   #FF6B6B;  /* prejuízo                               */
+
   /* ── TIPOGRAFIA ───────────────────────────────────────────────────────
      Duas famílias. Nada mais.
      ATIPLA ND — tipografia oficial. Um único desenho em dois registros:
