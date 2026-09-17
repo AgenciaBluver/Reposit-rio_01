@@ -110,7 +110,7 @@ export function Header() {
           <Link
             href={primaryCta.href}
             onClick={() => track("cta_click", { location: "nav", label: primaryCta.label, destination: primaryCta.href })}
-            className="inline-flex items-center bg-fg px-5 py-3 text-[0.875rem] font-medium tracking-[-0.01em] text-bg transition-opacity hover:opacity-85"
+            className="inline-flex items-center bg-action px-5 py-3 text-[0.875rem] font-medium tracking-[-0.01em] text-on-action transition-[filter] duration-200 hover:brightness-110"
           >
             {primaryCta.label}
           </Link>
@@ -194,7 +194,7 @@ export function Header() {
             <Link
               href={primaryCta.href}
               onClick={() => track("cta_click", { location: "nav_mobile", label: primaryCta.label })}
-              className="flex w-full items-center justify-center bg-fg px-6 py-4 text-[1rem] font-medium text-bg"
+              className="flex w-full items-center justify-center bg-action px-6 py-4 text-[1rem] font-medium text-on-action"
             >
               {primaryCta.label}
             </Link>

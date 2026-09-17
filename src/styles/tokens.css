@@ -49,6 +49,13 @@
   --bv-signal-lift: #00FFE2;  /* ciano — sinal sobre ESCURO              */
   --bv-signal-deep: #001A2E;  /* azul profundo — superfície de imersão   */
 
+  /* Azul escurecido para SUPERFÍCIES com texto branco em cima.
+     O #007AEE puro dá 4.2:1 com branco — reprova em texto normal.
+     Este dá 5.8:1 e mantém a leitura de "azul Bluver".               */
+  --bv-signal-press: #0063C4;
+  /* Véu azul para hover sobre fotografia. */
+  --bv-signal-veil:  rgba(0, 122, 238, 0.22);
+
   /* Gradiente da marca. Único lugar onde ele é declarado. */
   --bv-gradient: linear-gradient(90deg, var(--bv-signal-lift) 0%, var(--bv-signal-mid) 50%, var(--bv-signal) 100%);
 

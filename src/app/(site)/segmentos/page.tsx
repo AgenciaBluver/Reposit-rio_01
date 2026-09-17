@@ -47,6 +47,7 @@ export default function SegmentsPage() {
           alt: "Ambiente empresarial de cliente da Bluver registrado em luz natural.",
           ratio: "3:4",
           slot: "SEGMENTOS/HERO — Ambiente empresarial real (vertical)",
+      preview: "https://t3.ftcdn.net/jpg/05/01/67/28/1000_F_501672880_moCm9LrdfE7BppTdjYybYOncrCYVrAWO.jpg",
         }}
         cta={{ label: ctas.positioning.label, href: ctas.positioning.href }}
       />

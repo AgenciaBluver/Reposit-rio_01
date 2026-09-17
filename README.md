@@ -107,6 +107,18 @@ narrativa definida, sinaliza "em produção" e fica `noindex` até ser
 preenchida. No case, `impacto.objetivo` e `impacto.comprovado` são campos
 separados por princípio — sem dado verificável, `comprovado` fica `null`.
 
+### Modo de visualização (comps)
+
+Cada slot pode declarar um `preview`: uma imagem de banco (Adobe Stock)
+que só aparece quando `NEXT_PUBLIC_PREVIEW_IMAGES=1`. Serve para mostrar
+o site com fotografia antes de o material real existir.
+
+Em produção a variável fica desligada e os slots voltam ao placeholder
+editorial — nenhuma imagem de banco vai ao ar por acidente. Os comps são
+de baixa resolução e **não licenciados**: para usá-los de verdade é
+preciso licenciar na Adobe Stock, mas a intenção é substituí-los por
+fotografia real da Bluver e dos clientes.
+
 ### Slots de mídia
 
 `src/content/types.ts` → `Media`. Com `src: null`, o componente renderiza

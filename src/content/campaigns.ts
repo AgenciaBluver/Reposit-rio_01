@@ -39,6 +39,7 @@ export const campaigns: Campaign[] = [
         alt: "Site desenvolvido pela Bluver exibido em desktop e celular.",
         ratio: "3:2",
         slot: "LP SITES — Projeto real em tela (horizontal)",
+      preview: "https://t3.ftcdn.net/jpg/02/58/54/00/1000_F_258540015_SSAcBYnqx2ED0nz6bVcucFRcCYxl2Q1L.jpg",
       },
     },
     points: [

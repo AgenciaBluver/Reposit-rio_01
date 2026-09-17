@@ -1,5 +1,10 @@
 import Image from "next/image";
 import type { Media as MediaType } from "@/content/types";
+import { PreviewImage } from "./PreviewImage";
+
+/* Modo de visualização: liga os comps de banco de imagem declarados em
+   `Media.preview`. Desligado por padrão — ver src/content/types.ts. */
+const PREVIEW_IMAGES = process.env.NEXT_PUBLIC_PREVIEW_IMAGES === "1";
 
 const ratioClass: Record<string, string> = {
   "3:4": "aspect-[3/4]",
@@ -46,6 +51,21 @@ export function Media({
   ratioOverride?: string;
 }) {
   const ratio = ratioOverride ?? ratioClass[media.ratio ?? "3:2"] ?? ratioClass["3:2"];
+
+  // Comp de visualização: <img> simples, sem otimização do Next — a
+  // origem é externa e o arquivo é temporário por definição.
+  if (!media.src && PREVIEW_IMAGES && media.preview) {
+    return (
+      <figure className={`relative overflow-hidden ${ratio} ${className}`}>
+        <PreviewImage
+          src={media.preview}
+          alt={media.alt}
+          priority={priority}
+          cinematic={cinematic}
+        />
+      </figure>
+    );
+  }
 
   if (!media.src) {
     return (

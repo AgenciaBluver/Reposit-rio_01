@@ -19,6 +19,17 @@ export type Media = {
   kind?: "image" | "video";
   /** Poster obrigatório quando kind === "video". */
   poster?: string | null;
+  /** COMP DE VISUALIZAÇÃO — imagem de banco (Adobe Stock) usada apenas
+   *  para demonstrar como a seção fica com fotografia, antes de o
+   *  material real existir.
+   *
+   *  Só aparece quando NEXT_PUBLIC_PREVIEW_IMAGES=1. Em produção a
+   *  variável fica desligada e o slot volta ao placeholder editorial —
+   *  nenhuma imagem de banco vai ao ar por acidente.
+   *
+   *  ⚠ São comps de baixa resolução, não licenciados. Para publicar é
+   *  preciso licenciar na Adobe Stock ou substituir por foto real. */
+  preview?: string;
 };
 
 export type Cta = {

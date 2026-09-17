@@ -19,6 +19,7 @@ const heroMedia: MediaType = {
   alt: "Equipe da Bluver em produção: direção acompanhando a captação em ambiente de cliente.",
   ratio: "3:4",
   slot: "HOME/HERO — Imagem principal: bastidor real de direção/captação (vertical)",
+      preview: "https://t3.ftcdn.net/jpg/04/00/26/10/1000_F_400261057_x8kvCSM5oSZ3MMhL5hItFyfoaVRAbLHP.jpg",
 };
 
 export function HomeHero() {

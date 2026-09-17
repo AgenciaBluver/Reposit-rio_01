@@ -165,7 +165,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={pending}
-          className="ml-auto inline-flex items-center gap-3 bg-fg px-7 py-4 text-[0.9375rem] font-medium text-bg transition-opacity hover:opacity-85 disabled:opacity-50"
+          className="ml-auto inline-flex items-center gap-3 bg-action px-7 py-4 text-[0.9375rem] font-medium text-on-action transition-[filter] duration-200 hover:brightness-110 disabled:opacity-50"
         >
           {pending ? "Enviando…" : "Apresente seu desafio"}
         </button>

@@ -22,6 +22,8 @@
   --color-fg-muted: var(--bv-fg-muted, var(--bv-on-paper-muted));
   --color-line: var(--bv-line, var(--bv-paper-line));
   --color-accent: var(--bv-accent, var(--bv-signal));
+  --color-action: var(--bv-action, var(--bv-signal-press));
+  --color-on-action: var(--bv-on-action, var(--bv-paper-pure));
 
   --font-display: var(--bv-font-display);
   --font-text: var(--bv-font-text);
@@ -41,6 +43,7 @@
   --spacing-pad-lg: var(--bv-pad-lg);
 
   --color-signal-mid: var(--bv-signal-mid);
+  --color-signal-press: var(--bv-signal-press);
 
   --ease-bv: var(--bv-ease);
   --ease-bv-firm: var(--bv-ease-firm);
@@ -195,6 +198,32 @@
   }
   .bv-link:hover,
   .bv-link:focus-visible { background-size: 100% 1px; }
+
+  /* Progresso de leitura: a régua da marca virando indicador.
+     Existe para dar noção de extensão numa página longa, não por enfeite. */
+  .bv-progress {
+    position: fixed;
+    inset: 0 auto auto 0;
+    z-index: 60;
+    height: 2px;
+    width: 100%;
+    transform-origin: 0 50%;
+    transform: scaleX(var(--bv-progress, 0));
+    background: var(--bv-gradient);
+    pointer-events: none;
+  }
+
+  /* Véu azul que sobe sobre a fotografia no hover. */
+  .bv-veil::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--bv-signal-veil);
+    opacity: 0;
+    transition: opacity var(--bv-dur) var(--bv-ease);
+    pointer-events: none;
+  }
+  .group:hover .bv-veil::after { opacity: 1; }
 
   /* Pula para o conteúdo — acessibilidade por teclado. */
   .bv-skip {

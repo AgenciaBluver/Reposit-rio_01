@@ -25,7 +25,9 @@ export function Action({ href, children, event = "cta_click", payload, className
       <Arrow />
     </>
   );
-  const cls = `group inline-flex items-center gap-3 bg-fg px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.9rem,1.2vw,1.1rem)] text-[0.9375rem] font-medium tracking-[-0.01em] text-bg transition-opacity duration-200 hover:opacity-85 ${className}`;
+    // Azul da marca como cor de ação. Em superfície escura o token vira o
+  // ciano, que é o par legível ali — o componente não precisa saber.
+  const cls = `group inline-flex items-center gap-3 bg-action px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.9rem,1.2vw,1.1rem)] text-[0.9375rem] font-medium tracking-[-0.01em] text-on-action transition-[transform,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:brightness-110 ${className}`;
 
   const onClick = () =>
     track(event, { label: typeof children === "string" ? children : undefined, destination: href, ...payload });
@@ -52,7 +54,7 @@ export function ActionText({ href, children, event = "cta_click", payload, class
       onClick={() =>
         track(event, { label: typeof children === "string" ? children : undefined, destination: href, ...payload })
       }
-      className={`group inline-flex items-center gap-2.5 border-b border-fg/25 pb-1.5 text-[0.9375rem] font-medium tracking-[-0.01em] transition-colors duration-200 hover:border-fg ${className}`}
+      className={`group inline-flex items-center gap-2.5 border-b border-fg/25 pb-1.5 text-[0.9375rem] font-medium tracking-[-0.01em] transition-colors duration-200 hover:border-action hover:text-action ${className}`}
     >
       <span>{children}</span>
       <Arrow />

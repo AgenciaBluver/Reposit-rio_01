@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@/components/layout/Analytics";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { site } from "@/content/site";
 import { organizationSchema } from "@/lib/seo";
 import "@/styles/globals.css";
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Header, main e footer são definidos por cada grupo de rota:
             (site) tem navegação completa; /lp tem chrome reduzido. */}
         {children}
+        <ScrollProgress />
         <Analytics />
       </body>
     </html>

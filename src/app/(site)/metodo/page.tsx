@@ -49,6 +49,7 @@ export default function MethodPage() {
           alt: "Mesa de trabalho da Bluver com roteiro, referências impressas e anotações de direção.",
           ratio: "3:4",
           slot: "MÉTODO/HERO — Mesa de pré-produção real (vertical)",
+      preview: "https://t3.ftcdn.net/jpg/05/01/67/28/1000_F_501672880_moCm9LrdfE7BppTdjYybYOncrCYVrAWO.jpg",
         }}
         cta={{ label: ctas.positioning.label, href: ctas.positioning.href }}
       />

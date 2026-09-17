@@ -51,6 +51,7 @@ export default function ProjectsPage() {
           alt: "Seleção de materiais produzidos pela Bluver para clientes.",
           ratio: "3:4",
           slot: "PROJETOS/HERO — Composição de materiais entregues (vertical)",
+      preview: "https://t3.ftcdn.net/jpg/04/81/85/88/1000_F_481858837_URWKagvAasR8JEs8SF0njjDNMkabn89d.jpg",
         }}
         cta={{ label: ctas.challenge.label, href: ctas.challenge.href }}
       />

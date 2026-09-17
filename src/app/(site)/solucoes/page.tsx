@@ -38,6 +38,7 @@ export default function SolutionsPage() {
           alt: "Equipe da Bluver em reunião de direção, com material de projeto sobre a mesa.",
           ratio: "3:4",
           slot: "SOLUÇÕES/HERO — Reunião de direção (vertical)",
+      preview: "https://t3.ftcdn.net/jpg/03/21/22/68/1000_F_321226892_3xkCyGRF8Q3JjoW4OTBqSypJ2sV5ND9G.jpg",
         }}
         cta={{ label: ctas.challenge.label, href: ctas.challenge.href }}
       />

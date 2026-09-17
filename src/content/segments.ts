@@ -22,6 +22,7 @@ export const segments: Segment[] = [
         alt: "Interior de indústria em operação: máquina de precisão em funcionamento, registrada em luz natural.",
         ratio: "3:2",
         slot: "INDÚSTRIAS/HERO — Chão de fábrica real de cliente (horizontal)",
+      preview: "https://t4.ftcdn.net/jpg/07/50/64/49/1000_F_750644919_ihpW16nbJEwk1k3SlM0WmySk342ZRYLt.jpg",
       },
     },
     thesis:
@@ -118,6 +119,7 @@ export const segments: Segment[] = [
         alt: "Ambiente de escritório de advocacia: mesa de reunião, luz natural e profissionais em conversa.",
         ratio: "3:2",
         slot: "ADVOCACIA/HERO — Escritório real de cliente (horizontal, sóbrio)",
+      preview: "https://t4.ftcdn.net/jpg/06/80/33/35/1000_F_680333537_6Q79rAwUAj9bhEbLIJvkfkDA0V4vbTxX.jpg",
       },
     },
     thesis:
@@ -211,6 +213,7 @@ export const segments: Segment[] = [
         alt: "Obra de empreendimento em estágio avançado, registrada em luz de fim de tarde.",
         ratio: "3:2",
         slot: "IMOBILIÁRIO/HERO — Empreendimento real (horizontal, hora dourada)",
+      preview: "https://t4.ftcdn.net/jpg/18/87/59/13/1000_F_1887591377_menbbHhJmDzmo5TIfjs3UMuqcHSwLnMb.jpg",
       },
     },
     thesis:

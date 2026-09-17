@@ -59,6 +59,7 @@ export default function AboutPage() {
           alt: "Equipe da Bluver trabalhando no escritório em Joinville.",
           ratio: "3:4",
           slot: "SOBRE/HERO — Equipe/escritório real da Bluver (vertical)",
+      preview: "https://t3.ftcdn.net/jpg/02/80/84/60/1000_F_280846031_1dCzkNKW1pjIFaB8RFlJiqpbDQSgb2HS.jpg",
         }}
         cta={{ label: ctas.talk.label, href: ctas.talk.href }}
       />

@@ -27,6 +27,7 @@ export const products: Product[] = [
         alt: "Equipe da Bluver em dia de captação, com câmera, iluminação e direção acompanhando a cena.",
         ratio: "3:2",
         slot: "PRODUÇÃO/HERO — Dia de captação da Bluver (horizontal, cinematográfico)",
+      preview: "https://t4.ftcdn.net/jpg/05/20/10/61/1000_F_520106169_SSx8xtkI4ogGfv4GTGM8o6FSpBL8RyxI.jpg",
       },
     },
     problem: {
@@ -163,6 +164,7 @@ export const products: Product[] = [
         alt: "Cobertura de evento corporativo pela Bluver: câmera em movimento registrando o público durante uma palestra.",
         ratio: "3:2",
         slot: "EVENTOS/HERO — Cobertura real em evento (horizontal)",
+      preview: "https://t3.ftcdn.net/jpg/02/45/54/34/1000_F_245543401_IipVKLuG4QfowFWu1vOXPiwztke9wPI4.jpg",
       },
     },
     problem: {
@@ -284,6 +286,7 @@ export const products: Product[] = [
         alt: "Tela de operação de campanhas com estrutura de conta e painel de desempenho.",
         ratio: "3:2",
         slot: "MÍDIA/HERO — Operação real de mídia (tela, ambiente de trabalho)",
+      preview: "https://t3.ftcdn.net/jpg/05/65/96/68/1000_F_565966895_ETolnr58K21AlFsM2oG35qWByjQWDwqY.jpg",
       },
     },
     problem: {
@@ -406,6 +409,7 @@ export const products: Product[] = [
         alt: "Site desenvolvido pela Bluver exibido em desktop e celular sobre mesa de trabalho.",
         ratio: "3:2",
         slot: "SITES/HERO — Projeto real em tela (desktop + mobile)",
+      preview: "https://t4.ftcdn.net/jpg/05/72/28/77/1000_F_572287741_mN9PEgwgt1dPgj1GvwB47raIqKW995Hr.jpg",
       },
     },
     problem: {

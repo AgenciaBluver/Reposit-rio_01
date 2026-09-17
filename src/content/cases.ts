@@ -40,11 +40,12 @@ export const cases: CaseStudy[] = [
       alt: "Cobertura da Expo Inovação Joinville realizada pela Bluver.",
       ratio: "3:2",
       slot: "CASE — Expo Inovação Joinville: imagem de capa",
+      preview: "https://t3.ftcdn.net/jpg/02/38/88/60/1000_F_238886031_hFQ6F1YN2stEBttavKsW60zFrT5arEsO.jpg",
     },
     gallery: [
-      { src: null, alt: "Registro do público durante a Expo Inovação Joinville.", ratio: "3:2", slot: "CASE Expo — 01 público" },
-      { src: null, alt: "Entrevista captada durante a Expo Inovação Joinville.", ratio: "3:4", slot: "CASE Expo — 02 entrevista" },
-      { src: null, alt: "Bastidor da equipe da Bluver na cobertura da Expo Inovação.", ratio: "3:2", slot: "CASE Expo — 03 bastidor" },
+      { src: null, alt: "Registro do público durante a Expo Inovação Joinville.", ratio: "3:2", slot: "CASE Expo — 01 público", preview: "https://t3.ftcdn.net/jpg/02/45/54/34/1000_F_245543401_IipVKLuG4QfowFWu1vOXPiwztke9wPI4.jpg" },
+      { src: null, alt: "Entrevista captada durante a Expo Inovação Joinville.", ratio: "3:4", slot: "CASE Expo — 02 entrevista", preview: "https://t3.ftcdn.net/jpg/03/21/22/68/1000_F_321226892_3xkCyGRF8Q3JjoW4OTBqSypJ2sV5ND9G.jpg" },
+      { src: null, alt: "Bastidor da equipe da Bluver na cobertura da Expo Inovação.", ratio: "3:2", slot: "CASE Expo — 03 bastidor", preview: "https://t3.ftcdn.net/jpg/04/00/26/10/1000_F_400261057_x8kvCSM5oSZ3MMhL5hItFyfoaVRAbLHP.jpg" },
     ],
   },
   {
@@ -69,11 +70,12 @@ export const cases: CaseStudy[] = [
       alt: "Máquina de eletroerosão a fio em operação, registrada em detalhe.",
       ratio: "3:2",
       slot: "CASE — Eletroerosão: imagem de capa (detalhe de máquina)",
+      preview: "https://t4.ftcdn.net/jpg/04/80/10/27/1000_F_480102788_98monqK7hJqg0P5mXuz09O3Ndf0XeeFU.jpg",
     },
     gallery: [
-      { src: null, alt: "Detalhe de peça usinada por eletroerosão a fio.", ratio: "1:1", slot: "CASE Eletroerosão — 01 detalhe de peça" },
-      { src: null, alt: "Operador acompanhando o processo de usinagem.", ratio: "3:4", slot: "CASE Eletroerosão — 02 operador" },
-      { src: null, alt: "Vista geral do parque de máquinas.", ratio: "3:2", slot: "CASE Eletroerosão — 03 parque de máquinas" },
+      { src: null, alt: "Detalhe de peça usinada por eletroerosão a fio.", ratio: "1:1", slot: "CASE Eletroerosão — 01 detalhe de peça", preview: "https://t4.ftcdn.net/jpg/06/73/22/29/1000_F_673222900_VfN8IE6DFYQBoeRcK5iwVy0XKFXVpvBB.jpg" },
+      { src: null, alt: "Operador acompanhando o processo de usinagem.", ratio: "3:4", slot: "CASE Eletroerosão — 02 operador", preview: "https://t4.ftcdn.net/jpg/07/50/64/49/1000_F_750644919_ihpW16nbJEwk1k3SlM0WmySk342ZRYLt.jpg" },
+      { src: null, alt: "Vista geral do parque de máquinas.", ratio: "3:2", slot: "CASE Eletroerosão — 03 parque de máquinas", preview: "https://t4.ftcdn.net/jpg/04/80/10/27/1000_F_480102788_98monqK7hJqg0P5mXuz09O3Ndf0XeeFU.jpg" },
     ],
   },
 ];
