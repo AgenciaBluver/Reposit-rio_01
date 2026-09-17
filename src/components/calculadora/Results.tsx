@@ -2,6 +2,8 @@
 
 import { useId, type ReactNode } from "react";
 import {
+  FIXED_FEE_BANDS,
+  LISTING_TYPES,
   brl,
   pct,
   marginVerdict,
@@ -305,9 +307,80 @@ export function Breakdown({
   ].filter((r) => r.value > 0.0001);
 
   const monthly = monthlyUnits * result.profit;
+  const loss = result.profit < 0;
+
+  const threshold = inputs.fixedFeeThreshold;
+  const isFree = inputs.listingType === "gratuito";
+  const sellerPaysShipping =
+    inputs.shippingRule === "vendedor" ||
+    (inputs.shippingRule === "auto" && !isFree && result.price >= threshold);
+  const band =
+    result.price < FIXED_FEE_BANDS[0]
+      ? `abaixo de ${brl(FIXED_FEE_BANDS[0])}`
+      : result.price < FIXED_FEE_BANDS[1]
+        ? `de ${brl(FIXED_FEE_BANDS[0])} a ${brl(FIXED_FEE_BANDS[1])}`
+        : `de ${brl(FIXED_FEE_BANDS[1])} a ${brl(threshold)}`;
+
+  // Cada dedução ganha uma linha e o motivo de estar ali — inclusive quando
+  // é zero: saber por que uma taxa NÃO está sendo cobrada vale tanto quanto
+  // saber o valor das outras. O custo fixo é o caso clássico: some acima do
+  // limite e, abaixo dele, morde uma fatia que nenhum percentual denuncia.
+  const saleRows: { label: string; value: number; note: string }[] = [
+    {
+      label: "Custo de produção",
+      value: p.total,
+      note: "Filamento, energia, máquina, falhas, trabalho e embalagem",
+    },
+    {
+      label: "Comissão do anúncio",
+      value: result.commission,
+      note: isFree
+        ? "Anúncio grátis não paga comissão"
+        : `${LISTING_TYPES[inputs.listingType].label} · ${pct(inputs.commissionPct, 0)} sobre o preço`,
+    },
+    {
+      label: "Custo fixo por unidade",
+      value: result.fixedFee,
+      note: isFree
+        ? "Anúncio grátis não tem custo fixo"
+        : result.price >= threshold
+          ? `Não incide: preço a partir de ${brl(threshold)}`
+          : `Valor fixo por venda na faixa ${band} — não é percentual, e por isso pesa tanto em peça barata`,
+    },
+    {
+      label: "Frete pago pelo vendedor",
+      value: result.shipping,
+      note: sellerPaysShipping
+        ? `${brl(inputs.shippingCost)} de tabela menos ${pct(inputs.shippingDiscountPct, 0)} de desconto de reputação`
+        : inputs.shippingRule === "comprador"
+          ? "Comprador paga o frete"
+          : `Comprador paga: preço abaixo de ${brl(threshold)}`,
+    },
+    {
+      label: "Logística por unidade",
+      value: result.logistics,
+      note: "Armazenagem no Full, coleta e deslocamento até a agência",
+    },
+    {
+      label: "Imposto",
+      value: result.tax,
+      note: `${pct(inputs.taxPct, 0)} sobre o preço de venda`,
+    },
+    {
+      label: "Publicidade",
+      value: result.ads,
+      note: `${pct(inputs.adsPct, 0)} do preço aplicados em mídia`,
+    },
+    {
+      label: "Outros custos",
+      value: result.other,
+      note: `${pct(inputs.otherPct, 0)} do preço`,
+    },
+  ];
 
   return (
     <div className="grid gap-gutter lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="flex flex-col gap-gutter">
       <div className="border border-fg/12 bg-fg/[0.03] p-5 sm:p-6">
         <h2 className="bv-display text-[1.0625rem] font-medium">Custo de produção, linha a linha</h2>
         <table className="mt-4 w-full text-[0.875rem]">
@@ -344,6 +417,66 @@ export function Breakdown({
           Custo por grama impresso: {brl(inputs.partWeightG > 0 ? p.total / inputs.partWeightG : 0)}.
           Custo por hora de impressão: {brl(inputs.printHours > 0 ? p.total / inputs.printHours : 0)}.
         </p>
+      </div>
+
+      <div className="border border-fg/12 bg-fg/[0.03] p-5 sm:p-6">
+        <h2 className="bv-display text-[1.0625rem] font-medium">Do preço ao lucro, linha a linha</h2>
+        <p className="mt-2 max-w-[62ch] text-[0.8125rem] leading-relaxed text-fg-muted">
+          Tudo que sai do preço antes de sobrar alguma coisa. As linhas zeradas continuam à vista
+          de propósito: saber por que uma taxa não está sendo cobrada vale tanto quanto saber o
+          valor das outras.
+        </p>
+        <table className="mt-4 w-full text-[0.875rem]">
+          <caption className="sr-only">Do preço de venda ao lucro por unidade</caption>
+          <tbody>
+            <tr className="border-b border-fg/25">
+              <th scope="row" className="py-2.5 pr-3 text-left font-medium">
+                Preço de venda
+              </th>
+              <td className="py-2.5 text-right font-medium tabular-nums">{brl(result.price)}</td>
+              <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted">100%</td>
+            </tr>
+            {saleRows.map((r) => (
+              <tr
+                key={r.label}
+                className={`border-b border-fg/10 ${r.value <= 0.0001 ? "opacity-55" : ""}`}
+              >
+                <th scope="row" className="py-2.5 pr-3 text-left font-normal align-top">
+                  {r.label}
+                  <span className="mt-0.5 block max-w-[46ch] text-[0.75rem] leading-snug text-fg-muted">
+                    {r.note}
+                  </span>
+                </th>
+                <td className="py-2.5 text-right tabular-nums align-top whitespace-nowrap">
+                  {r.value > 0.0001 ? `− ${brl(r.value)}` : brl(0)}
+                </td>
+                <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted align-top">
+                  {result.price > 0 ? pct((r.value / result.price) * 100, 0) : "—"}
+                </td>
+              </tr>
+            ))}
+            <tr className="border-t border-fg/25">
+              <th scope="row" className="py-3 text-left font-medium">
+                {loss ? "Prejuízo por unidade" : "Lucro por unidade"}
+              </th>
+              <td
+                className={`py-3 text-right font-medium tabular-nums ${
+                  loss ? "text-data-loss" : "text-data-profit"
+                }`}
+              >
+                {brl(result.profit)}
+              </td>
+              <td
+                className={`py-3 text-right tabular-nums ${
+                  loss ? "text-data-loss" : "text-data-profit"
+                }`}
+              >
+                {pct(result.marginPct, 0)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       </div>
 
       <div className="border border-fg/12 bg-fg/[0.03] p-5 sm:p-6">
