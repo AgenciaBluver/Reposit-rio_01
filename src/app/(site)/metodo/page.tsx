@@ -9,7 +9,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 import { ctas } from "@/content/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Método Bluver — diagnóstico, direção, construção, distribuição e evolução",
+  title: "Método Bluver, diagnóstico, direção, construção, distribuição e evolução",
   description:
     "O Sistema Bluver de Autoridade em cinco etapas: diagnóstico, direção, construção, distribuição e evolução. Pensamento antes da execução.",
   path: "/metodo",
@@ -43,12 +43,12 @@ export default function MethodPage() {
       <PageHero
         eyebrow="Método Bluver"
         headline={["Pensamos como", "estrategistas.", "Materializamos", "como criativos."]}
-        sub="O diferencial não é ter câmera e gerir tráfego. É integrar pensamento, materialização e distribuição dentro da mesma direção — e conseguir sustentar isso ao longo do tempo."
+        sub="O diferencial não é ter câmera e gerir tráfego. É integrar pensamento, materialização e distribuição dentro da mesma direção, e conseguir sustentar isso ao longo do tempo."
         media={{
           src: null,
           alt: "Mesa de trabalho da Bluver com roteiro, referências impressas e anotações de direção.",
           ratio: "3:4",
-          slot: "MÉTODO/HERO — Mesa de pré-produção real (vertical)",
+          slot: "MÉTODO/HERO, Mesa de pré-produção real (vertical)",
       preview: "https://t3.ftcdn.net/jpg/05/01/67/28/1000_F_501672880_moCm9LrdfE7BppTdjYybYOncrCYVrAWO.jpg",
         }}
         cta={{ label: ctas.positioning.label, href: ctas.positioning.href }}
@@ -87,7 +87,7 @@ export default function MethodPage() {
 
       <CtaBand
         title="Todo trabalho começa pelo diagnóstico."
-        body="Entender o negócio, o mercado, a oferta e a percepção atual — antes de propor qualquer produção."
+        body="Entender o negócio, o mercado, a oferta e a percepção atual, antes de propor qualquer produção."
         cta={{ label: ctas.challenge.label, href: ctas.challenge.href }}
         location="method_page"
       />

@@ -26,7 +26,7 @@ export async function generateMetadata({
   const item = getCase(slug);
   if (!item) return {};
   return buildMetadata({
-    title: `${item.client} — ${item.sector}`,
+    title: `${item.client}, ${item.sector}`,
     description: item.headline,
     path: `/projetos/${item.slug}`,
     // Case ainda sem conteúdo não deve entrar no índice do Google.
@@ -170,7 +170,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                 <Eyebrow as="h2">Resultado comprovado</Eyebrow>
                 <p className="mt-5 text-lead leading-relaxed text-fg-muted">
                   {item.narrative.impacto.comprovado ??
-                    "Ainda não há dado financeiro verificável para este projeto. Quando houver, ele aparece aqui — com a fonte."}
+                    "Ainda não há dado financeiro verificável para este projeto. Quando houver, ele aparece aqui, com a fonte."}
                 </p>
               </div>
             </div>

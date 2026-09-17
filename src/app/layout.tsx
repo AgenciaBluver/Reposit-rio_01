@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@/components/layout/Analytics";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { Cursor } from "@/components/layout/Cursor";
 import { site } from "@/content/site";
 import { organizationSchema } from "@/lib/seo";
 import "@/styles/globals.css";
@@ -8,9 +9,9 @@ import "@/styles/globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.signature}`,
+    default: `${site.name}, ${site.signature}`,
     // Toda página interna herda este sufixo; nenhuma repete o nome da marca.
-    template: `%s — ${site.name}`,
+    template: `%s, ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             (site) tem navegação completa; /lp tem chrome reduzido. */}
         {children}
         <ScrollProgress />
+        <Cursor />
         <Analytics />
       </body>
     </html>

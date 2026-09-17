@@ -1,5 +1,6 @@
 import { products } from "./products";
 import { segments } from "./segments";
+import { landings } from "./landings";
 
 /** Navegação derivada do conteúdo — adicionar produto/segmento já
  *  aparece no menu, no rodapé e no sitemap. Nada é digitado duas vezes. */
@@ -24,6 +25,10 @@ export const nav = {
       index: "",
     })),
   },
+  /** Landing pages de conversão. Vivem fora da navegação principal para
+   *  não competir com as páginas de segmento no orgânico, mas aparecem no
+   *  rodapé e no seletor da home. */
+  landings: landings.map((l) => ({ label: l.label, href: `/lp/${l.slug}` })),
   simple: [
     { label: "Projetos", href: "/projetos" },
     { label: "Método", href: "/metodo" },

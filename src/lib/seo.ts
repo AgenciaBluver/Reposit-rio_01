@@ -33,7 +33,7 @@ export function buildMetadata({
       siteName: site.name,
       title,
       description,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: `${title} — ${site.name}` }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `${title}, ${site.name}` }],
     },
     twitter: {
       card: "summary_large_image",

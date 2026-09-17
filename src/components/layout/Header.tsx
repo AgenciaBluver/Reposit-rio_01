@@ -65,7 +65,7 @@ export function Header() {
       <div className="bv-shell flex h-[4.5rem] items-center justify-between gap-6 lg:h-[5.25rem]">
         <Link
           href="/"
-          aria-label="Bluver — página inicial"
+          aria-label="Bluver, página inicial"
           className="relative z-10 -ml-0.5 py-2"
         >
           <Logo />

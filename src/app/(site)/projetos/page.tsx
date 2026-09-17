@@ -8,7 +8,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 import { ctas } from "@/content/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Projetos — cases com contexto, direção e impacto",
+  title: "Projetos, cases com contexto, direção e impacto",
   description:
     "Projetos da Bluver apresentados pelo raciocínio: contexto, problema de percepção, diagnóstico, direção, criação, distribuição e impacto.",
   path: "/projetos",
@@ -24,7 +24,7 @@ const framework = [
   { step: "Direção", body: "A posição escolhida e o que foi recusado." },
   { step: "Criação", body: "Os ativos produzidos para materializar a posição." },
   { step: "Distribuição", body: "Como o material entrou em circulação." },
-  { step: "Impacto", body: "O que foi alcançado — separando objetivo de evidência." },
+  { step: "Impacto", body: "O que foi alcançado, separando objetivo de evidência." },
 ];
 
 export default function ProjectsPage() {
@@ -45,12 +45,12 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="Projetos"
         headline={["Portfólio mostra", "o que ficou pronto.", "Case mostra", "por que ficou assim."]}
-        sub="Cada projeto é apresentado pelo raciocínio que o originou. Quando não existe dado financeiro comprovado, dizemos isso — e mostramos a evolução de posicionamento, linguagem e estrutura."
+        sub="Cada projeto é apresentado pelo raciocínio que o originou. Quando não existe dado financeiro comprovado, dizemos isso, e mostramos a evolução de posicionamento, linguagem e estrutura."
         media={{
           src: null,
           alt: "Seleção de materiais produzidos pela Bluver para clientes.",
           ratio: "3:4",
-          slot: "PROJETOS/HERO — Composição de materiais entregues (vertical)",
+          slot: "PROJETOS/HERO, Composição de materiais entregues (vertical)",
       preview: "https://t3.ftcdn.net/jpg/04/81/85/88/1000_F_481858837_URWKagvAasR8JEs8SF0njjDNMkabn89d.jpg",
         }}
         cta={{ label: ctas.challenge.label, href: ctas.challenge.href }}

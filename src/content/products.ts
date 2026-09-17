@@ -14,26 +14,26 @@ export const products: Product[] = [
     index: "01",
     name: "Produção de conteúdo",
     positioning:
-      "Recorrência de construção de autoridade — não volume de publicação.",
+      "Recorrência de construção de autoridade, não volume de publicação.",
     thesis: "Não é sobre postar mais. É sobre ser reconhecido.",
     thesisBody:
-      "Uma empresa não se torna referência porque publicou muito. Torna-se referência porque, toda vez que aparece, aparece do mesmo jeito, dizendo coisas que só ela poderia dizer. Consistência é o que transforma presença em memória — e memória é o que faz o mercado lembrar de você no momento da decisão.",
+      "Uma empresa não se torna referência porque publicou muito. Torna-se referência porque, toda vez que aparece, aparece do mesmo jeito, dizendo coisas que só ela poderia dizer. Consistência é o que transforma presença em memória, e memória é o que faz o mercado lembrar de você no momento da decisão.",
     hero: {
       eyebrow: "Solução 01",
       headline: ["Presença coerente", "o suficiente", "para ser reconhecida."],
-      sub: "Produção recorrente com direção: estratégia, roteiro, captação e distribuição operando como um sistema só — para que a autoridade da empresa se acumule em vez de recomeçar todo mês.",
+      sub: "Produção recorrente com direção: estratégia, roteiro, captação e distribuição operando como um sistema só, para que a autoridade da empresa se acumule em vez de recomeçar todo mês.",
       media: {
         src: null,
         alt: "Equipe da Bluver em dia de captação, com câmera, iluminação e direção acompanhando a cena.",
         ratio: "3:2",
-        slot: "PRODUÇÃO/HERO — Dia de captação da Bluver (horizontal, cinematográfico)",
+        slot: "PRODUÇÃO/HERO, Dia de captação da Bluver (horizontal, cinematográfico)",
       preview: "https://t4.ftcdn.net/jpg/05/20/10/61/1000_F_520106169_SSx8xtkI4ogGfv4GTGM8o6FSpBL8RyxI.jpg",
       },
     },
     problem: {
       headline: "O problema raramente é falta de conteúdo.",
       body: [
-        "Muitas empresas já publicam. Publicam com frequência, inclusive. O que falta não é quantidade — é direção.",
+        "Muitas empresas já publicam. Publicam com frequência, inclusive. O que falta não é quantidade, é direção.",
         "Quando cada peça é decidida na semana em que vai ao ar, o resultado é um arquivo de publicações que não constrói nada. O mercado vê movimento, mas não forma opinião. E movimento sem opinião não vira preferência.",
         "A diferença entre uma empresa que publica e uma empresa que é referência não está no calendário. Está na decisão que veio antes dele.",
       ],
@@ -49,11 +49,11 @@ export const products: Product[] = [
       },
       {
         title: "Direção e captação",
-        body: "Direção de cena, fotografia, vídeo e som. Conduzimos quem está na frente da câmera — porque a maior parte dos nossos clientes não é atriz, é especialista.",
+        body: "Direção de cena, fotografia, vídeo e som. Conduzimos quem está na frente da câmera, porque a maior parte dos nossos clientes não é atriz, é especialista.",
       },
       {
         title: "Pós-produção",
-        body: "Edição, tratamento de cor, design e versionamento por canal. Um material captado, vários formatos — sem que nenhum pareça sobra do outro.",
+        body: "Edição, tratamento de cor, design e versionamento por canal. Um material captado, vários formatos, sem que nenhum pareça sobra do outro.",
       },
       {
         title: "Fotografia",
@@ -95,7 +95,7 @@ export const products: Product[] = [
           "Edição, cor e som",
           "Design e tipografia aplicados ao padrão da marca",
           "Versões horizontais, verticais e estáticas",
-          "Legendas — acessibilidade e consumo sem áudio",
+          "Legendas, acessibilidade e consumo sem áudio",
         ],
       },
       {
@@ -122,11 +122,11 @@ export const products: Product[] = [
       },
       {
         q: "Quantas peças estão incluídas?",
-        a: "O volume é definido no diagnóstico, a partir dos canais que a empresa realmente sustenta e do ciclo de decisão do seu cliente. Não vendemos pacote fechado de quantidade — vendemos a consistência necessária para a posição que a empresa quer ocupar.",
+        a: "O volume é definido no diagnóstico, a partir dos canais que a empresa realmente sustenta e do ciclo de decisão do seu cliente. Não vendemos pacote fechado de quantidade, vendemos a consistência necessária para a posição que a empresa quer ocupar.",
       },
       {
         q: "Precisamos aparecer em vídeo?",
-        a: "Na maioria dos casos, sim — autoridade em serviço e indústria costuma passar por pessoas. Mas conduzimos a direção para que isso funcione mesmo com quem nunca gravou. Também existem formatos que constroem autoridade sem exposição pessoal.",
+        a: "Na maioria dos casos, sim, autoridade em serviço e indústria costuma passar por pessoas. Mas conduzimos a direção para que isso funcione mesmo com quem nunca gravou. Também existem formatos que constroem autoridade sem exposição pessoal.",
       },
       {
         q: "Com que frequência vocês vão até a empresa?",
@@ -151,26 +151,26 @@ export const products: Product[] = [
     index: "02",
     name: "Cobertura de eventos",
     positioning:
-      "Eventos transformados em ativos de marca — não em um álbum de fotos.",
+      "Eventos transformados em ativos de marca, não em um álbum de fotos.",
     thesis: "Um evento dura horas. O conteúdo pode trabalhar por meses.",
     thesisBody:
       "A maior parte do investimento em um evento é convertida em experiência para quem estava lá. É muito dinheiro para uma audiência que já é sua. O que decide o retorno é o que sobra depois: o material que continua circulando, abrindo conversa e provando posição para quem não pôde ir.",
     hero: {
       eyebrow: "Solução 02",
       headline: ["Se o evento acaba,", "o conteúdo não", "precisa acabar."],
-      sub: "Transformamos eventos em ativos de conteúdo, relacionamento e percepção de marca — planejados antes, capturados durante e desdobrados depois.",
+      sub: "Transformamos eventos em ativos de conteúdo, relacionamento e percepção de marca, planejados antes, capturados durante e desdobrados depois.",
       media: {
         src: null,
         alt: "Cobertura de evento corporativo pela Bluver: câmera em movimento registrando o público durante uma palestra.",
         ratio: "3:2",
-        slot: "EVENTOS/HERO — Cobertura real em evento (horizontal)",
+        slot: "EVENTOS/HERO, Cobertura real em evento (horizontal)",
       preview: "https://t3.ftcdn.net/jpg/02/45/54/34/1000_F_245543401_IipVKLuG4QfowFWu1vOXPiwztke9wPI4.jpg",
       },
     },
     problem: {
       headline: "O evento acabou. E agora?",
       body: [
-        "Meses de planejamento, investimento significativo, uma operação inteira mobilizada — e, no dia seguinte, o que resta é uma pasta de fotos que ninguém abre.",
+        "Meses de planejamento, investimento significativo, uma operação inteira mobilizada, e, no dia seguinte, o que resta é uma pasta de fotos que ninguém abre.",
         "O problema não é a cobertura. É que a cobertura foi contratada como registro, e não como produção. Registrar é documentar o que aconteceu. Produzir é decidir, antes, o que aquele evento precisa provar sobre a empresa.",
         "Quando essa decisão é tomada antes, o mesmo evento gera material para os meses seguintes: prova para o comercial, presença para o digital e acervo para a marca.",
       ],
@@ -186,7 +186,7 @@ export const products: Product[] = [
       },
       {
         title: "Entrevistas e depoimentos",
-        body: "Captação conduzida com convidados, lideranças e clientes — a matéria-prima mais valiosa de um evento e a que mais se perde quando não é planejada.",
+        body: "Captação conduzida com convidados, lideranças e clientes, a matéria-prima mais valiosa de um evento e a que mais se perde quando não é planejada.",
       },
       {
         title: "Conteúdo de ritmo rápido",
@@ -194,7 +194,7 @@ export const products: Product[] = [
       },
       {
         title: "Filme institucional",
-        body: "Peça de fôlego, montada depois, que traduz o evento em posicionamento — a que continua sendo usada em apresentações e no comercial.",
+        body: "Peça de fôlego, montada depois, que traduz o evento em posicionamento, a que continua sendo usada em apresentações e no comercial.",
       },
       {
         title: "Banco de imagens e desdobramento",
@@ -204,7 +204,7 @@ export const products: Product[] = [
     process: [
       {
         index: "01",
-        title: "Antes — planejamento",
+        title: "Antes, planejamento",
         body: "A cobertura é desenhada antes do evento existir. Sem isso, a equipe passa o dia reagindo ao que acontece em vez de construir o que foi decidido.",
         detail: [
           "Objetivo do evento e o que ele precisa provar",
@@ -215,7 +215,7 @@ export const products: Product[] = [
       },
       {
         index: "02",
-        title: "Durante — captação",
+        title: "Durante, captação",
         body: "Equipe posicionada para cobrir simultaneamente o palco, os bastidores, as conversas e os detalhes que constroem atmosfera.",
         detail: [
           "Palco, público, bastidores e ambientação",
@@ -226,7 +226,7 @@ export const products: Product[] = [
       },
       {
         index: "03",
-        title: "Depois — desdobramento",
+        title: "Depois, desdobramento",
         body: "É aqui que o investimento do evento se paga. O acervo vira uma sequência de conteúdos com vida própria.",
         detail: [
           "Filme institucional do evento",
@@ -244,7 +244,7 @@ export const products: Product[] = [
     faq: [
       {
         q: "Com quanta antecedência vocês precisam ser acionados?",
-        a: "Quanto antes, melhor — o valor desta solução está no planejamento anterior ao evento. Coberturas contratadas em cima da hora são possíveis, mas entregam registro, não desdobramento.",
+        a: "Quanto antes, melhor, o valor desta solução está no planejamento anterior ao evento. Coberturas contratadas em cima da hora são possíveis, mas entregam registro, não desdobramento.",
       },
       {
         q: "Vocês entregam material durante o evento?",
@@ -261,7 +261,7 @@ export const products: Product[] = [
     ],
     offer: null,
     seo: {
-      title: "Cobertura de eventos corporativos — vídeo e fotografia",
+      title: "Cobertura de eventos corporativos, vídeo e fotografia",
       description:
         "Cobertura de eventos planejada como ativo de marca: filme institucional, entrevistas, conteúdo vertical e banco de imagens. Base em Joinville, atuação nacional.",
     },
@@ -273,19 +273,19 @@ export const products: Product[] = [
     index: "03",
     name: "Mídia paga",
     positioning:
-      "Distribuição conectada a posicionamento, criativo e página — não gestão de tráfego isolada.",
+      "Distribuição conectada a posicionamento, criativo e página, não gestão de tráfego isolada.",
     thesis: "Uma mensagem fraca não melhora quando é amplificada.",
     thesisBody:
-      "Mídia é multiplicador. Multiplica o que já existe — inclusive a falta de clareza. Quando o posicionamento não está resolvido, o criativo não sustenta a promessa ou a página não conclui a conversa, aumentar o investimento apenas faz o problema custar mais caro. Por isso mídia, na Bluver, não é uma operação separada.",
+      "Mídia é multiplicador. Multiplica o que já existe, inclusive a falta de clareza. Quando o posicionamento não está resolvido, o criativo não sustenta a promessa ou a página não conclui a conversa, aumentar o investimento apenas faz o problema custar mais caro. Por isso mídia, na Bluver, não é uma operação separada.",
     hero: {
       eyebrow: "Solução 03",
       headline: ["Mídia amplifica.", "Mas primeiro é preciso", "ter algo certo", "para amplificar."],
-      sub: "Meta Ads e Google Ads operados junto com posicionamento, criativo e página — porque o resultado de uma campanha é decidido muito antes do leilão.",
+      sub: "Meta Ads e Google Ads operados junto com posicionamento, criativo e página, porque o resultado de uma campanha é decidido muito antes do leilão.",
       media: {
         src: null,
         alt: "Tela de operação de campanhas com estrutura de conta e painel de desempenho.",
         ratio: "3:2",
-        slot: "MÍDIA/HERO — Operação real de mídia (tela, ambiente de trabalho)",
+        slot: "MÍDIA/HERO, Operação real de mídia (tela, ambiente de trabalho)",
       preview: "https://t3.ftcdn.net/jpg/05/65/96/68/1000_F_565966895_ETolnr58K21AlFsM2oG35qWByjQWDwqY.jpg",
       },
     },
@@ -293,7 +293,7 @@ export const products: Product[] = [
       headline: "Quase sempre, o problema não está na campanha.",
       body: [
         "Quando o custo por lead sobe, a reação habitual é mexer na campanha: trocar a segmentação, testar outro público, aumentar o orçamento.",
-        "Mas a campanha é apenas a última etapa de uma cadeia. Se a mensagem não diferencia, se o criativo não sustenta a promessa, se a página não responde à objeção real — nenhum ajuste de leilão corrige isso.",
+        "Mas a campanha é apenas a última etapa de uma cadeia. Se a mensagem não diferencia, se o criativo não sustenta a promessa, se a página não responde à objeção real, nenhum ajuste de leilão corrige isso.",
         "Amplificar antes de resolver é a forma mais cara de descobrir que havia um problema anterior.",
       ],
     },
@@ -304,7 +304,7 @@ export const products: Product[] = [
       },
       {
         title: "Google Ads",
-        body: "Pesquisa, Performance Max, YouTube e Display conforme a intenção existente no mercado — não conforme o que está na moda.",
+        body: "Pesquisa, Performance Max, YouTube e Display conforme a intenção existente no mercado, não conforme o que está na moda.",
       },
       {
         title: "Criativos",
@@ -316,7 +316,7 @@ export const products: Product[] = [
       },
       {
         title: "Mensuração",
-        body: "Instrumentação de eventos, integração de conversões e leitura honesta do que o dado permite afirmar — e do que não permite.",
+        body: "Instrumentação de eventos, integração de conversões e leitura honesta do que o dado permite afirmar, e do que não permite.",
       },
       {
         title: "Análise e evolução",
@@ -327,7 +327,7 @@ export const products: Product[] = [
       {
         index: "01",
         title: "Posicionamento",
-        body: "Qual é a mensagem que diferencia — e qual é a objeção real que impede a compra.",
+        body: "Qual é a mensagem que diferencia, e qual é a objeção real que impede a compra.",
       },
       {
         index: "02",
@@ -342,12 +342,12 @@ export const products: Product[] = [
       {
         index: "04",
         title: "Mídia",
-        body: "Estrutura, verba e leilão. A etapa que quase todo mundo chama de 'tráfego' — e que só funciona apoiada nas três anteriores.",
+        body: "Estrutura, verba e leilão. A etapa que quase todo mundo chama de 'tráfego', e que só funciona apoiada nas três anteriores.",
       },
       {
         index: "05",
         title: "Dados",
-        body: "Medição instrumentada. Sem evento configurado corretamente, não existe decisão — existe opinião com planilha.",
+        body: "Medição instrumentada. Sem evento configurado corretamente, não existe decisão, existe opinião com planilha.",
       },
       {
         index: "06",
@@ -363,7 +363,7 @@ export const products: Product[] = [
     faq: [
       {
         q: "Vocês assumem a conta de anúncios que já existe?",
-        a: "Sim, e normalmente começamos por uma auditoria da estrutura atual. Em boa parte dos casos há histórico aproveitável — reconstruir do zero nem sempre é a decisão certa.",
+        a: "Sim, e normalmente começamos por uma auditoria da estrutura atual. Em boa parte dos casos há histórico aproveitável, reconstruir do zero nem sempre é a decisão certa.",
       },
       {
         q: "Qual investimento mínimo em mídia?",
@@ -371,11 +371,11 @@ export const products: Product[] = [
       },
       {
         q: "Vocês garantem resultado?",
-        a: "Não. Ninguém honesto garante. Garantimos método, instrumentação correta, leitura transparente e ajuste contínuo — e somos diretos quando o problema não está na mídia.",
+        a: "Não. Ninguém honesto garante. Garantimos método, instrumentação correta, leitura transparente e ajuste contínuo, e somos diretos quando o problema não está na mídia.",
       },
       {
         q: "Vocês produzem os criativos ou usamos os nossos?",
-        a: "Podemos operar dos dois jeitos. Quando produzimos, a mensagem da campanha e a posição da marca nascem da mesma direção — o que costuma reduzir o atrito entre promessa e entrega.",
+        a: "Podemos operar dos dois jeitos. Quando produzimos, a mensagem da campanha e a posição da marca nascem da mesma direção, o que costuma reduzir o atrito entre promessa e entrega.",
       },
       {
         q: "Como é feito o acompanhamento?",
@@ -384,7 +384,7 @@ export const products: Product[] = [
     ],
     offer: null,
     seo: {
-      title: "Mídia paga — Meta Ads e Google Ads com estratégia",
+      title: "Mídia paga, Meta Ads e Google Ads com estratégia",
       description:
         "Gestão de mídia paga conectada a posicionamento, criativo, landing page e mensuração. Meta Ads e Google Ads para negócios de alto valor.",
     },
@@ -396,26 +396,26 @@ export const products: Product[] = [
     index: "04",
     name: "Criação de sites",
     positioning:
-      "O site como materialização digital do posicionamento — não como página institucional.",
+      "O site como materialização digital do posicionamento, não como página institucional.",
     thesis: "Seu site é a primeira reunião que acontece sem você.",
     thesisBody:
       "Antes de qualquer conversa, o cliente já procurou sua empresa, abriu o site e formou uma percepção. Essa percepção define o tom da reunião que ainda vai acontecer: se você vai precisar provar que é grande, ou se já entrou na sala com isso resolvido.",
     hero: {
       eyebrow: "Solução 04",
       headline: ["Seu site é a", "primeira reunião", "que acontece", "sem você."],
-      sub: "Estratégia, arquitetura, design e desenvolvimento de sites que traduzem o nível real da operação — rápidos, responsivos e construídos para converter.",
+      sub: "Estratégia, arquitetura, design e desenvolvimento de sites que traduzem o nível real da operação, rápidos, responsivos e construídos para converter.",
       media: {
         src: null,
         alt: "Site desenvolvido pela Bluver exibido em desktop e celular sobre mesa de trabalho.",
         ratio: "3:2",
-        slot: "SITES/HERO — Projeto real em tela (desktop + mobile)",
+        slot: "SITES/HERO, Projeto real em tela (desktop + mobile)",
       preview: "https://t4.ftcdn.net/jpg/05/72/28/77/1000_F_572287741_mN9PEgwgt1dPgj1GvwB47raIqKW995Hr.jpg",
       },
     },
     problem: {
       headline: "Antes de falar com sua empresa, o cliente já decidiu algo sobre ela.",
       body: [
-        "Um site desatualizado não comunica apenas que o site está desatualizado. Comunica descuido, porte menor, tecnologia atrasada — conclusões que quem visita tira em segundos e raramente revisa.",
+        "Um site desatualizado não comunica apenas que o site está desatualizado. Comunica descuido, porte menor, tecnologia atrasada, conclusões que quem visita tira em segundos e raramente revisa.",
         "Para empresas que vendem caro, isso é caro. O site é o único ativo que trabalha com todo mundo que pesquisa sobre você: o cliente que vai comprar, o que está comparando, o parceiro que está avaliando, o profissional que está decidindo se quer trabalhar aí.",
         "Ele não precisa ser bonito. Precisa ser coerente com o tamanho real da operação.",
       ],
@@ -427,7 +427,7 @@ export const products: Product[] = [
       },
       {
         title: "Arquitetura",
-        body: "Estrutura de páginas e de navegação preparada para crescer — novos serviços, segmentos e campanhas sem reconstruir o projeto.",
+        body: "Estrutura de páginas e de navegação preparada para crescer, novos serviços, segmentos e campanhas sem reconstruir o projeto.",
       },
       {
         title: "UX e UI",
@@ -435,7 +435,7 @@ export const products: Product[] = [
       },
       {
         title: "Desenvolvimento",
-        body: "Código próprio, performance como requisito e responsividade desenhada — não adaptada no final.",
+        body: "Código próprio, performance como requisito e responsividade desenhada, não adaptada no final.",
       },
       {
         title: "SEO técnico",
@@ -481,7 +481,7 @@ export const products: Product[] = [
     faq: [
       {
         q: "O que está incluído no valor inicial?",
-        a: "Sites profissionais a partir de R$ 1.999 cobrem projeto, design e desenvolvimento de um site institucional de escopo definido. Estruturas maiores — mais páginas, integrações, e-commerce, áreas restritas — são orçadas conforme o projeto.",
+        a: "Sites profissionais a partir de R$ 1.999 cobrem projeto, design e desenvolvimento de um site institucional de escopo definido. Estruturas maiores, mais páginas, integrações, e-commerce, áreas restritas, são orçadas conforme o projeto.",
       },
       {
         q: "Em quanto tempo o site fica pronto?",
@@ -489,7 +489,7 @@ export const products: Product[] = [
       },
       {
         q: "Vocês fazem o conteúdo e as fotos?",
-        a: "Sim. Redação, fotografia e audiovisual podem entrar no escopo — e é o caminho mais comum quando a empresa quer que o site represente a operação de verdade, em vez de banco de imagens.",
+        a: "Sim. Redação, fotografia e audiovisual podem entrar no escopo, e é o caminho mais comum quando a empresa quer que o site represente a operação de verdade, em vez de banco de imagens.",
       },
       {
         q: "O site fica preparado para anúncios?",
@@ -501,7 +501,7 @@ export const products: Product[] = [
       },
       {
         q: "Vocês fazem apenas landing pages?",
-        a: "Sim, quando o objetivo é campanha. Uma LP tem função diferente de um site institucional — e funciona melhor quando é tratada assim.",
+        a: "Sim, quando o objetivo é campanha. Uma LP tem função diferente de um site institucional, e funciona melhor quando é tratada assim.",
       },
     ],
     offer: {

@@ -148,7 +148,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <CtaBand
         title={product.cta.label + "."}
-        body="Conte o contexto do seu negócio. A primeira conversa é de diagnóstico — entender antes de propor."
+        body="Conte o contexto do seu negócio. A primeira conversa é de diagnóstico, entender antes de propor."
         cta={{ label: "Apresente seu desafio", href: product.cta.href }}
         location={`product_${product.slug}`}
       />

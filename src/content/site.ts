@@ -41,7 +41,7 @@ export const primaryCta: Cta = ctas.talk;
 /** Ressalva institucional. Aparece onde houver promessa de crescimento —
  *  a Bluver influencia demanda e oportunidades, não garante faturamento. */
 export const disclaimer =
-  "A Bluver influencia demanda e oportunidades. Parte do resultado depende da operação comercial do cliente — por isso não prometemos faturamento garantido.";
+  "A Bluver influencia demanda e oportunidades. Parte do resultado depende da operação comercial do cliente. Por isso não prometemos faturamento garantido.";
 
 /** Tradução de entregável em significado (documento mestre, seção 06).
  *  É o antídoto contra o site virar lista de serviços. */
@@ -64,7 +64,7 @@ export const thesis = [
     index: "01",
     term: "Estratégia",
     verb: "posiciona",
-    body: "Antes de produzir qualquer coisa, é preciso decidir que lugar a empresa vai ocupar na cabeça de quem decide. Posição é escolha — e escolha envolve recusa.",
+    body: "Antes de produzir qualquer coisa, é preciso decidir que lugar a empresa vai ocupar na cabeça de quem decide. Posição é escolha, e escolha envolve recusa.",
   },
   {
     index: "02",

@@ -8,7 +8,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 import { ctas } from "@/content/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Soluções — produção, eventos, mídia e sites",
+  title: "Soluções, produção, eventos, mídia e sites",
   description:
     "Quatro frentes que resolvem o mesmo problema: produção de conteúdo recorrente, cobertura de eventos, mídia paga e criação de sites.",
   path: "/solucoes",
@@ -37,7 +37,7 @@ export default function SolutionsPage() {
           src: null,
           alt: "Equipe da Bluver em reunião de direção, com material de projeto sobre a mesa.",
           ratio: "3:4",
-          slot: "SOLUÇÕES/HERO — Reunião de direção (vertical)",
+          slot: "SOLUÇÕES/HERO, Reunião de direção (vertical)",
       preview: "https://t3.ftcdn.net/jpg/03/21/22/68/1000_F_321226892_3xkCyGRF8Q3JjoW4OTBqSypJ2sV5ND9G.jpg",
         }}
         cta={{ label: ctas.challenge.label, href: ctas.challenge.href }}
@@ -49,7 +49,7 @@ export default function SolutionsPage() {
 
       <CtaBand
         title="Qual delas resolve o seu problema?"
-        body="Se não estiver claro, a conversa de diagnóstico existe justamente para isso — entender antes de propor."
+        body="Se não estiver claro, a conversa de diagnóstico existe justamente para isso, entender antes de propor."
         cta={{ label: ctas.challenge.label, href: ctas.challenge.href }}
         location="solutions_index"
       />

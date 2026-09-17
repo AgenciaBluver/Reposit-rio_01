@@ -57,7 +57,7 @@ export async function submitContact(
   if (!endpoint) {
     return {
       status: "unconfigured",
-      payload: `${data.nome} · ${data.empresa ?? "—"} · ${data.email}`,
+      payload: `${data.nome} · ${data.empresa?? " "} · ${data.email}`,
     };
   }
 

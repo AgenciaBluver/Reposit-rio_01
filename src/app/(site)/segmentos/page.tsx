@@ -8,7 +8,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 import { ctas } from "@/content/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Segmentos — indústrias, advocacia e mercado imobiliário",
+  title: "Segmentos, indústrias, advocacia e mercado imobiliário",
   description:
     "Como a Bluver trabalha posicionamento e presença em indústrias, escritórios de advocacia e serviços profissionais, construtoras, incorporadoras e imobiliárias.",
   path: "/segmentos",
@@ -41,12 +41,12 @@ export default function SegmentsPage() {
       <PageHero
         eyebrow="Segmentos"
         headline={["O nicho não é", "uma profissão.", "É um tipo", "de decisão."]}
-        sub="A Bluver trabalha com negócios de alto valor, alta confiança e decisão complexa. O setor muda o vocabulário e o canal — não muda a lógica da construção de autoridade."
+        sub="A Bluver trabalha com negócios de alto valor, alta confiança e decisão complexa. O setor muda o vocabulário e o canal, não muda a lógica da construção de autoridade."
         media={{
           src: null,
           alt: "Ambiente empresarial de cliente da Bluver registrado em luz natural.",
           ratio: "3:4",
-          slot: "SEGMENTOS/HERO — Ambiente empresarial real (vertical)",
+          slot: "SEGMENTOS/HERO, Ambiente empresarial real (vertical)",
       preview: "https://t3.ftcdn.net/jpg/05/01/67/28/1000_F_501672880_moCm9LrdfE7BppTdjYybYOncrCYVrAWO.jpg",
         }}
         cta={{ label: ctas.positioning.label, href: ctas.positioning.href }}

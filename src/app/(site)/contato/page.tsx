@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 import { ContactChannels } from "@/components/blocks/ContactChannels";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contato — apresente seu desafio",
+  title: "Contato, apresente seu desafio",
   description:
     "Fale com a Bluver. A primeira conversa é de diagnóstico: entender o negócio e a distância entre o valor real e a percepção do mercado.",
   path: "/contato",
@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
 const nextSteps = [
   { index: "01", title: "Estudamos o contexto", body: "Antes de responder, lemos o que você enviou e olhamos como sua empresa aparece hoje." },
   { index: "02", title: "Conversa de diagnóstico", body: "Uma conversa sobre negócio e percepção. Sem apresentação comercial padrão." },
-  { index: "03", title: "Direção recomendada", body: "Apresentamos a direção que faz sentido — e só depois o escopo e o investimento." },
+  { index: "03", title: "Direção recomendada", body: "Apresentamos a direção que faz sentido, e só depois o escopo e o investimento." },
 ];
 
 export default function ContactPage() {

@@ -16,12 +16,12 @@ export const segments: Segment[] = [
     hero: {
       eyebrow: "Segmento",
       headline: ["Sua indústria pode ter", "uma operação de alto nível", "e ainda parecer menor", "do que realmente é."],
-      sub: "Capacidade técnica não se comunica sozinha. Traduzimos processo, precisão e engenharia em percepção de mercado — para clientes, para parceiros e para quem você quer contratar.",
+      sub: "Capacidade técnica não se comunica sozinha. Traduzimos processo, precisão e engenharia em percepção de mercado, para clientes, para parceiros e para quem você quer contratar.",
       media: {
         src: null,
         alt: "Interior de indústria em operação: máquina de precisão em funcionamento, registrada em luz natural.",
         ratio: "3:2",
-        slot: "INDÚSTRIAS/HERO — Chão de fábrica real de cliente (horizontal)",
+        slot: "INDÚSTRIAS/HERO, Chão de fábrica real de cliente (horizontal)",
       preview: "https://t4.ftcdn.net/jpg/07/50/64/49/1000_F_750644919_ihpW16nbJEwk1k3SlM0WmySk342ZRYLt.jpg",
       },
     },
@@ -32,7 +32,7 @@ export const segments: Segment[] = [
       body: [
         "Uma indústria com maquinário de precisão, processo maduro e equipe técnica qualificada frequentemente se apresenta ao mercado com três fotos desatualizadas, um site de dez anos atrás e um catálogo em PDF.",
         "Isso tem consequência comercial concreta. O comprador que nunca visitou a planta forma sua opinião pelo que encontra antes da visita. O engenheiro que vai especificar o fornecedor pesquisa e compara. O profissional qualificado que você quer contratar avalia a empresa pelo que ela aparenta ser.",
-        "A operação é de alto nível. A percepção, muitas vezes, ficou parada — e é a percepção que abre ou fecha a porta antes da primeira reunião.",
+        "A operação é de alto nível. A percepção, muitas vezes, ficou parada, e é a percepção que abre ou fecha a porta antes da primeira reunião.",
       ],
     },
     translation: [
@@ -46,12 +46,12 @@ export const segments: Segment[] = [
     fronts: [
       {
         title: "Site institucional",
-        body: "A primeira verificação que um comprador técnico faz. Precisa comunicar porte, capacidade, aplicações atendidas e como iniciar uma conversa — com clareza de catálogo e rigor de engenharia.",
+        body: "A primeira verificação que um comprador técnico faz. Precisa comunicar porte, capacidade, aplicações atendidas e como iniciar uma conversa, com clareza de catálogo e rigor de engenharia.",
         product: "criacao-de-sites",
       },
       {
         title: "Audiovisual industrial",
-        body: "Filme institucional e registro de processo. Mostrar a operação funcionando é o argumento mais forte que uma indústria tem — e o menos usado.",
+        body: "Filme institucional e registro de processo. Mostrar a operação funcionando é o argumento mais forte que uma indústria tem, e o menos usado.",
         product: "producao-de-conteudo",
       },
       {
@@ -90,7 +90,7 @@ export const segments: Segment[] = [
       },
       {
         q: "Marketing funciona para indústria?",
-        a: "Da forma que costuma ser vendida, frequentemente não. O ciclo é longo, o público é restrito e a decisão é técnica. O que funciona é construir autoridade junto a quem especifica e estar visível quando a necessidade aparece — que é uma lógica diferente da de consumo.",
+        a: "Da forma que costuma ser vendida, frequentemente não. O ciclo é longo, o público é restrito e a decisão é técnica. O que funciona é construir autoridade junto a quem especifica e estar visível quando a necessidade aparece, que é uma lógica diferente da de consumo.",
       },
     ],
     cta: {
@@ -99,7 +99,7 @@ export const segments: Segment[] = [
       event: "cta_click",
     },
     seo: {
-      title: "Marketing para indústrias — posicionamento e audiovisual industrial",
+      title: "Marketing para indústrias, posicionamento e audiovisual industrial",
       description:
         "Site, audiovisual, fotografia e conteúdo técnico para indústrias que precisam traduzir capacidade técnica em percepção de mercado. Base em Joinville, atuação nacional.",
     },
@@ -113,23 +113,23 @@ export const segments: Segment[] = [
     hero: {
       eyebrow: "Segmento",
       headline: ["O conhecimento pode ser", "excelente e ainda ser", "comunicado de forma", "genérica."],
-      sub: "Para bancas e escritórios de serviço profissional, a reputação é o ativo. Trabalhamos autoridade com a sobriedade que a profissão exige — sem promessa de resultado, sem sensacionalismo.",
+      sub: "Para bancas e escritórios de serviço profissional, a reputação é o ativo. Trabalhamos autoridade com a sobriedade que a profissão exige, sem promessa de resultado, sem sensacionalismo.",
       media: {
         src: null,
         alt: "Ambiente de escritório de advocacia: mesa de reunião, luz natural e profissionais em conversa.",
         ratio: "3:2",
-        slot: "ADVOCACIA/HERO — Escritório real de cliente (horizontal, sóbrio)",
+        slot: "ADVOCACIA/HERO, Escritório real de cliente (horizontal, sóbrio)",
       preview: "https://t4.ftcdn.net/jpg/06/80/33/35/1000_F_680333537_6Q79rAwUAj9bhEbLIJvkfkDA0V4vbTxX.jpg",
       },
     },
     thesis:
-      "Reputação se constrói pelo que se demonstra com consistência — não pelo que se promete.",
+      "Reputação se constrói pelo que se demonstra com consistência, não pelo que se promete.",
     reality: {
       headline: "Quando todo mundo diz a mesma coisa, ninguém diz nada.",
       body: [
-        "Atendimento personalizado. Equipe especializada. Compromisso com o cliente. Tradição e inovação. São frases verdadeiras na maioria dos escritórios — e por isso não diferenciam nenhum.",
+        "Atendimento personalizado. Equipe especializada. Compromisso com o cliente. Tradição e inovação. São frases verdadeiras na maioria dos escritórios, e por isso não diferenciam nenhum.",
         "Quem procura um advogado ou um profissional para uma questão relevante não está comparando serviços: está tentando reduzir risco. Quer entender quem domina aquele assunto específico, como essa pessoa pensa e se vai ser compreendido.",
-        "O que diferencia não é o adjetivo. É a demonstração de raciocínio — visível, consistente e reconhecível ao longo do tempo.",
+        "O que diferencia não é o adjetivo. É a demonstração de raciocínio, visível, consistente e reconhecível ao longo do tempo.",
       ],
     },
     translation: [
@@ -151,7 +151,7 @@ export const segments: Segment[] = [
       },
       {
         title: "Conteúdo de autoridade",
-        body: "Explicar o que a lei ou a norma significa na prática para o cliente — sem prometer desfecho, sem prospectar caso concreto. Ensinar é a forma mais sólida de demonstrar domínio.",
+        body: "Explicar o que a lei ou a norma significa na prática para o cliente, sem prometer desfecho, sem prospectar caso concreto. Ensinar é a forma mais sólida de demonstrar domínio.",
         product: "producao-de-conteudo",
       },
       {
@@ -165,7 +165,7 @@ export const segments: Segment[] = [
       },
       {
         title: "Mídia quando aplicável",
-        body: "Nem toda atuação comporta anúncio, e regras profissionais variam por conselho. Quando aplicável, trabalhamos com contenção — presença institucional, não captação agressiva.",
+        body: "Nem toda atuação comporta anúncio, e regras profissionais variam por conselho. Quando aplicável, trabalhamos com contenção, presença institucional, não captação agressiva.",
         product: "midia-paga",
       },
     ],
@@ -176,7 +176,7 @@ export const segments: Segment[] = [
       },
       {
         q: "Vocês prometem aumento de clientes?",
-        a: "Não. Construímos autoridade e presença; conversão em contratação depende de fatores que não controlamos — e, em profissões reguladas, prometer resultado é justamente o que não se deve fazer.",
+        a: "Não. Construímos autoridade e presença; conversão em contratação depende de fatores que não controlamos, e, em profissões reguladas, prometer resultado é justamente o que não se deve fazer.",
       },
       {
         q: "Isso vale para outros serviços profissionais?",
@@ -184,7 +184,7 @@ export const segments: Segment[] = [
       },
       {
         q: "Os sócios precisam aparecer?",
-        a: "Ajuda bastante, porque a confiança se ancora em pessoas. Mas existe caminho institucional para quem prefere menor exposição — é uma decisão de direção, definida no início.",
+        a: "Ajuda bastante, porque a confiança se ancora em pessoas. Mas existe caminho institucional para quem prefere menor exposição, é uma decisão de direção, definida no início.",
       },
     ],
     cta: {
@@ -207,12 +207,12 @@ export const segments: Segment[] = [
     hero: {
       eyebrow: "Segmento",
       headline: ["O empreendimento é", "vendido muito antes", "de existir."],
-      sub: "Para construtoras, incorporadoras e imobiliárias: conceito, imagem e distribuição trabalhando juntos — da definição do posicionamento do produto até a campanha de vendas.",
+      sub: "Para construtoras, incorporadoras e imobiliárias: conceito, imagem e distribuição trabalhando juntos, da definição do posicionamento do produto até a campanha de vendas.",
       media: {
         src: null,
         alt: "Obra de empreendimento em estágio avançado, registrada em luz de fim de tarde.",
         ratio: "3:2",
-        slot: "IMOBILIÁRIO/HERO — Empreendimento real (horizontal, hora dourada)",
+        slot: "IMOBILIÁRIO/HERO, Empreendimento real (horizontal, hora dourada)",
       preview: "https://t4.ftcdn.net/jpg/18/87/59/13/1000_F_1887591377_menbbHhJmDzmo5TIfjs3UMuqcHSwLnMb.jpg",
       },
     },
@@ -246,7 +246,7 @@ export const segments: Segment[] = [
       },
       {
         title: "Captação aérea",
-        body: "Drone para implantação, entorno, vista e evolução de obra — o argumento visual mais direto sobre localização.",
+        body: "Drone para implantação, entorno, vista e evolução de obra, o argumento visual mais direto sobre localização.",
         product: "producao-de-conteudo",
       },
       {
@@ -256,7 +256,7 @@ export const segments: Segment[] = [
       },
       {
         title: "Campanhas de lançamento",
-        body: "Mídia paga estruturada por fase — pré-lançamento, lançamento e sustentação — com criativo e página construídos junto.",
+        body: "Mídia paga estruturada por fase, pré-lançamento, lançamento e sustentação, com criativo e página construídos junto.",
         product: "midia-paga",
       },
       {
@@ -268,7 +268,7 @@ export const segments: Segment[] = [
     faq: [
       {
         q: "Vocês trabalham por empreendimento ou por contrato contínuo?",
-        a: "Dos dois modos. Empreendimento tem começo, meio e fim; a marca da construtora é contínua. O trabalho mais consistente combina os dois — a marca sustenta a credibilidade que cada lançamento aproveita.",
+        a: "Dos dois modos. Empreendimento tem começo, meio e fim; a marca da construtora é contínua. O trabalho mais consistente combina os dois, a marca sustenta a credibilidade que cada lançamento aproveita.",
       },
       {
         q: "Vocês fazem perspectivas e imagens 3D?",
