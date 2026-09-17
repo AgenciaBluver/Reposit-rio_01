@@ -6,7 +6,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /* Imagem social gerada no build, com a identidade da marca.
-   Usa fontes do sistema em vez da Atipla ND: o runtime de OG exige o
+   Usa fontes do sistema em vez da Figtree: o runtime de OG exige o
    binário da fonte carregado e isso pesa no build para um ganho pequeno
    numa peça de 1200×630. A composição — preto, régua de gradiente e
    hierarquia — mantém a marca reconhecível. */

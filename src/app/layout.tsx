@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* A fonte da marca é crítica para o primeiro paint do hero. */}
         <link
           rel="preload"
-          href="/fonts/AtiplaND-Medium.woff2"
+          href="/fonts/Figtree-Variable.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

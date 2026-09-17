@@ -8,17 +8,15 @@ Todas as 22 rotas são geradas estaticamente no build.
 
 ---
 
-## Antes de publicar — 4 pendências
+## Antes de publicar — 3 pendências
 
-Estas são as únicas coisas que faltam. Nenhuma exige mexer em código de
-componente.
+Nenhuma exige mexer em código de componente.
 
 | # | Pendência | Onde resolver |
 |---|---|---|
-| 1 | **Licença da fonte.** Os arquivos da Atipla ND vieram com licença `Demo for Personal Use` (ifonts.xyz), que **não cobre uso comercial**. É preciso adquirir a licença webfont antes de o site ir ao ar. | `src/styles/fonts.css` |
-| 2 | **Fotografia e vídeo.** Nenhuma imagem real existe no projeto. Todos os slots estão declarados e renderizam um placeholder editorial que descreve o material a produzir. | `src/content/*.ts` (campos `media`) |
-| 3 | **IDs de analytics.** Nenhum ID fictício foi versionado. Sem `NEXT_PUBLIC_GTM_ID`, nada de terceiro é carregado. | `.env` (ver `.env.example`) |
-| 4 | **Endpoint do formulário.** Sem `FORM_ENDPOINT`, o formulário não finge sucesso: avisa que o envio não está ligado e oferece os canais diretos. | `.env` |
+| 1 | **Fotografia e vídeo.** Nenhuma imagem real existe no projeto. Todos os slots estão declarados e renderizam um placeholder editorial que descreve o material a produzir. | `src/content/*.ts` (campos `media`) |
+| 2 | **IDs de analytics.** Nenhum ID fictício foi versionado. Sem `NEXT_PUBLIC_GTM_ID`, nada de terceiro é carregado. | `.env` (ver `.env.example`) |
+| 3 | **Endpoint do formulário.** Sem `FORM_ENDPOINT`, o formulário não finge sucesso: avisa que o envio não está ligado e oferece os canais diretos. | `.env` |
 
 ---
 
@@ -31,6 +29,24 @@ npm run dev              # http://localhost:3000
 npm run build            # build de produção
 npm run typecheck        # TypeScript estrito
 ```
+
+---
+
+## Tipografia
+
+**Figtree**, sob SIL Open Font License 1.1 — uso comercial liberado e
+auto-hospedagem permitida. Arquivo único variável de 27 KB em
+`public/fonts/`, licença em `public/fonts/OFL-Figtree.txt`.
+
+A tipografia da marca é a **Atipla ND**, mas os arquivos disponíveis
+vinham com licença `Demo for Personal Use`, que não cobre um site
+comercial. A Figtree foi escolhida por proximidade de desenho —
+verificada em espécime lado a lado: mesma geometria arredondada, mesma
+largura e mesma quebra de linha na headline principal.
+
+Para voltar à Atipla ND depois de licenciada, troque os arquivos em
+`public/fonts/` e o nome da família em `src/styles/fonts.css` e
+`tokens.css`. Nenhum componente cita fonte diretamente.
 
 ---
 
@@ -157,8 +173,8 @@ imagem, FAQ em `<details>` nativo (funciona sem JS e é indexável).
 `prefers-reduced-motion` desliga todo movimento via CSS. As revelações de
 scroll têm estado padrão **visível**: sem JavaScript, nada desaparece.
 
-Fonte auto-hospedada em WOFF2 (3 pesos, ~29 KB cada) com preload do peso
-crítico; imagens em AVIF/WebP com `sizes` corretos e proporção reservada
+Fonte auto-hospedada em WOFF2 variável (27 KB para todos os pesos) com
+preload; imagens em AVIF/WebP com `sizes` corretos e proporção reservada
 (sem CLS); nenhuma dependência de animação; zero script de terceiro
 quando o GTM não está configurado.
 

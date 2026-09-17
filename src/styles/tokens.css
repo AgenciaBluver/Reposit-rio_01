@@ -6,8 +6,10 @@
 
    STATUS
    · COR ......... OFICIAL. Paleta da marca Bluver aplicada.
-   · TIPOGRAFIA .. OFICIAL (Atipla ND, auto-hospedada).
-                   ⚠ licença demo — ver src/styles/fonts.css.
+   · TIPOGRAFIA .. Figtree (SIL OFL, uso comercial liberado).
+                   Substituta próxima da Atipla ND, cuja licença
+                   disponível não cobre uso comercial.
+                   Ver src/styles/fonts.css.
    · LOGO ........ provisório — substituir por
                    public/media/brand/logo.svg.
    · FOTOGRAFIA .. pendente — slots declarados em src/content/*.
@@ -60,16 +62,16 @@
 
   /* ── TIPOGRAFIA ───────────────────────────────────────────────────────
      Duas famílias. Nada mais.
-     ATIPLA ND — tipografia oficial. Um único desenho em dois registros:
+     FIGTREE — um único desenho em dois registros:
      DISPLAY (peso 500/600, tracking fechado) para títulos em escala, e
      TEXT (peso 400, tracking aberto) para tese, citação e numerais.
      Ver src/styles/fonts.css — inclui aviso de licença.                 */
 
-  --bv-font-display: "Atipla ND", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --bv-font-display: "Figtree", "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* "text" não é uma segunda família: é a MESMA fonte em outro registro
      (peso regular, tracking mais aberto, cor mais baixa). Uma família só
      mantém a identidade coerente e elimina uma requisição de rede. */
-  --bv-font-text:    "Atipla ND", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --bv-font-text:    "Figtree", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   /* Escala fluida 375px → 1440px. Sem media query para tamanho de fonte. */
   --bv-t-display-1: clamp(3.1rem, 1.4rem + 7.2vw, 7.25rem);

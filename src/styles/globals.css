@@ -66,8 +66,7 @@
     font-family: var(--bv-font-display);
     font-size: var(--bv-t-body);
     line-height: var(--bv-lh-body);
-    /* A Atipla ND não tem itálico nem pesos além dos carregados:
-       impedimos que o navegador invente ambos. */
+    /* Sem itálico no arquivo: impedimos o navegador de inventar um. */
     font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -124,7 +123,7 @@
 
   /* Registro editorial: mesma fonte, peso leve e tracking aberto.
      É o contraponto de voz aos títulos — sem recorrer a uma segunda
-     família e sem itálico sintético, que a Atipla ND não possui. */
+     família e sem itálico sintético, que o arquivo não possui. */
   .bv-serif {
     font-family: var(--bv-font-text);
     font-weight: 400;
