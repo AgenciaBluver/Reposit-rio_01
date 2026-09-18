@@ -4,6 +4,15 @@
    Núcleo de cálculo puro: nenhuma função aqui conhece React, DOM ou
    formatação. A interface só lê o que este arquivo devolve.
 
+   O custo tem três camadas que não se misturam:
+   · DESEMBOLSO — dinheiro que sai da conta: filamento, energia, insumos,
+     embalagem, taxas, imposto, frete.
+   · SEU TEMPO — o pós-processamento que VOCÊ faz. Não sai do bolso, mas
+     consome a única coisa que não dá para comprar de volta.
+   · DESGASTE — bico, correia, placa e a própria máquina. Não sai hoje;
+     sai quando quebrar.
+   O caixa é o primeiro. O lucro cheio é o que sobra depois dos três.
+
    A conta tem dois lados que não se misturam:
    · CUSTO DE PRODUÇÃO — não depende do preço de venda (filamento, energia,
      máquina, falhas, mão de obra, embalagem).
@@ -93,6 +102,10 @@ export type PricingInputs = {
   machineCostPerHour: number;
   laborMinutes: number;
   laborCostPerHour: number;
+  /** "meu": quem faz o pós-processamento é você — o trabalho não sai do
+   *  caixa, mas é medido para responder se a venda paga o seu tempo.
+   *  "pago": você paga alguém — é desembolso como qualquer outro. */
+  laborMode: "meu" | "pago";
   extrasCost: number;
   packagingCost: number;
 
@@ -130,6 +143,7 @@ export const DEFAULT_INPUTS: PricingInputs = {
   machineCostPerHour: 1.5,
   laborMinutes: 10,
   laborCostPerHour: 25,
+  laborMode: "meu",
   extrasCost: 0,
   packagingCost: 2.5,
 
@@ -159,6 +173,14 @@ export type ProductionCost = {
   extras: number;
   packaging: number;
   total: number;
+  /** Desembolso: o que sai da conta para produzir (sem seu tempo, sem
+   *  desgaste). É a base do caixa. */
+  cash: number;
+  /** Seu tempo, quando é você quem faz. Zero no modo "pago" — lá o
+   *  trabalho já está dentro do desembolso. */
+  time: number;
+  /** Desgaste da máquina, incluindo a parte das impressões perdidas. */
+  wear: number;
   /** Peças impressas neste anúncio (soma das quantidades do kit). */
   units: number;
   /** Gramas e horas somadas de todas as peças do anúncio. */
@@ -199,10 +221,14 @@ export function productionCost(i: PricingInputs): ProductionCost {
   const machine = safe(i.machineCostPerHour) * hours;
 
   // Falha consome máquina, energia e material — nunca a mão de obra de
-  // acabamento, que só acontece depois da peça sair inteira.
-  const printed = material + energy + machine;
+  // acabamento, que só acontece depois da peça sair inteira. A perda é
+  // repartida entre as duas camadas que a causaram: o filamento queimado
+  // é desembolso, a hora de máquina jogada fora é desgaste.
   const f = clamp(safe(i.failureRatePct) / 100, 0, 0.95);
-  const failure = printed * (f / (1 - f));
+  const lost = f / (1 - f);
+  const failureCash = (material + energy) * lost;
+  const failureWear = machine * lost;
+  const failure = failureCash + failureWear;
 
   // Trabalho e insumos são POR PEÇA; embalagem é POR ANÚNCIO — é o que faz
   // o kit sair mais barato por unidade do que três vendas separadas.
@@ -210,7 +236,12 @@ export function productionCost(i: PricingInputs): ProductionCost {
   const extras = safe(i.extrasCost) * units;
   const packaging = safe(i.packagingCost);
 
-  const total = printed + failure + labor + extras + packaging;
+  const timeIsCash = i.laborMode === "pago";
+  const cash = material + energy + failureCash + extras + packaging + (timeIsCash ? labor : 0);
+  const time = timeIsCash ? 0 : labor;
+  const wear = machine + failureWear;
+  const total = cash + time + wear;
+
   return {
     material,
     energy,
@@ -220,6 +251,9 @@ export function productionCost(i: PricingInputs): ProductionCost {
     extras,
     packaging,
     total,
+    cash,
+    time,
+    wear,
     units,
     weightG,
     hours,
@@ -280,9 +314,25 @@ export type PricingResult = {
   totalCost: number;
   /** O que o Mercado Livre repassa antes dos custos do vendedor. */
   netReceipt: number;
+  /** LUCRO CHEIO: depois do desembolso, do seu tempo e do desgaste. */
   profit: number;
-  /** Lucro sobre o preço de venda. É a margem que importa. */
+  /** Lucro sobre o preço de venda. */
   marginPct: number;
+  /** CAIXA: o que entra na conta nesta venda — preço menos tudo que sai
+   *  do bolso. Não desconta o seu tempo nem o desgaste da máquina. */
+  cashProfit: number;
+  cashMarginPct: number;
+  /** Caixa dividido pelas horas de impressora — o gargalo da operação. */
+  cashPerPrintHour: number;
+  /** Caixa dividido pelas SUAS horas de trabalho. Responde "quanto a minha
+   *  hora está pagando nesta venda". Zero quando o trabalho é pago. */
+  cashPerLaborHour: number;
+  cashProfitPerUnit: number;
+  /** Quanto do preço é desembolso de produção. */
+  cashCost: number;
+  /** As duas camadas que não saem do bolso hoje. */
+  timeCost: number;
+  wearCost: number;
   /** Preço dividido pelo custo de produção. */
   markup: number;
   /** Retorno sobre o custo de produção. */
@@ -312,7 +362,14 @@ export function calculate(i: PricingInputs): PricingResult {
 
   const marketplaceTotal = commission + fixedFee + shipping;
   const totalCost = production.total + marketplaceTotal + logistics + tax + ads + other;
-  const profit = price - totalCost;
+
+  // Tudo que o marketplace retém é desembolso — sai da conta na hora do
+  // repasse. O que separa caixa de lucro cheio é só o seu tempo e o
+  // desgaste da máquina.
+  const outOfPocket = production.cash + marketplaceTotal + logistics + tax + ads + other;
+  const cashProfit = price - outOfPocket;
+  const profit = cashProfit - production.time - production.wear;
+  const laborHours = (safe(i.laborMinutes) / 60) * production.units;
 
   return {
     price,
@@ -329,6 +386,14 @@ export function calculate(i: PricingInputs): PricingResult {
     netReceipt: price - marketplaceTotal,
     profit,
     marginPct: price > 0 ? (profit / price) * 100 : 0,
+    cashProfit,
+    cashMarginPct: price > 0 ? (cashProfit / price) * 100 : 0,
+    cashPerPrintHour: production.hours > 0 ? cashProfit / production.hours : 0,
+    cashPerLaborHour: production.time > 0 && laborHours > 0 ? cashProfit / laborHours : 0,
+    cashProfitPerUnit: production.units > 0 ? cashProfit / production.units : cashProfit,
+    cashCost: production.cash,
+    timeCost: production.time,
+    wearCost: production.wear,
     markup: production.total > 0 ? price / production.total : 0,
     roiPct: production.total > 0 ? (profit / production.total) * 100 : 0,
     profitPerPrintHour: production.hours > 0 ? profit / production.hours : 0,
@@ -336,7 +401,7 @@ export function calculate(i: PricingInputs): PricingResult {
     pricePerUnit: production.units > 0 ? price / production.units : price,
     profitPerUnit: production.units > 0 ? profit / production.units : profit,
     deductions: ([
-      { key: "producao", label: "Custo de produção", value: production.total, tone: "cost" },
+      { key: "producao", label: "Produção (desembolso)", value: production.cash, tone: "cost" },
       { key: "comissao", label: "Comissão do anúncio", value: commission, tone: "fee" },
       { key: "fixo", label: "Custo fixo por venda", value: fixedFee, tone: "fee" },
       { key: "frete", label: "Frete pago pelo vendedor", value: shipping, tone: "ship" },
@@ -360,11 +425,15 @@ export function calculate(i: PricingInputs): PricingResult {
 export function solvePrice(
   i: PricingInputs,
   targetMarginPct: number,
+  /** "caixa" mira o dinheiro que entra; "cheio" mira o lucro depois de
+   *  pagar o seu tempo e o desgaste da máquina. */
+  basis: "caixa" | "cheio" = "caixa",
 ): { price: number; atBoundary: boolean } | null {
   const k = 1 - percentualLoad(i) - targetMarginPct / 100;
   if (k <= 0.0001) return null; // taxas + margem desejada consomem 100% do preço
 
-  const base = productionCost(i).total + safe(i.logisticsCost);
+  const p = productionCost(i);
+  const base = (basis === "caixa" ? p.cash : p.total) + safe(i.logisticsCost);
   const threshold = Math.max(safe(i.fixedFeeThreshold), 0.01);
   const bounds = Array.from(
     new Set([0, FIXED_FEE_BANDS[0], FIXED_FEE_BANDS[1], threshold]),
@@ -385,15 +454,23 @@ export function solvePrice(
   // Sem solução dentro das faixas: a menor fronteira que já entrega a
   // margem é o preço certo.
   for (const b of bounds.slice(1)) {
-    const margin = calculate({ ...i, price: b }).marginPct;
+    const r = calculate({ ...i, price: b });
+    const margin = basis === "caixa" ? r.cashMarginPct : r.marginPct;
     if (margin >= targetMarginPct - 1e-9) return { price: b, atBoundary: true };
   }
   return null;
 }
 
-/** Preço em que o lucro é exatamente zero. */
+/** Preço em que o caixa é exatamente zero — abaixo dele você tira dinheiro
+ *  do bolso para vender. */
 export function breakEvenPrice(i: PricingInputs) {
-  return solvePrice(i, 0);
+  return solvePrice(i, 0, "caixa");
+}
+
+/** Preço em que a venda também paga o seu tempo e o desgaste da máquina.
+ *  Entre este e o de equilíbrio de caixa, você está trabalhando de graça. */
+export function fullBreakEvenPrice(i: PricingInputs) {
+  return solvePrice(i, 0, "cheio");
 }
 
 /* ── Formatação ─────────────────────────────────────────────────────── */
@@ -405,14 +482,24 @@ const brlFormatter = new Intl.NumberFormat("pt-BR", {
 
 export const brl = (n: number) => brlFormatter.format(Number.isFinite(n) ? n : 0);
 
+/** Sem centavos. Para métricas de ordem de grandeza — "R$ 311/h" lê melhor
+ *  que "R$ 311,00/h". */
+const brl0Formatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+  maximumFractionDigits: 0,
+});
+export const brl0 = (n: number) => brl0Formatter.format(Number.isFinite(n) ? n : 0);
+
 export const pct = (n: number, digits = 1) =>
   `${(Number.isFinite(n) ? n : 0).toLocaleString("pt-BR", {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   })}%`;
 
-/** Leitura honesta da margem. Os limites vêm da prática de marketplace:
- *  abaixo de 10% qualquer devolução ou reajuste de frete come o lucro. */
+/** Leitura honesta da margem — use a de CAIXA quando o trabalho é seu.
+ *  Os limites vêm da prática de marketplace: abaixo de 10% qualquer
+ *  devolução ou reajuste de frete come o lucro. */
 export function marginVerdict(marginPct: number) {
   if (marginPct < 0) return { label: "Prejuízo", tone: "loss" as const };
   if (marginPct < 10) return { label: "Apertado", tone: "warn" as const };

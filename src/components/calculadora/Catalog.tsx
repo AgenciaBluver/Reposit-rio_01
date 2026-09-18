@@ -86,10 +86,10 @@ export function Catalog({
                 <th scope="col" className="py-2.5 pr-3 font-medium">Produto</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Peças</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Peso</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Custo</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Preço</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Lucro</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Margem</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Caixa</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Caixa/h</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Lucro cheio</th>
                 <th scope="col" className="py-2.5 text-right font-medium">
                   <span className="sr-only">Ações</span>
                 </th>
@@ -98,7 +98,7 @@ export function Catalog({
             <tbody>
               {items.map((item) => {
                 const r = calculate(item.inputs);
-                const verdict = marginVerdict(r.marginPct);
+                const verdict = marginVerdict(r.cashMarginPct);
                 return (
                   <tr key={item.id} className="border-b border-fg/10 last:border-0">
                     <th scope="row" className="py-3 pr-3 text-left font-normal">
@@ -110,13 +110,19 @@ export function Catalog({
                     <td className="py-3 pr-3 text-right tabular-nums text-fg-muted">
                       {r.production.weightG.toLocaleString("pt-BR", { maximumFractionDigits: 0 })} g
                     </td>
-                    <td className="py-3 pr-3 text-right tabular-nums">{brl(r.production.total)}</td>
                     <td className="py-3 pr-3 text-right tabular-nums">{brl(r.price)}</td>
                     <td className={`py-3 pr-3 text-right tabular-nums ${TONE[verdict.tone]}`}>
-                      {brl(r.profit)}
+                      {brl(r.cashProfit)}
                     </td>
                     <td className={`py-3 pr-3 text-right tabular-nums ${TONE[verdict.tone]}`}>
-                      {pct(r.marginPct, 1)}
+                      {brl(r.cashPerPrintHour)}
+                    </td>
+                    <td
+                      className={`py-3 pr-3 text-right tabular-nums ${
+                        r.profit < 0 ? "text-data-loss" : "text-fg-muted"
+                      }`}
+                    >
+                      {brl(r.profit)}
                     </td>
                     <td className="py-3 text-right whitespace-nowrap">
                       <button
@@ -152,14 +158,18 @@ function exportCsv(items: SavedProduct[]) {
     "Peças no anúncio",
     "Peso (g)",
     "Horas de impressão",
-    "Custo de produção",
+    "Desembolso de produção",
     "Preço de venda",
     "Taxas do Mercado Livre",
     "Imposto",
     "Publicidade",
-    "Lucro por anúncio",
-    "Lucro por peça",
-    "Margem (%)",
+    "Caixa por anúncio",
+    "Caixa por peça",
+    "Caixa por hora de impressora",
+    "Margem de caixa (%)",
+    "Seu tempo",
+    "Desgaste da máquina",
+    "Lucro cheio",
   ];
   const lines = items.map((item) => {
     const r = calculate(item.inputs);
@@ -168,14 +178,18 @@ function exportCsv(items: SavedProduct[]) {
       String(r.units),
       num(r.production.weightG),
       num(r.production.hours),
-      num(r.production.total),
+      num(r.cashCost),
       num(r.price),
       num(r.marketplaceTotal + r.logistics),
       num(r.tax),
       num(r.ads),
+      num(r.cashProfit),
+      num(r.cashProfitPerUnit),
+      num(r.cashPerPrintHour),
+      num(r.cashMarginPct),
+      num(r.timeCost),
+      num(r.wearCost),
       num(r.profit),
-      num(r.profitPerUnit),
-      num(r.marginPct),
     ].join(";");
   });
 

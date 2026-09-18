@@ -5,6 +5,7 @@ import {
   FIXED_FEE_BANDS,
   LISTING_TYPES,
   brl,
+  brl0,
   pct,
   marginVerdict,
   type PricingInputs,
@@ -23,6 +24,8 @@ import { Button, useNumericDraft } from "./Fields";
  *  cálculo, porque é decisão de leitura visual — não de contabilidade. */
 const SEGMENT_COLOR: Record<string, string> = {
   producao: "bg-data-cost",
+  tempo: "bg-data-time",
+  desgaste: "bg-data-wear",
   comissao: "bg-data-fee",
   fixo: "bg-data-fee/55",
   frete: "bg-data-ship",
@@ -108,6 +111,7 @@ export function ResultPanel({
   onTargetMargin,
   suggested,
   breakEven,
+  fullBreakEven,
   onUsePrice,
   children,
 }: {
@@ -116,12 +120,18 @@ export function ResultPanel({
   onTargetMargin: (n: number) => void;
   suggested: { price: number; atBoundary: boolean } | null;
   breakEven: { price: number; atBoundary: boolean } | null;
+  /** Preço em que a venda também paga o seu tempo e o desgaste. */
+  fullBreakEven: { price: number; atBoundary: boolean } | null;
   onUsePrice: (n: number) => void;
   /** Controle de preço — renderizado no topo do painel. */
   children: ReactNode;
 }) {
-  const verdict = marginVerdict(result.marginPct);
+  // O número de cima é o CAIXA: é ele que aparece no extrato. O lucro
+  // cheio vem logo abaixo, porque é ele que diz se o negócio se paga.
+  const verdict = marginVerdict(result.cashMarginPct);
+  const noCash = result.cashProfit < 0;
   const loss = result.profit < 0;
+  const meuTempo = result.timeCost > 0;
 
   return (
     <div className="border border-fg/12 bg-fg/[0.03]">
@@ -131,13 +141,8 @@ export function ResultPanel({
       <div className="p-5 sm:p-6">
         <div className="flex items-baseline justify-between gap-3">
           <span className="bv-eyebrow text-fg-muted">
-            {result.units > 1
-              ? loss
-                ? "Prejuízo por anúncio"
-                : "Lucro por anúncio"
-              : loss
-                ? "Prejuízo por unidade"
-                : "Lucro por unidade"}
+            {noCash ? "Falta no caixa" : "Entra no caixa"}
+            {result.units > 1 ? " por anúncio" : " por venda"}
           </span>
           <span className={`text-[0.8125rem] font-medium ${VERDICT_COLOR[verdict.tone]}`}>
             {verdict.label}
@@ -145,27 +150,51 @@ export function ResultPanel({
         </div>
         <p
           className={`bv-numeral mt-3 text-[clamp(2.5rem,7vw,3.25rem)] ${
-            loss ? "text-data-loss" : "text-data-profit"
+            noCash ? "text-data-loss" : "text-data-profit"
           }`}
         >
-          {brl(result.profit)}
+          {brl(result.cashProfit)}
+        </p>
+        <p className="mt-2 text-[0.75rem] leading-snug text-fg-muted">
+          Dinheiro que sobra depois do filamento, da embalagem, das taxas e do imposto.
+          {meuTempo ? " Seu trabalho ainda está aqui dentro." : ""}
         </p>
         <hr className="bv-rule-signal mt-4 opacity-60" />
 
+        <div className="mt-4 flex items-baseline justify-between gap-3 border border-fg/12 px-3 py-2.5">
+          <span className="text-[0.75rem] leading-snug text-fg-muted">
+            Lucro cheio
+            <span className="block">
+              {meuTempo ? "depois de pagar sua hora e o desgaste" : "depois do desgaste da máquina"}
+            </span>
+          </span>
+          <span
+            className={`bv-numeral text-[1.25rem] tabular-nums ${
+              loss ? "text-data-loss" : "text-fg"
+            }`}
+          >
+            {brl(result.profit)}
+          </span>
+        </div>
+
         <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4">
-          <Metric label="Margem líquida" value={pct(result.marginPct)} />
+          <Metric label="Margem de caixa" value={pct(result.cashMarginPct)} />
           {result.units > 1 && (
-            <Metric
-              label={loss ? "Prejuízo por unidade" : "Lucro por unidade"}
-              value={brl(result.profitPerUnit)}
-            />
+            <Metric label="Caixa por unidade" value={brl(result.cashProfitPerUnit)} />
           )}
-          <Metric label="Markup sobre o custo" value={`${result.markup.toFixed(2)}×`} />
-          <Metric label="Lucro por hora de impressora" value={brl(result.profitPerPrintHour)} />
-          <Metric label="Retorno sobre o custo" value={pct(result.roiPct, 0)} />
+          <Metric label="Caixa por hora de impressora" value={brl(result.cashPerPrintHour)} />
+          {meuTempo ? (
+            <Metric
+              label="Quanto sua hora rende"
+              value={`${brl0(result.cashPerLaborHour)}/h`}
+            />
+          ) : (
+            <Metric label="Markup sobre o desembolso" value={`${result.markup.toFixed(2)}×`} />
+          )}
+          <Metric label="Margem cheia" value={pct(result.marginPct)} />
           <Metric
-            label={result.units > 1 ? "Custo do kit" : "Custo de produção"}
-            value={brl(result.production.total)}
+            label={result.units > 1 ? "Desembolso do kit" : "Desembolso de produção"}
+            value={brl(result.cashCost)}
           />
           <Metric label="Mercado Livre retém" value={brl(result.marketplaceTotal)} />
         </dl>
@@ -188,12 +217,30 @@ export function ResultPanel({
           ))}
           <li className="flex items-center gap-2.5 border-t border-fg/12 pt-2 text-[0.8125rem] font-medium">
             <span
-              className={`h-2.5 w-2.5 shrink-0 ${loss ? "bg-data-loss" : "bg-data-profit"}`}
+              className={`h-2.5 w-2.5 shrink-0 ${noCash ? "bg-data-loss" : "bg-data-profit"}`}
               aria-hidden
             />
-            <span className="min-w-0 flex-1 truncate">{loss ? "Prejuízo" : "Lucro"}</span>
-            <span className="tabular-nums">{brl(result.profit)}</span>
-            <span className="w-12 text-right tabular-nums">{pct(result.marginPct, 0)}</span>
+            <span className="min-w-0 flex-1 truncate">Caixa</span>
+            <span className="tabular-nums">{brl(result.cashProfit)}</span>
+            <span className="w-12 text-right tabular-nums">{pct(result.cashMarginPct, 0)}</span>
+          </li>
+          {meuTempo && (
+            <li className="flex items-center gap-2.5 pl-3 text-[0.8125rem]">
+              <span className="h-2.5 w-2.5 shrink-0 bg-data-time" aria-hidden />
+              <span className="min-w-0 flex-1 truncate text-fg-muted">└ seu tempo dentro dele</span>
+              <span className="tabular-nums text-fg-muted">{brl(result.timeCost)}</span>
+              <span className="w-12 text-right tabular-nums text-fg-muted">
+                {result.price > 0 ? pct((result.timeCost / result.price) * 100, 0) : "—"}
+              </span>
+            </li>
+          )}
+          <li className="flex items-center gap-2.5 pl-3 text-[0.8125rem]">
+            <span className="h-2.5 w-2.5 shrink-0 bg-data-wear" aria-hidden />
+            <span className="min-w-0 flex-1 truncate text-fg-muted">└ desgaste da máquina</span>
+            <span className="tabular-nums text-fg-muted">{brl(result.wearCost)}</span>
+            <span className="w-12 text-right tabular-nums text-fg-muted">
+              {result.price > 0 ? pct((result.wearCost / result.price) * 100, 0) : "—"}
+            </span>
           </li>
         </ul>
       </div>
@@ -202,7 +249,7 @@ export function ResultPanel({
       <div className="border-t border-fg/12 p-5 sm:p-6">
         <div className="flex items-baseline justify-between gap-3">
           <label htmlFor="alvo" className="bv-eyebrow text-fg-muted">
-            Preço para a margem desejada
+            Preço para a margem de caixa
           </label>
           <span className="bv-numeral text-[0.9375rem] text-accent tabular-nums">
             {pct(targetMargin, 0)}
@@ -235,10 +282,18 @@ export function ResultPanel({
             inviabiliza a margem.
           </p>
         )}
-        <p className="mt-4 flex items-baseline justify-between gap-3 border-t border-fg/12 pt-4 text-[0.8125rem] text-fg-muted">
-          <span>Preço de equilíbrio (lucro zero)</span>
-          <span className="tabular-nums text-fg">{breakEven ? brl(breakEven.price) : "—"}</span>
-        </p>
+        <div className="mt-4 space-y-2 border-t border-fg/12 pt-4 text-[0.8125rem] text-fg-muted">
+          <p className="flex items-baseline justify-between gap-3">
+            <span>Abaixo disto você tira do bolso</span>
+            <span className="tabular-nums text-fg">{breakEven ? brl(breakEven.price) : "—"}</span>
+          </p>
+          <p className="flex items-baseline justify-between gap-3">
+            <span>{meuTempo ? "Abaixo disto você trabalha de graça" : "Preço que cobre o desgaste"}</span>
+            <span className="tabular-nums text-fg">
+              {fullBreakEven ? brl(fullBreakEven.price) : "—"}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -256,15 +311,23 @@ function Metric({ label, value }: { label: string; value: string }) {
 /** Barra de composição. É decorativa: os mesmos números aparecem na
  *  legenda logo abaixo, em texto. */
 export function CompositionBar({ result }: { result: PricingResult }) {
-  const loss = result.profit < 0;
+  const noCash = result.cashProfit < 0;
   const denom = Math.max(result.price, result.totalCost, 0.01);
+  // Depois dos desembolsos vem a cauda: o seu tempo e o desgaste saem de
+  // dentro do caixa, e só o que fica depois deles é lucro de verdade.
   const segments = [
     ...result.deductions.map((d) => ({ key: d.key, value: d.value, cls: SEGMENT_COLOR[d.key] })),
-    {
-      key: "resultado",
-      value: Math.abs(result.profit),
-      cls: loss ? "bg-data-loss" : "bg-data-profit",
-    },
+    ...(noCash
+      ? [{ key: "semcaixa", value: Math.abs(result.cashProfit), cls: "bg-data-loss" }]
+      : [
+          { key: "tempo", value: result.timeCost, cls: "bg-data-time" },
+          { key: "desgaste", value: result.wearCost, cls: "bg-data-wear" },
+          {
+            key: "resultado",
+            value: Math.abs(result.profit),
+            cls: result.profit < 0 ? "bg-data-loss" : "bg-data-profit",
+          },
+        ]),
   ];
 
   return (
@@ -297,6 +360,9 @@ export function Breakdown({
 }) {
   const p = result.production;
   const kit = p.units > 1;
+  const loss = result.profit < 0;
+  const noCash = result.cashProfit < 0;
+  const meuTempo = result.timeCost > 0;
   /** Número curto em português: 4,53 h, 135 g. */
   const n = (x: number) => x.toLocaleString("pt-BR", { maximumFractionDigits: 2 });
   const perPiece = kit ? ` × ${p.units} peças` : "";
@@ -317,7 +383,7 @@ export function Breakdown({
     {
       label: "Máquina",
       value: p.machine,
-      note: `${n(p.hours)} h × ${brl(inputs.machineCostPerHour)}/h`,
+      note: `${n(p.hours)} h × ${brl(inputs.machineCostPerHour)}/h — desgaste, não sai do caixa`,
     },
     {
       label: "Impressões perdidas",
@@ -327,7 +393,9 @@ export function Breakdown({
     {
       label: "Mão de obra",
       value: p.labor,
-      note: `${inputs.laborMinutes} min${perPiece} × ${brl(inputs.laborCostPerHour)}/h`,
+      note: `${inputs.laborMinutes} min${perPiece} × ${brl(inputs.laborCostPerHour)}/h${
+        meuTempo ? " — seu tempo, não sai do caixa" : ""
+      }`,
     },
     {
       label: "Insumos extras",
@@ -337,8 +405,8 @@ export function Breakdown({
     { label: "Embalagem", value: p.packaging, note: "Uma por venda, não por peça" },
   ].filter((r) => r.value > 0.0001);
 
-  const monthly = monthlyUnits * result.profit;
-  const loss = result.profit < 0;
+  const monthly = monthlyUnits * result.cashProfit;
+  const monthlyFull = monthlyUnits * result.profit;
 
   const threshold = inputs.fixedFeeThreshold;
   const isFree = inputs.listingType === "gratuito";
@@ -358,11 +426,11 @@ export function Breakdown({
   // limite e, abaixo dele, morde uma fatia que nenhum percentual denuncia.
   const saleRows: { label: string; value: number; note: string }[] = [
     {
-      label: "Custo de produção",
-      value: p.total,
+      label: "Produção (o que sai do bolso)",
+      value: p.cash,
       note: kit
-        ? `As ${p.units} peças do anúncio: filamento, energia, máquina, falhas, trabalho e embalagem`
-        : "Filamento, energia, máquina, falhas, trabalho e embalagem",
+        ? `As ${p.units} peças do anúncio: filamento, energia, perdas, insumos e embalagem`
+        : "Filamento, energia, perdas, insumos e embalagem",
     },
     {
       label: "Comissão do anúncio",
@@ -444,7 +512,27 @@ export function Breakdown({
             ))}
             <tr className="border-t border-fg/25">
               <th scope="row" className="py-3 text-left font-medium">
-                {kit ? "Custo do anúncio" : "Custo por unidade"}
+                Sai do bolso{kit ? " por anúncio" : ""}
+              </th>
+              <td className="py-3 text-right font-medium tabular-nums">{brl(p.cash)}</td>
+              <td className="py-3 text-right tabular-nums text-fg-muted">
+                {p.total > 0 ? pct((p.cash / p.total) * 100, 0) : "—"}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" className="py-2 text-left font-normal text-fg-muted">
+                Não sai do bolso ({meuTempo ? "seu tempo + desgaste" : "desgaste"})
+              </th>
+              <td className="py-2 text-right tabular-nums text-fg-muted">
+                {brl(p.time + p.wear)}
+              </td>
+              <td className="py-2 text-right tabular-nums text-fg-muted">
+                {p.total > 0 ? pct(((p.time + p.wear) / p.total) * 100, 0) : "—"}
+              </td>
+            </tr>
+            <tr className="border-t border-fg/15">
+              <th scope="row" className="py-3 text-left font-medium">
+                Custo cheio{kit ? " do anúncio" : " por unidade"}
               </th>
               <td className="py-3 text-right font-medium tabular-nums">{brl(p.total)}</td>
               <td className="py-3 text-right tabular-nums text-fg-muted">100%</td>
@@ -452,7 +540,7 @@ export function Breakdown({
             {kit && (
               <tr>
                 <th scope="row" className="py-3 text-left font-normal text-fg-muted">
-                  Custo por peça
+                  Custo cheio por peça
                 </th>
                 <td className="py-3 text-right tabular-nums">{brl(p.perUnit)}</td>
                 <td className="py-3 text-right tabular-nums text-fg-muted">
@@ -532,19 +620,87 @@ export function Breakdown({
                 </td>
               </tr>
             ))}
+            {/* O caixa fecha aqui: daqui para baixo nada sai da conta hoje. */}
             <tr className="border-t border-fg/25">
               <th scope="row" className="py-3 text-left font-medium">
-                {kit
-                  ? loss
-                    ? "Prejuízo por anúncio"
-                    : "Lucro por anúncio"
-                  : loss
-                    ? "Prejuízo por unidade"
-                    : "Lucro por unidade"}
+                {noCash ? "Falta no caixa" : "Entra no caixa"}
               </th>
               <td
                 className={`py-3 text-right font-medium tabular-nums ${
-                  loss ? "text-data-loss" : "text-data-profit"
+                  noCash ? "text-data-loss" : "text-data-profit"
+                }`}
+              >
+                {brl(result.cashProfit)}
+              </td>
+              {kit && (
+                <td
+                  className={`w-24 py-3 text-right font-medium tabular-nums ${
+                    noCash ? "text-data-loss" : "text-data-profit"
+                  }`}
+                >
+                  {brl(result.cashProfitPerUnit)}
+                </td>
+              )}
+              <td
+                className={`py-3 text-right tabular-nums ${
+                  noCash ? "text-data-loss" : "text-data-profit"
+                }`}
+              >
+                {pct(result.cashMarginPct, 0)}
+              </td>
+            </tr>
+
+            {meuTempo && (
+              <tr className="border-b border-fg/10">
+                <th scope="row" className="py-2.5 pr-3 text-left font-normal align-top">
+                  Seu tempo
+                  <span className="mt-0.5 block max-w-[46ch] text-[0.75rem] leading-snug text-fg-muted">
+                    {inputs.laborMinutes} min{kit ? ` × ${p.units} peças` : ""} a{" "}
+                    {brl(inputs.laborCostPerHour)}/h — não sai da conta, sai de você
+                  </span>
+                </th>
+                <td className="py-2.5 text-right tabular-nums align-top whitespace-nowrap">
+                  − {brl(result.timeCost)}
+                </td>
+                {kit && (
+                  <td className="w-24 py-2.5 text-right tabular-nums align-top whitespace-nowrap">
+                    − {brl(result.timeCost / p.units)}
+                  </td>
+                )}
+                <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted align-top">
+                  {result.price > 0 ? pct((result.timeCost / result.price) * 100, 0) : "—"}
+                </td>
+              </tr>
+            )}
+            <tr className="border-b border-fg/10">
+              <th scope="row" className="py-2.5 pr-3 text-left font-normal align-top">
+                Desgaste da máquina
+                <span className="mt-0.5 block max-w-[46ch] text-[0.75rem] leading-snug text-fg-muted">
+                  {n(p.hours)} h a {brl(inputs.machineCostPerHour)}/h, mais as perdas — não sai
+                  hoje, sai quando o bico ou a máquina morrer
+                </span>
+              </th>
+              <td className="py-2.5 text-right tabular-nums align-top whitespace-nowrap">
+                − {brl(result.wearCost)}
+              </td>
+              {kit && (
+                <td className="w-24 py-2.5 text-right tabular-nums align-top whitespace-nowrap">
+                  − {brl(result.wearCost / p.units)}
+                </td>
+              )}
+              <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted align-top">
+                {result.price > 0 ? pct((result.wearCost / result.price) * 100, 0) : "—"}
+              </td>
+            </tr>
+
+            <tr className="border-t border-fg/25">
+              <th scope="row" className="py-3 text-left font-medium">
+                {loss ? "Prejuízo cheio" : "Lucro cheio"}
+                {kit ? " por anúncio" : ""}
+              </th>
+              <td
+                className={`py-3 text-right font-medium tabular-nums ${
+                  loss ? "text-data-loss" : "text-fg"
                 }`}
               >
                 {brl(result.profit)}
@@ -552,16 +708,14 @@ export function Breakdown({
               {kit && (
                 <td
                   className={`w-24 py-3 text-right font-medium tabular-nums ${
-                    loss ? "text-data-loss" : "text-data-profit"
+                    loss ? "text-data-loss" : "text-fg"
                   }`}
                 >
                   {brl(result.profitPerUnit)}
                 </td>
               )}
               <td
-                className={`py-3 text-right tabular-nums ${
-                  loss ? "text-data-loss" : "text-data-profit"
-                }`}
+                className={`py-3 text-right tabular-nums ${loss ? "text-data-loss" : "text-fg"}`}
               >
                 {pct(result.marginPct, 0)}
               </td>
@@ -591,24 +745,33 @@ export function Breakdown({
         </p>
         <dl className="mt-5 space-y-3">
           <Line label="Faturamento" value={brl(monthlyUnits * result.price)} />
-          <Line label="Custo total" value={brl(monthlyUnits * result.totalCost)} />
           <Line
-            label={monthly < 0 ? "Prejuízo no mês" : "Lucro no mês"}
+            label="Sai do bolso"
+            value={brl(monthlyUnits * (result.cashCost + result.marketplaceTotal + result.logistics + result.tax + result.ads + result.other))}
+          />
+          <Line
+            label={monthly < 0 ? "Falta no caixa" : "Entra no caixa"}
             value={brl(monthly)}
             strong
             tone={monthly < 0 ? "loss" : "profit"}
           />
-          {kit && (
-            <Line label="Peças impressas" value={`${monthlyUnits * p.units} un.`} />
-          )}
           <Line
-            label="Horas de impressora"
-            value={`${(monthlyUnits * p.hours).toFixed(0)} h`}
+            label={monthlyFull < 0 ? "Prejuízo cheio" : "Lucro cheio"}
+            value={brl(monthlyFull)}
           />
+          {meuTempo && (
+            <Line
+              label="Seu trabalho no mês"
+              value={`${((monthlyUnits * inputs.laborMinutes * p.units) / 60).toFixed(1)} h`}
+            />
+          )}
+          {kit && <Line label="Peças impressas" value={`${monthlyUnits * p.units} un.`} />}
+          <Line label="Horas de impressora" value={`${(monthlyUnits * p.hours).toFixed(0)} h`} />
         </dl>
         <p className="mt-4 text-[0.75rem] leading-relaxed text-fg-muted">
-          A projeção não desconta custos fixos do negócio (aluguel, software, pró-labore). Ela
-          mostra o que sobra das vendas — não o lucro da empresa.
+          A projeção não desconta custos fixos do negócio (aluguel, software, pró-labore). E
+          vender {monthlyUnits} por mês é demanda, não impressão — a máquina aguentar não
+          significa o mercado comprar.
         </p>
       </div>
     </div>

@@ -24,12 +24,16 @@ const faq = [
     a: "É o percentual de impressões que não viram produto. Se 10% falham, você imprime onze peças para vender dez — e o custo das onze precisa caber no preço das dez.",
   },
   {
+    q: "Devo contar a minha própria hora no custo?",
+    a: "As duas coisas, em contas separadas. O caixa é o dinheiro que entra: preço menos filamento, embalagem, taxas e imposto. O seu trabalho não está aí, porque ele não sai da sua conta bancária. Mas ele sai de você — por isso a ferramenta mostra quanto a sua hora rendeu naquela venda. Se o caixa é positivo e a sua hora rende bem, a venda vale a pena. Se o caixa só fica de pé porque você não se paga, você tem um emprego mal pago, não um produto.",
+  },
+  {
     q: "Vender em kit compensa?",
     a: "Quase sempre, em peça barata. Filamento, energia, máquina e acabamento multiplicam por peça, mas embalagem, frete, logística e custo fixo do Mercado Livre são pagos uma vez por venda. Uma peça de 35 g vendida a R$ 21 pode dar prejuízo; as mesmas três num kit de R$ 63 pagam um custo fixo só e sobram alguns reais por unidade. Vale para um anúncio que vende o conjunto como um produto só — manter estoque de três unidades no anúncio avulso não dilui nada.",
   },
   {
     q: "Qual margem é saudável para impressão 3D no Mercado Livre?",
-    a: "Abaixo de 10% de margem líquida qualquer devolução, reajuste de frete ou mudança de comissão apaga o lucro. Entre 10% e 20% a operação se sustenta; acima de 20% há folga para promoções e para investir em anúncios.",
+    a: "Abaixo de 10% de margem de caixa qualquer devolução, reajuste de frete ou mudança de comissão apaga o lucro. Entre 10% e 20% a operação se sustenta; acima de 20% há folga para promoções e para investir em anúncios.",
   },
 ];
 

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   DEFAULT_INPUTS,
+  fullBreakEvenPrice,
   FILAMENT_PRESETS,
   LISTING_TYPES,
   breakEvenPrice,
@@ -79,6 +80,7 @@ export function PricingCalculator() {
   const result = useMemo(() => calculate(inputs), [inputs]);
   const suggested = useMemo(() => solvePrice(inputs, prefs.targetMargin), [inputs, prefs.targetMargin]);
   const breakEven = useMemo(() => breakEvenPrice(inputs), [inputs]);
+  const fullBreakEven = useMemo(() => fullBreakEvenPrice(inputs), [inputs]);
 
   const freeShippingRisk =
     inputs.shippingRule === "comprador" && inputs.price >= inputs.fixedFeeThreshold;
@@ -95,6 +97,7 @@ export function PricingCalculator() {
             onTargetMargin={(n) => setPrefs((p) => ({ ...p, targetMargin: n }))}
             suggested={suggested}
             breakEven={breakEven}
+            fullBreakEven={fullBreakEven}
             onUsePrice={(n) => set("price")(Math.round(n * 100) / 100)}
           >
             <PriceControl
@@ -184,7 +187,7 @@ export function PricingCalculator() {
           <Panel
             step="02"
             title="Máquina, energia e trabalho"
-            hint="A hora de impressora não é de graça: bico, correia, placa e a própria máquina se gastam imprimindo."
+            hint="A hora de impressora não é de graça: bico, correia, placa e a própria máquina se gastam imprimindo. Esse desgaste não sai do caixa hoje — sai quando alguma coisa quebrar."
           >
             <NumberField
               label="Consumo médio da impressora"
@@ -207,6 +210,21 @@ export function PricingCalculator() {
               unit="R$/h"
               hint="Preço da máquina ÷ horas de vida útil + peças de reposição."
             />
+            <SelectField<"meu" | "pago">
+              label="Quem faz o pós-processamento"
+              value={inputs.laborMode}
+              onChange={set("laborMode")}
+              options={[
+                { value: "meu", label: "Sou eu" },
+                { value: "pago", label: "Pago alguém" },
+              ]}
+              span={2}
+              hint={
+                inputs.laborMode === "meu"
+                  ? "O seu trabalho não sai do caixa — mas continua sendo medido, para responder se a venda paga o seu tempo."
+                  : "Salário ou diária de quem faz entra como desembolso, igual ao filamento."
+              }
+            />
             <NumberField
               label="Pós-processamento por peça"
               value={inputs.laborMinutes}
@@ -215,10 +233,15 @@ export function PricingCalculator() {
               hint="Remover suporte, lixar, montar, embalar."
             />
             <NumberField
-              label="Valor da sua hora"
+              label={inputs.laborMode === "meu" ? "Quanto vale a sua hora" : "Custo da hora de quem faz"}
               value={inputs.laborCostPerHour}
               onChange={set("laborCostPerHour")}
               unit="R$/h"
+              hint={
+                inputs.laborMode === "meu"
+                  ? "Serve de régua: abaixo disso, a venda não paga o seu tempo."
+                  : undefined
+              }
             />
             <NumberField
               label="Insumos extras por peça"

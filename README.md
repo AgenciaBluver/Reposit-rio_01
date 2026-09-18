@@ -145,6 +145,24 @@ o custo, **lucro por hora de impressora**, composição visual do preço,
 custo de produção linha a linha, projeção mensal por volume, preço de
 equilíbrio e o caminho inverso — o preço necessário para uma margem alvo.
 
+**Três camadas de custo, não uma**
+
+O custo de uma peça impressa não é um número só, e tratar como se fosse
+reprova produto bom e aprova produto ruim:
+
+| Camada | O que é | Sai da conta? |
+|---|---|---|
+| **Desembolso** | filamento, energia, perdas, insumos, embalagem, taxas, imposto, frete | sim, hoje |
+| **Seu tempo** | o pós-processamento que você faz | não — sai de você |
+| **Desgaste** | bico, correia, placa e a própria máquina | não hoje — sai quando quebrar |
+
+Daí saem os dois números que a tela mostra juntos: **caixa** (preço menos o
+desembolso — o que entra no banco) e **lucro cheio** (caixa menos o seu
+tempo e o desgaste). Quando o trabalho é seu, a ferramenta também responde
+**quanto a sua hora rendeu** naquela venda: é a régua que separa "vale a
+pena" de "emprego mal pago". O seletor no bloco 02 troca para o modo "pago
+alguém", e aí a mão de obra vira desembolso como qualquer outro.
+
 **Kit**
 
 Um anúncio pode vender mais de uma peça: `kitQty` para N unidades da mesma
@@ -155,17 +173,20 @@ logística e custo fixo do Mercado Livre são **por venda**. O preço passa a
 ser o do anúncio, e o resultado aparece nas duas leituras — por anúncio e
 por peça.
 
-**As três decisões de modelagem que merecem atenção**
+**As quatro decisões de modelagem que merecem atenção**
 
-1. **Taxa de falha.** Quem perde 10% das impressões produz onze peças
+1. **A perda das impressões falhadas é repartida** entre as camadas que a
+   causaram: o filamento queimado é desembolso, a hora de máquina jogada
+   fora é desgaste. Sem isso, o caixa ficaria pessimista sem motivo.
+2. **Taxa de falha.** Quem perde 10% das impressões produz onze peças
    para vender dez. O custo é diluído nas peças boas
    (`custo × f / (1 − f)`), não somado como percentual simples — e incide
    só sobre material, energia e máquina, nunca sobre o acabamento de uma
    peça que não existiu.
-2. **O kit não é estoque.** A diluição só existe quando o anúncio vende o
+3. **O kit não é estoque.** A diluição só existe quando o anúncio vende o
    conjunto como um produto só. Manter três unidades em estoque num anúncio
    avulso não dilui nada: cada venda paga as taxas de novo.
-3. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
+4. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
    acima dele o custo fixo some e o frete vira do vendedor. Como as duas
    taxas são funções em degrau do próprio preço, o preço-alvo não sai de
    uma fórmula fechada: `solvePrice()` resolve a equação dentro de cada
