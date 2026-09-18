@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   DEFAULT_INPUTS,
-  fullBreakEvenPrice,
   FILAMENT_PRESETS,
   LISTING_TYPES,
   breakEvenPrice,
@@ -80,7 +79,6 @@ export function PricingCalculator() {
   const result = useMemo(() => calculate(inputs), [inputs]);
   const suggested = useMemo(() => solvePrice(inputs, prefs.targetMargin), [inputs, prefs.targetMargin]);
   const breakEven = useMemo(() => breakEvenPrice(inputs), [inputs]);
-  const fullBreakEven = useMemo(() => fullBreakEvenPrice(inputs), [inputs]);
 
   const freeShippingRisk =
     inputs.shippingRule === "comprador" && inputs.price >= inputs.fixedFeeThreshold;
@@ -97,7 +95,6 @@ export function PricingCalculator() {
             onTargetMargin={(n) => setPrefs((p) => ({ ...p, targetMargin: n }))}
             suggested={suggested}
             breakEven={breakEven}
-            fullBreakEven={fullBreakEven}
             onUsePrice={(n) => set("price")(Math.round(n * 100) / 100)}
           >
             <PriceControl
@@ -113,7 +110,7 @@ export function PricingCalculator() {
         <div className="space-y-gutter lg:col-start-1 lg:row-start-1">
           <Panel
             step="01"
-            title="A peça"
+            title="O produto"
             hint="O custo do material sai do preço do quilo: cada grama impressa vale preço do rolo dividido por mil."
           >
             <SelectField
@@ -186,8 +183,8 @@ export function PricingCalculator() {
 
           <Panel
             step="02"
-            title="Máquina, energia e insumos"
-            hint="A hora de impressora não é de graça: bico, correia, placa e a própria máquina se gastam imprimindo. Esse desgaste não sai do caixa hoje — sai quando alguma coisa quebrar. O seu trabalho não entra em custo nenhum."
+            title="Custos de produção"
+            hint="A hora de impressora não é de graça: bico, correia, placa e a própria máquina se gastam imprimindo. Seu trabalho não entra: numa operação de uma pessoa só ele não sai da conta."
           >
             <NumberField
               label="Consumo médio da impressora"
@@ -197,21 +194,21 @@ export function PricingCalculator() {
               hint="Mesa aquecida puxa mais: 100–150 W em FDM comum."
             />
             <NumberField
-              label="Tarifa de energia"
+              label="Custo da eletricidade"
               value={inputs.energyPricePerKwh}
               onChange={set("energyPricePerKwh")}
               unit="R$/kWh"
               hint="Some impostos e bandeira — é o valor da sua conta."
             />
             <NumberField
-              label="Depreciação e manutenção"
+              label="Custo da máquina por hora"
               value={inputs.machineCostPerHour}
               onChange={set("machineCostPerHour")}
               unit="R$/h"
               hint="Preço da máquina ÷ horas de vida útil + peças de reposição."
             />
             <NumberField
-              label="Insumos extras por peça"
+              label="Custo de insumos por peça"
               value={inputs.extrasCost}
               onChange={set("extrasCost")}
               unit="R$"
@@ -219,7 +216,7 @@ export function PricingCalculator() {
               hint="Ímãs, parafusos, tinta, cola, encarte."
             />
             <NumberField
-              label="Embalagem por anúncio"
+              label="Custo de embalagem por anúncio"
               value={inputs.packagingCost}
               onChange={set("packagingCost")}
               unit="R$"
@@ -290,7 +287,7 @@ export function PricingCalculator() {
               hint={`Frete no seu bolso hoje: ${brl(result.shipping)}.`}
             />
             <NumberField
-              label="Logística por venda"
+              label="Custo de logística"
               value={inputs.logisticsCost}
               onChange={set("logisticsCost")}
               unit="R$"

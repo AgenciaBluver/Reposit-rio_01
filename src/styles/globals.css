@@ -44,8 +44,6 @@
 
   /* Escala de dados — usada só na calculadora de precificação. */
   --color-data-cost: var(--bv-data-cost);
-  --color-data-time: var(--bv-data-time);
-  --color-data-wear: var(--bv-data-wear);
   --color-data-fee: var(--bv-data-fee);
   --color-data-ship: var(--bv-data-ship);
   --color-data-tax: var(--bv-data-tax);

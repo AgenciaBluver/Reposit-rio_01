@@ -4,20 +4,15 @@
    Núcleo de cálculo puro: nenhuma função aqui conhece React, DOM ou
    formatação. A interface só lê o que este arquivo devolve.
 
-   O custo tem duas camadas que não se misturam:
-   · DESEMBOLSO — dinheiro que sai da conta: filamento, energia, insumos,
-     embalagem, taxas, imposto, frete.
-   · DESGASTE — bico, correia, placa e a própria máquina. Não sai hoje;
-     sai quando quebrar.
-   MÃO DE OBRA NÃO É CUSTO AQUI. Quem imprime, tira o suporte e embala é o
-   dono da operação: esse trabalho não sai da conta bancária e, por decisão
-   de projeto, não entra em custo nenhum.
-
    A conta tem dois lados que não se misturam:
-   · CUSTO DE PRODUÇÃO — não depende do preço de venda (filamento, energia,
-     máquina, falhas, mão de obra, embalagem).
-   · CUSTO DE VENDA — depende do preço (comissão, custo fixo por faixa,
-     frete, imposto, ads).
+   · CUSTO DO PRODUTO — não depende do preço de venda: material, eletricidade,
+     máquina, peças perdidas, insumos e embalagem.
+   · CUSTOS DA VENDA — dependem do preço: comissão, custo fixo por faixa,
+     frete, imposto, publicidade.
+   Preço menos os dois = LUCRO POR PRODUTO.
+
+   MÃO DE OBRA NÃO É CUSTO AQUI. Quem imprime, tira o suporte e embala é o
+   dono da operação: esse trabalho não sai da conta e não entra em custo.
 
    ⚠ VALORES PADRÃO: comissões e custo fixo mudam por categoria e por
    política do Mercado Livre. Todos os números são editáveis na interface —
@@ -162,11 +157,8 @@ export type ProductionCost = {
   failure: number;
   extras: number;
   packaging: number;
+  /** Custo do produto: soma de tudo que é preciso para a peça existir. */
   total: number;
-  /** Desembolso: o que sai da conta para produzir. É a base do caixa. */
-  cash: number;
-  /** Desgaste da máquina, incluindo a parte das impressões perdidas. */
-  wear: number;
   /** Peças impressas neste anúncio (soma das quantidades do kit). */
   units: number;
   /** Gramas e horas somadas de todas as peças do anúncio. */
@@ -206,23 +198,17 @@ export function productionCost(i: PricingInputs): ProductionCost {
   const energy = (safe(i.printerWatts) / 1000) * hours * safe(i.energyPricePerKwh);
   const machine = safe(i.machineCostPerHour) * hours;
 
-  // A perda das impressões falhadas é repartida entre as duas camadas que
-  // a causaram: o filamento queimado é desembolso, a hora de máquina
-  // jogada fora é desgaste.
+  // Quem perde 6% das impressões produz 106 para vender 100: o custo das
+  // perdidas entra no preço das boas.
   const f = clamp(safe(i.failureRatePct) / 100, 0, 0.95);
-  const lost = f / (1 - f);
-  const failureCash = (material + energy) * lost;
-  const failureWear = machine * lost;
-  const failure = failureCash + failureWear;
+  const failure = (material + energy + machine) * (f / (1 - f));
 
   // Insumos são POR PEÇA; embalagem é POR ANÚNCIO — é o que faz o kit sair
   // mais barato por unidade do que três vendas separadas.
   const extras = safe(i.extrasCost) * units;
   const packaging = safe(i.packagingCost);
 
-  const cash = material + energy + failureCash + extras + packaging;
-  const wear = machine + failureWear;
-  const total = cash + wear;
+  const total = material + energy + machine + failure + extras + packaging;
 
   return {
     material,
@@ -232,8 +218,6 @@ export function productionCost(i: PricingInputs): ProductionCost {
     extras,
     packaging,
     total,
-    cash,
-    wear,
     units,
     weightG,
     hours,
@@ -253,7 +237,7 @@ export function fixedFeeFor(price: number, i: PricingInputs): number {
   return safe(c);
 }
 
-/** Frete que sai do bolso do vendedor. */
+/** Frete que o vendedor paga. */
 export function shippingFor(price: number, i: PricingInputs): number {
   const sellerPays =
     i.shippingRule === "vendedor" ||
@@ -290,28 +274,17 @@ export type PricingResult = {
   other: number;
   /** Tudo que o Mercado Livre retém do preço. */
   marketplaceTotal: number;
-  /** Custo total do produto vendido, incluindo taxas e impostos. */
+  /** Preço menos o lucro: custo do produto somado aos custos da venda. */
   totalCost: number;
   /** O que o Mercado Livre repassa antes dos custos do vendedor. */
   netReceipt: number;
-  /** LUCRO APÓS DESGASTE: o caixa menos o que a máquina se gastou. */
+  /** LUCRO POR PRODUTO: preço menos o custo do produto e os custos da venda. */
   profit: number;
-  /** Lucro sobre o preço de venda. */
+  /** Margem de lucro: o lucro sobre o preço de venda. */
   marginPct: number;
-  /** CAIXA: o que entra na conta nesta venda — preço menos tudo que sai
-   *  do bolso. Não desconta o desgaste da máquina, que não sai hoje. */
-  cashProfit: number;
-  cashMarginPct: number;
-  /** Caixa dividido pelas horas de impressora — o gargalo da operação. */
-  cashPerPrintHour: number;
-  cashProfitPerUnit: number;
-  /** Quanto do preço é desembolso de produção. */
-  cashCost: number;
-  /** A camada que não sai do bolso hoje. */
-  wearCost: number;
-  /** Preço dividido pelo custo de produção. */
+  /** Preço dividido pelo custo do produto. */
   markup: number;
-  /** Retorno sobre o custo de produção. */
+  /** Retorno sobre o custo do produto. */
   roiPct: number;
   /** Quanto cada hora de impressora deixa de lucro nesta venda. */
   profitPerPrintHour: number;
@@ -339,11 +312,7 @@ export function calculate(i: PricingInputs): PricingResult {
   const marketplaceTotal = commission + fixedFee + shipping;
   const totalCost = production.total + marketplaceTotal + logistics + tax + ads + other;
 
-  // Tudo que o marketplace retém é desembolso — sai da conta na hora do
-  // repasse. O que separa caixa de lucro é só o desgaste da máquina.
-  const outOfPocket = production.cash + marketplaceTotal + logistics + tax + ads + other;
-  const cashProfit = price - outOfPocket;
-  const profit = cashProfit - production.wear;
+  const profit = price - totalCost;
 
   return {
     price,
@@ -360,12 +329,6 @@ export function calculate(i: PricingInputs): PricingResult {
     netReceipt: price - marketplaceTotal,
     profit,
     marginPct: price > 0 ? (profit / price) * 100 : 0,
-    cashProfit,
-    cashMarginPct: price > 0 ? (cashProfit / price) * 100 : 0,
-    cashPerPrintHour: production.hours > 0 ? cashProfit / production.hours : 0,
-    cashProfitPerUnit: production.units > 0 ? cashProfit / production.units : cashProfit,
-    cashCost: production.cash,
-    wearCost: production.wear,
     markup: production.total > 0 ? price / production.total : 0,
     roiPct: production.total > 0 ? (profit / production.total) * 100 : 0,
     profitPerPrintHour: production.hours > 0 ? profit / production.hours : 0,
@@ -373,11 +336,11 @@ export function calculate(i: PricingInputs): PricingResult {
     pricePerUnit: production.units > 0 ? price / production.units : price,
     profitPerUnit: production.units > 0 ? profit / production.units : profit,
     deductions: ([
-      { key: "producao", label: "Produção (desembolso)", value: production.cash, tone: "cost" },
+      { key: "producao", label: "Custo do produto", value: production.total, tone: "cost" },
       { key: "comissao", label: "Comissão do anúncio", value: commission, tone: "fee" },
-      { key: "fixo", label: "Custo fixo por venda", value: fixedFee, tone: "fee" },
-      { key: "frete", label: "Frete pago pelo vendedor", value: shipping, tone: "ship" },
-      { key: "logistica", label: "Logística por venda", value: logistics, tone: "ship" },
+      { key: "fixo", label: "Custo fixo do anúncio", value: fixedFee, tone: "fee" },
+      { key: "frete", label: "Custo de frete", value: shipping, tone: "ship" },
+      { key: "logistica", label: "Custo de logística", value: logistics, tone: "ship" },
       { key: "imposto", label: "Imposto", value: tax, tone: "tax" },
       { key: "ads", label: "Publicidade", value: ads, tone: "ads" },
       { key: "outros", label: "Outros custos", value: other, tone: "tax" },
@@ -397,15 +360,11 @@ export function calculate(i: PricingInputs): PricingResult {
 export function solvePrice(
   i: PricingInputs,
   targetMarginPct: number,
-  /** "caixa" mira o dinheiro que entra; "cheio" mira o lucro depois do
-   *  desgaste da máquina. */
-  basis: "caixa" | "cheio" = "caixa",
 ): { price: number; atBoundary: boolean } | null {
   const k = 1 - percentualLoad(i) - targetMarginPct / 100;
   if (k <= 0.0001) return null; // taxas + margem desejada consomem 100% do preço
 
-  const p = productionCost(i);
-  const base = (basis === "caixa" ? p.cash : p.total) + safe(i.logisticsCost);
+  const base = productionCost(i).total + safe(i.logisticsCost);
   const threshold = Math.max(safe(i.fixedFeeThreshold), 0.01);
   const bounds = Array.from(
     new Set([0, FIXED_FEE_BANDS[0], FIXED_FEE_BANDS[1], threshold]),
@@ -426,22 +385,16 @@ export function solvePrice(
   // Sem solução dentro das faixas: a menor fronteira que já entrega a
   // margem é o preço certo.
   for (const b of bounds.slice(1)) {
-    const r = calculate({ ...i, price: b });
-    const margin = basis === "caixa" ? r.cashMarginPct : r.marginPct;
-    if (margin >= targetMarginPct - 1e-9) return { price: b, atBoundary: true };
+    if (calculate({ ...i, price: b }).marginPct >= targetMarginPct - 1e-9) {
+      return { price: b, atBoundary: true };
+    }
   }
   return null;
 }
 
-/** Preço em que o caixa é exatamente zero — abaixo dele você tira dinheiro
- *  do bolso para vender. */
+/** Preço mínimo: abaixo dele a venda dá prejuízo. */
 export function breakEvenPrice(i: PricingInputs) {
-  return solvePrice(i, 0, "caixa");
-}
-
-/** Preço em que a venda também cobre o desgaste da máquina. */
-export function fullBreakEvenPrice(i: PricingInputs) {
-  return solvePrice(i, 0, "cheio");
+  return solvePrice(i, 0);
 }
 
 /* ── Formatação ─────────────────────────────────────────────────────── */
@@ -459,9 +412,9 @@ export const pct = (n: number, digits = 1) =>
     maximumFractionDigits: digits,
   })}%`;
 
-/** Leitura honesta da margem — use a de CAIXA quando o trabalho é seu.
- *  Os limites vêm da prática de marketplace: abaixo de 10% qualquer
- *  devolução ou reajuste de frete come o lucro. */
+/** Leitura honesta da margem de lucro. Os limites vêm da prática de
+ *  marketplace: abaixo de 10% qualquer devolução ou reajuste de frete
+ *  come o lucro. */
 export function marginVerdict(marginPct: number) {
   if (marginPct < 0) return { label: "Prejuízo", tone: "loss" as const };
   if (marginPct < 10) return { label: "Apertado", tone: "warn" as const };

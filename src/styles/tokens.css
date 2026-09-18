@@ -64,9 +64,7 @@
      gradiente da marca e nunca aparece em elemento institucional.
      Todas verificadas sobre a superfície escura, onde os gráficos vivem
      (≥ 3:1, suficiente para elemento não textual).                      */
-  --bv-data-cost:   #8A8B90;  /* desembolso de produção — neutro        */
-  --bv-data-time:   #C9CBD1;  /* seu tempo — não sai do caixa           */
-  --bv-data-wear:   #55575C;  /* desgaste da máquina — não sai hoje     */
+  --bv-data-cost:   #8A8B90;  /* custo do produto — neutro              */
   --bv-data-fee:    #007AEE;  /* comissão e custo fixo do marketplace   */
   --bv-data-ship:   #00B4CE;  /* frete e logística                      */
   --bv-data-tax:    #9B7BE0;  /* imposto e outros                       */

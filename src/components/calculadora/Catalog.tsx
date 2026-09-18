@@ -8,7 +8,8 @@ import { Button } from "./Fields";
    CATÁLOGO
    ────────────────────────────────────────────────────────────────────────
    A calculadora só vira ferramenta de gestão quando os produtos ficam lado
-   a lado: é comparando margem por peça que se decide o que continua no ar.
+   a lado: é comparando margem de lucro por produto que se decide o que
+   continua no ar.
    Tudo vive no navegador de quem usa (localStorage). Nada sai daqui.
    ════════════════════════════════════════════════════════════════════════ */
 
@@ -86,10 +87,11 @@ export function Catalog({
                 <th scope="col" className="py-2.5 pr-3 font-medium">Produto</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Peças</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Peso</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Custo</th>
                 <th scope="col" className="py-2.5 pr-3 text-right font-medium">Preço</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Caixa</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Caixa/h</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Lucro cheio</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Lucro</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Margem</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-medium">Lucro/h</th>
                 <th scope="col" className="py-2.5 text-right font-medium">
                   <span className="sr-only">Ações</span>
                 </th>
@@ -98,7 +100,7 @@ export function Catalog({
             <tbody>
               {items.map((item) => {
                 const r = calculate(item.inputs);
-                const verdict = marginVerdict(r.cashMarginPct);
+                const verdict = marginVerdict(r.marginPct);
                 return (
                   <tr key={item.id} className="border-b border-fg/10 last:border-0">
                     <th scope="row" className="py-3 pr-3 text-left font-normal">
@@ -110,19 +112,18 @@ export function Catalog({
                     <td className="py-3 pr-3 text-right tabular-nums text-fg-muted">
                       {r.production.weightG.toLocaleString("pt-BR", { maximumFractionDigits: 0 })} g
                     </td>
+                    <td className="py-3 pr-3 text-right tabular-nums">
+                      {brl(r.production.total)}
+                    </td>
                     <td className="py-3 pr-3 text-right tabular-nums">{brl(r.price)}</td>
                     <td className={`py-3 pr-3 text-right tabular-nums ${TONE[verdict.tone]}`}>
-                      {brl(r.cashProfit)}
+                      {brl(r.profit)}
                     </td>
                     <td className={`py-3 pr-3 text-right tabular-nums ${TONE[verdict.tone]}`}>
-                      {brl(r.cashPerPrintHour)}
+                      {pct(r.marginPct, 1)}
                     </td>
-                    <td
-                      className={`py-3 pr-3 text-right tabular-nums ${
-                        r.profit < 0 ? "text-data-loss" : "text-fg-muted"
-                      }`}
-                    >
-                      {brl(r.profit)}
+                    <td className="py-3 pr-3 text-right tabular-nums text-fg-muted">
+                      {brl(r.profitPerPrintHour)}
                     </td>
                     <td className="py-3 text-right whitespace-nowrap">
                       <button
@@ -158,17 +159,16 @@ function exportCsv(items: SavedProduct[]) {
     "Peças no anúncio",
     "Peso (g)",
     "Horas de impressão",
-    "Desembolso de produção",
+    "Custo do produto",
     "Preço de venda",
     "Taxas do Mercado Livre",
     "Imposto",
     "Publicidade",
-    "Caixa por anúncio",
-    "Caixa por peça",
-    "Caixa por hora de impressora",
-    "Margem de caixa (%)",
-    "Desgaste da máquina",
-    "Lucro cheio",
+    "Lucro por anúncio",
+    "Lucro por peça",
+    "Margem de lucro (%)",
+    "Markup",
+    "Lucro por hora de impressora",
   ];
   const lines = items.map((item) => {
     const r = calculate(item.inputs);
@@ -177,17 +177,16 @@ function exportCsv(items: SavedProduct[]) {
       String(r.units),
       num(r.production.weightG),
       num(r.production.hours),
-      num(r.cashCost),
+      num(r.production.total),
       num(r.price),
       num(r.marketplaceTotal + r.logistics),
       num(r.tax),
       num(r.ads),
-      num(r.cashProfit),
-      num(r.cashProfitPerUnit),
-      num(r.cashPerPrintHour),
-      num(r.cashMarginPct),
-      num(r.wearCost),
       num(r.profit),
+      num(r.profitPerUnit),
+      num(r.marginPct),
+      num(r.markup),
+      num(r.profitPerPrintHour),
     ].join(";");
   });
 

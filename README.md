@@ -135,32 +135,33 @@ envio de dados. O que a pessoa digita é salvo no `localStorage` dela.
 
 | Bloco | Campos |
 |---|---|
-| A peça | preço do quilo do filamento (padrão R$ 100), peso em gramas, perda de material, tempo de impressão, taxa de falha, **composição do kit** |
-| Máquina e insumos | consumo em watts, tarifa de kWh, depreciação por hora, insumos extras, embalagem |
+| O produto | preço do quilo do filamento (padrão R$ 100), peso em gramas, perda de material, tempo de impressão, taxa de falha, **composição do kit** |
+| Custos de produção | consumo em watts, custo da eletricidade, custo da máquina por hora, insumos, embalagem |
 | Anúncio e frete | tipo de anúncio (Grátis/Clássico/Premium), comissão, quem paga o frete, custo do frete, desconto de reputação, logística por unidade |
 | Impostos e extras | imposto, publicidade, outros percentuais, faixas de custo fixo do marketplace |
 
-**O que sai**: caixa e margem de caixa por unidade, lucro após desgaste,
-markup, **caixa por hora de impressora**, composição visual do preço,
-custo de produção linha a linha, projeção mensal por volume, preço de
-equilíbrio e o caminho inverso — o preço necessário para uma margem alvo.
+**O que sai**: lucro por produto, margem de lucro, markup, **lucro por hora
+de impressora**, composição visual do preço,
+custo do produto linha a linha, projeção mensal por volume, preço mínimo e
+o caminho inverso — o preço necessário para uma margem de lucro alvo.
 
-**Mão de obra não é custo aqui**
+**Vocabulário: o do balcão, não o da contabilidade**
 
-Numa operação de uma pessoa só, o trabalho de imprimir, tirar suporte e
-embalar não sai da conta bancária. Cobrar isso como despesa reprova produto
-que dá dinheiro de verdade — então a ferramenta simplesmente não tem essa
-linha. Sobram duas camadas:
+A ferramenta usa os termos que quem vende usa, e só eles:
 
-| Camada | O que é | Sai da conta? |
-|---|---|---|
-| **Desembolso** | filamento, energia, perdas, insumos, embalagem, taxas, imposto, frete | sim, hoje |
-| **Desgaste** | bico, correia, placa e a própria máquina | não hoje — sai quando quebrar |
+| Termo | O que é |
+|---|---|
+| **Custo do produto** | material, eletricidade, máquina, peças perdidas, insumos e embalagem |
+| **Custos da venda** | comissão, custo fixo, frete, logística, imposto, publicidade |
+| **Lucro por produto** | preço menos os dois |
+| **Margem de lucro** | lucro ÷ preço |
+| **Markup** | preço ÷ custo do produto |
 
-Daí saem os dois números que a tela mostra juntos: **caixa** (preço menos o
-desembolso — o que entra no banco) e **lucro após desgaste**. O gargalo da
-operação é a máquina, não a pessoa, por isso a métrica que ordena tudo é
-**caixa por hora de impressora**.
+**Mão de obra não é custo.** Numa operação de uma pessoa só, o trabalho de
+imprimir, tirar suporte e embalar não sai da conta — cobrar isso como
+despesa reprova produto que dá dinheiro de verdade. A linha não existe no
+modelo. O gargalo é a máquina, não a pessoa: por isso a métrica de
+produtividade é **lucro por hora de impressora**.
 
 **Kit**
 
@@ -172,20 +173,17 @@ logística e custo fixo do Mercado Livre são **por venda**. O preço passa a
 ser o do anúncio, e o resultado aparece nas duas leituras — por anúncio e
 por peça.
 
-**As quatro decisões de modelagem que merecem atenção**
+**As três decisões de modelagem que merecem atenção**
 
-1. **A perda das impressões falhadas é repartida** entre as camadas que a
-   causaram: o filamento queimado é desembolso, a hora de máquina jogada
-   fora é desgaste. Sem isso, o caixa ficaria pessimista sem motivo.
-2. **Taxa de falha.** Quem perde 10% das impressões produz onze peças
+1. **Taxa de falha.** Quem perde 10% das impressões produz onze peças
    para vender dez. O custo é diluído nas peças boas
    (`custo × f / (1 − f)`), não somado como percentual simples — e incide
    só sobre material, energia e máquina, nunca sobre o acabamento de uma
    peça que não existiu.
-3. **O kit não é estoque.** A diluição só existe quando o anúncio vende o
+2. **O kit não é estoque.** A diluição só existe quando o anúncio vende o
    conjunto como um produto só. Manter três unidades em estoque num anúncio
    avulso não dilui nada: cada venda paga as taxas de novo.
-4. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
+3. **O degrau dos R$ 79.** Abaixo do limite há custo fixo por unidade;
    acima dele o custo fixo some e o frete vira do vendedor. Como as duas
    taxas são funções em degrau do próprio preço, o preço-alvo não sai de
    uma fórmula fechada: `solvePrice()` resolve a equação dentro de cada

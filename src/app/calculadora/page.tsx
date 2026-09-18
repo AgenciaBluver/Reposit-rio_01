@@ -25,15 +25,15 @@ const faq = [
   },
   {
     q: "Por que a mão de obra não entra no custo?",
-    a: "Porque numa operação de uma pessoa só ela não sai da conta bancária. Quem imprime, tira o suporte e embala é você — cobrar isso como despesa reprova produto que dá dinheiro de verdade. A calculadora mostra o caixa: preço menos filamento, energia, embalagem, taxas e imposto. O que sobra é seu. Se quiser saber se a venda pagou o seu tempo, divida o caixa pelos minutos que a peça deu de trabalho.",
+    a: "Porque numa operação de uma pessoa só ela não sai da conta. Quem imprime, tira o suporte e embala é você — cobrar isso como despesa reprova produto que dá dinheiro de verdade. O custo do produto aqui é material, eletricidade, máquina, peças perdidas, insumos e embalagem. O que sobra depois dele e das taxas é o seu lucro.",
   },
   {
     q: "Vender em kit compensa?",
-    a: "Quase sempre, em peça barata. Filamento, energia, máquina e acabamento multiplicam por peça, mas embalagem, frete, logística e custo fixo do Mercado Livre são pagos uma vez por venda. Uma peça de 35 g vendida a R$ 21 pode dar prejuízo; as mesmas três num kit de R$ 63 pagam um custo fixo só e sobram alguns reais por unidade. Vale para um anúncio que vende o conjunto como um produto só — manter estoque de três unidades no anúncio avulso não dilui nada.",
+    a: "Quase sempre, em peça barata. Filamento, energia, máquina e acabamento multiplicam por peça, mas embalagem, frete, logística e custo fixo do Mercado Livre são pagos uma vez por venda. Uma peça de 35 g vendida a R$ 21 pode dar prejuízo; as mesmas três num kit de R$ 63 pagam um custo fixo só e sobra lucro em cada unidade. Vale para um anúncio que vende o conjunto como um produto só — manter estoque de três unidades no anúncio avulso não dilui nada.",
   },
   {
     q: "Qual margem é saudável para impressão 3D no Mercado Livre?",
-    a: "Abaixo de 10% de margem de caixa qualquer devolução, reajuste de frete ou mudança de comissão apaga o lucro. Entre 10% e 20% a operação se sustenta; acima de 20% há folga para promoções e para investir em anúncios.",
+    a: "Abaixo de 10% de margem de lucro qualquer devolução, reajuste de frete ou mudança de comissão apaga o lucro. Entre 10% e 20% a operação se sustenta; acima de 20% há folga para promoções e para investir em anúncios.",
   },
 ];
 
