@@ -131,7 +131,7 @@ export function PricingCalculator() {
                 { value: "custom", label: "Personalizado" },
               ]}
               span={2}
-              hint="Valores de referência de mercado. Troque pelo preço da sua nota."
+              hint="Referência de mercado. Troque pelo preço da sua nota — e, na dúvida, use o rolo mais caro que você compra."
             />
             <NumberField
               label="Preço do quilo do filamento"
@@ -186,8 +186,8 @@ export function PricingCalculator() {
 
           <Panel
             step="02"
-            title="Máquina, energia e trabalho"
-            hint="A hora de impressora não é de graça: bico, correia, placa e a própria máquina se gastam imprimindo. Esse desgaste não sai do caixa hoje — sai quando alguma coisa quebrar."
+            title="Máquina, energia e insumos"
+            hint="A hora de impressora não é de graça: bico, correia, placa e a própria máquina se gastam imprimindo. Esse desgaste não sai do caixa hoje — sai quando alguma coisa quebrar. O seu trabalho não entra em custo nenhum."
           >
             <NumberField
               label="Consumo médio da impressora"
@@ -209,39 +209,6 @@ export function PricingCalculator() {
               onChange={set("machineCostPerHour")}
               unit="R$/h"
               hint="Preço da máquina ÷ horas de vida útil + peças de reposição."
-            />
-            <SelectField<"meu" | "pago">
-              label="Quem faz o pós-processamento"
-              value={inputs.laborMode}
-              onChange={set("laborMode")}
-              options={[
-                { value: "meu", label: "Sou eu" },
-                { value: "pago", label: "Pago alguém" },
-              ]}
-              span={2}
-              hint={
-                inputs.laborMode === "meu"
-                  ? "O seu trabalho não sai do caixa — mas continua sendo medido, para responder se a venda paga o seu tempo."
-                  : "Salário ou diária de quem faz entra como desembolso, igual ao filamento."
-              }
-            />
-            <NumberField
-              label="Pós-processamento por peça"
-              value={inputs.laborMinutes}
-              onChange={set("laborMinutes")}
-              unit="min"
-              hint="Remover suporte, lixar, montar, embalar."
-            />
-            <NumberField
-              label={inputs.laborMode === "meu" ? "Quanto vale a sua hora" : "Custo da hora de quem faz"}
-              value={inputs.laborCostPerHour}
-              onChange={set("laborCostPerHour")}
-              unit="R$/h"
-              hint={
-                inputs.laborMode === "meu"
-                  ? "Serve de régua: abaixo disso, a venda não paga o seu tempo."
-                  : undefined
-              }
             />
             <NumberField
               label="Insumos extras por peça"

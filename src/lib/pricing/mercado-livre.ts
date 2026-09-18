@@ -4,14 +4,14 @@
    Núcleo de cálculo puro: nenhuma função aqui conhece React, DOM ou
    formatação. A interface só lê o que este arquivo devolve.
 
-   O custo tem três camadas que não se misturam:
+   O custo tem duas camadas que não se misturam:
    · DESEMBOLSO — dinheiro que sai da conta: filamento, energia, insumos,
      embalagem, taxas, imposto, frete.
-   · SEU TEMPO — o pós-processamento que VOCÊ faz. Não sai do bolso, mas
-     consome a única coisa que não dá para comprar de volta.
    · DESGASTE — bico, correia, placa e a própria máquina. Não sai hoje;
      sai quando quebrar.
-   O caixa é o primeiro. O lucro cheio é o que sobra depois dos três.
+   MÃO DE OBRA NÃO É CUSTO AQUI. Quem imprime, tira o suporte e embala é o
+   dono da operação: esse trabalho não sai da conta bancária e, por decisão
+   de projeto, não entra em custo nenhum.
 
    A conta tem dois lados que não se misturam:
    · CUSTO DE PRODUÇÃO — não depende do preço de venda (filamento, energia,
@@ -59,10 +59,10 @@ export const LISTING_TYPES: Record<
 /** Preços de referência de filamento por quilo. Servem para preencher o
  *  campo rapidamente — o valor real é sempre o da sua nota fiscal. */
 export const FILAMENT_PRESETS = [
-  { id: "pla", label: "PLA", pricePerKg: 110 },
-  { id: "pla-silk", label: "PLA Silk", pricePerKg: 140 },
-  { id: "petg", label: "PETG", pricePerKg: 130 },
-  { id: "abs", label: "ABS", pricePerKg: 120 },
+  { id: "pla", label: "PLA", pricePerKg: 100 },
+  { id: "pla-silk", label: "PLA Silk", pricePerKg: 135 },
+  { id: "petg", label: "PETG", pricePerKg: 125 },
+  { id: "abs", label: "ABS", pricePerKg: 115 },
   { id: "tpu", label: "TPU (flexível)", pricePerKg: 190 },
   { id: "resina", label: "Resina (kg)", pricePerKg: 230 },
 ] as const;
@@ -100,12 +100,6 @@ export type PricingInputs = {
   energyPricePerKwh: number;
   /** Depreciação + manutenção + bicos/correias, diluídos por hora. */
   machineCostPerHour: number;
-  laborMinutes: number;
-  laborCostPerHour: number;
-  /** "meu": quem faz o pós-processamento é você — o trabalho não sai do
-   *  caixa, mas é medido para responder se a venda paga o seu tempo.
-   *  "pago": você paga alguém — é desembolso como qualquer outro. */
-  laborMode: "meu" | "pago";
   extrasCost: number;
   packagingCost: number;
 
@@ -130,7 +124,7 @@ export type PricingInputs = {
 };
 
 export const DEFAULT_INPUTS: PricingInputs = {
-  filamentPricePerKg: 110,
+  filamentPricePerKg: 100,
   partWeightG: 85,
   wastePct: 5,
   printHours: 4.5,
@@ -141,9 +135,6 @@ export const DEFAULT_INPUTS: PricingInputs = {
   printerWatts: 120,
   energyPricePerKwh: 0.95,
   machineCostPerHour: 1.5,
-  laborMinutes: 10,
-  laborCostPerHour: 25,
-  laborMode: "meu",
   extrasCost: 0,
   packagingCost: 2.5,
 
@@ -169,16 +160,11 @@ export type ProductionCost = {
   energy: number;
   machine: number;
   failure: number;
-  labor: number;
   extras: number;
   packaging: number;
   total: number;
-  /** Desembolso: o que sai da conta para produzir (sem seu tempo, sem
-   *  desgaste). É a base do caixa. */
+  /** Desembolso: o que sai da conta para produzir. É a base do caixa. */
   cash: number;
-  /** Seu tempo, quando é você quem faz. Zero no modo "pago" — lá o
-   *  trabalho já está dentro do desembolso. */
-  time: number;
   /** Desgaste da máquina, incluindo a parte das impressões perdidas. */
   wear: number;
   /** Peças impressas neste anúncio (soma das quantidades do kit). */
@@ -220,39 +206,33 @@ export function productionCost(i: PricingInputs): ProductionCost {
   const energy = (safe(i.printerWatts) / 1000) * hours * safe(i.energyPricePerKwh);
   const machine = safe(i.machineCostPerHour) * hours;
 
-  // Falha consome máquina, energia e material — nunca a mão de obra de
-  // acabamento, que só acontece depois da peça sair inteira. A perda é
-  // repartida entre as duas camadas que a causaram: o filamento queimado
-  // é desembolso, a hora de máquina jogada fora é desgaste.
+  // A perda das impressões falhadas é repartida entre as duas camadas que
+  // a causaram: o filamento queimado é desembolso, a hora de máquina
+  // jogada fora é desgaste.
   const f = clamp(safe(i.failureRatePct) / 100, 0, 0.95);
   const lost = f / (1 - f);
   const failureCash = (material + energy) * lost;
   const failureWear = machine * lost;
   const failure = failureCash + failureWear;
 
-  // Trabalho e insumos são POR PEÇA; embalagem é POR ANÚNCIO — é o que faz
-  // o kit sair mais barato por unidade do que três vendas separadas.
-  const labor = (safe(i.laborMinutes) / 60) * safe(i.laborCostPerHour) * units;
+  // Insumos são POR PEÇA; embalagem é POR ANÚNCIO — é o que faz o kit sair
+  // mais barato por unidade do que três vendas separadas.
   const extras = safe(i.extrasCost) * units;
   const packaging = safe(i.packagingCost);
 
-  const timeIsCash = i.laborMode === "pago";
-  const cash = material + energy + failureCash + extras + packaging + (timeIsCash ? labor : 0);
-  const time = timeIsCash ? 0 : labor;
+  const cash = material + energy + failureCash + extras + packaging;
   const wear = machine + failureWear;
-  const total = cash + time + wear;
+  const total = cash + wear;
 
   return {
     material,
     energy,
     machine,
     failure,
-    labor,
     extras,
     packaging,
     total,
     cash,
-    time,
     wear,
     units,
     weightG,
@@ -314,24 +294,20 @@ export type PricingResult = {
   totalCost: number;
   /** O que o Mercado Livre repassa antes dos custos do vendedor. */
   netReceipt: number;
-  /** LUCRO CHEIO: depois do desembolso, do seu tempo e do desgaste. */
+  /** LUCRO APÓS DESGASTE: o caixa menos o que a máquina se gastou. */
   profit: number;
   /** Lucro sobre o preço de venda. */
   marginPct: number;
   /** CAIXA: o que entra na conta nesta venda — preço menos tudo que sai
-   *  do bolso. Não desconta o seu tempo nem o desgaste da máquina. */
+   *  do bolso. Não desconta o desgaste da máquina, que não sai hoje. */
   cashProfit: number;
   cashMarginPct: number;
   /** Caixa dividido pelas horas de impressora — o gargalo da operação. */
   cashPerPrintHour: number;
-  /** Caixa dividido pelas SUAS horas de trabalho. Responde "quanto a minha
-   *  hora está pagando nesta venda". Zero quando o trabalho é pago. */
-  cashPerLaborHour: number;
   cashProfitPerUnit: number;
   /** Quanto do preço é desembolso de produção. */
   cashCost: number;
-  /** As duas camadas que não saem do bolso hoje. */
-  timeCost: number;
+  /** A camada que não sai do bolso hoje. */
   wearCost: number;
   /** Preço dividido pelo custo de produção. */
   markup: number;
@@ -364,12 +340,10 @@ export function calculate(i: PricingInputs): PricingResult {
   const totalCost = production.total + marketplaceTotal + logistics + tax + ads + other;
 
   // Tudo que o marketplace retém é desembolso — sai da conta na hora do
-  // repasse. O que separa caixa de lucro cheio é só o seu tempo e o
-  // desgaste da máquina.
+  // repasse. O que separa caixa de lucro é só o desgaste da máquina.
   const outOfPocket = production.cash + marketplaceTotal + logistics + tax + ads + other;
   const cashProfit = price - outOfPocket;
-  const profit = cashProfit - production.time - production.wear;
-  const laborHours = (safe(i.laborMinutes) / 60) * production.units;
+  const profit = cashProfit - production.wear;
 
   return {
     price,
@@ -389,10 +363,8 @@ export function calculate(i: PricingInputs): PricingResult {
     cashProfit,
     cashMarginPct: price > 0 ? (cashProfit / price) * 100 : 0,
     cashPerPrintHour: production.hours > 0 ? cashProfit / production.hours : 0,
-    cashPerLaborHour: production.time > 0 && laborHours > 0 ? cashProfit / laborHours : 0,
     cashProfitPerUnit: production.units > 0 ? cashProfit / production.units : cashProfit,
     cashCost: production.cash,
-    timeCost: production.time,
     wearCost: production.wear,
     markup: production.total > 0 ? price / production.total : 0,
     roiPct: production.total > 0 ? (profit / production.total) * 100 : 0,
@@ -425,8 +397,8 @@ export function calculate(i: PricingInputs): PricingResult {
 export function solvePrice(
   i: PricingInputs,
   targetMarginPct: number,
-  /** "caixa" mira o dinheiro que entra; "cheio" mira o lucro depois de
-   *  pagar o seu tempo e o desgaste da máquina. */
+  /** "caixa" mira o dinheiro que entra; "cheio" mira o lucro depois do
+   *  desgaste da máquina. */
   basis: "caixa" | "cheio" = "caixa",
 ): { price: number; atBoundary: boolean } | null {
   const k = 1 - percentualLoad(i) - targetMarginPct / 100;
@@ -467,8 +439,7 @@ export function breakEvenPrice(i: PricingInputs) {
   return solvePrice(i, 0, "caixa");
 }
 
-/** Preço em que a venda também paga o seu tempo e o desgaste da máquina.
- *  Entre este e o de equilíbrio de caixa, você está trabalhando de graça. */
+/** Preço em que a venda também cobre o desgaste da máquina. */
 export function fullBreakEvenPrice(i: PricingInputs) {
   return solvePrice(i, 0, "cheio");
 }
@@ -481,15 +452,6 @@ const brlFormatter = new Intl.NumberFormat("pt-BR", {
 });
 
 export const brl = (n: number) => brlFormatter.format(Number.isFinite(n) ? n : 0);
-
-/** Sem centavos. Para métricas de ordem de grandeza — "R$ 311/h" lê melhor
- *  que "R$ 311,00/h". */
-const brl0Formatter = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-  maximumFractionDigits: 0,
-});
-export const brl0 = (n: number) => brl0Formatter.format(Number.isFinite(n) ? n : 0);
 
 export const pct = (n: number, digits = 1) =>
   `${(Number.isFinite(n) ? n : 0).toLocaleString("pt-BR", {

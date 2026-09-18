@@ -24,8 +24,8 @@ const faq = [
     a: "É o percentual de impressões que não viram produto. Se 10% falham, você imprime onze peças para vender dez — e o custo das onze precisa caber no preço das dez.",
   },
   {
-    q: "Devo contar a minha própria hora no custo?",
-    a: "As duas coisas, em contas separadas. O caixa é o dinheiro que entra: preço menos filamento, embalagem, taxas e imposto. O seu trabalho não está aí, porque ele não sai da sua conta bancária. Mas ele sai de você — por isso a ferramenta mostra quanto a sua hora rendeu naquela venda. Se o caixa é positivo e a sua hora rende bem, a venda vale a pena. Se o caixa só fica de pé porque você não se paga, você tem um emprego mal pago, não um produto.",
+    q: "Por que a mão de obra não entra no custo?",
+    a: "Porque numa operação de uma pessoa só ela não sai da conta bancária. Quem imprime, tira o suporte e embala é você — cobrar isso como despesa reprova produto que dá dinheiro de verdade. A calculadora mostra o caixa: preço menos filamento, energia, embalagem, taxas e imposto. O que sobra é seu. Se quiser saber se a venda pagou o seu tempo, divida o caixa pelos minutos que a peça deu de trabalho.",
   },
   {
     q: "Vender em kit compensa?",

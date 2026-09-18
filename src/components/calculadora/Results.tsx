@@ -5,7 +5,6 @@ import {
   FIXED_FEE_BANDS,
   LISTING_TYPES,
   brl,
-  brl0,
   pct,
   marginVerdict,
   type PricingInputs,
@@ -24,7 +23,6 @@ import { Button, useNumericDraft } from "./Fields";
  *  cálculo, porque é decisão de leitura visual — não de contabilidade. */
 const SEGMENT_COLOR: Record<string, string> = {
   producao: "bg-data-cost",
-  tempo: "bg-data-time",
   desgaste: "bg-data-wear",
   comissao: "bg-data-fee",
   fixo: "bg-data-fee/55",
@@ -120,7 +118,7 @@ export function ResultPanel({
   onTargetMargin: (n: number) => void;
   suggested: { price: number; atBoundary: boolean } | null;
   breakEven: { price: number; atBoundary: boolean } | null;
-  /** Preço em que a venda também paga o seu tempo e o desgaste. */
+  /** Preço em que a venda também cobre o desgaste da máquina. */
   fullBreakEven: { price: number; atBoundary: boolean } | null;
   onUsePrice: (n: number) => void;
   /** Controle de preço — renderizado no topo do painel. */
@@ -131,7 +129,6 @@ export function ResultPanel({
   const verdict = marginVerdict(result.cashMarginPct);
   const noCash = result.cashProfit < 0;
   const loss = result.profit < 0;
-  const meuTempo = result.timeCost > 0;
 
   return (
     <div className="border border-fg/12 bg-fg/[0.03]">
@@ -156,17 +153,15 @@ export function ResultPanel({
           {brl(result.cashProfit)}
         </p>
         <p className="mt-2 text-[0.75rem] leading-snug text-fg-muted">
-          Dinheiro que sobra depois do filamento, da embalagem, das taxas e do imposto.
-          {meuTempo ? " Seu trabalho ainda está aqui dentro." : ""}
+          Dinheiro que sobra depois do filamento, da embalagem, das taxas e do imposto. Seu
+          trabalho não é descontado aqui.
         </p>
         <hr className="bv-rule-signal mt-4 opacity-60" />
 
         <div className="mt-4 flex items-baseline justify-between gap-3 border border-fg/12 px-3 py-2.5">
           <span className="text-[0.75rem] leading-snug text-fg-muted">
-            Lucro cheio
-            <span className="block">
-              {meuTempo ? "depois de pagar sua hora e o desgaste" : "depois do desgaste da máquina"}
-            </span>
+            Lucro após desgaste
+            <span className="block">o que sobra descontando o gasto da máquina</span>
           </span>
           <span
             className={`bv-numeral text-[1.25rem] tabular-nums ${
@@ -183,15 +178,8 @@ export function ResultPanel({
             <Metric label="Caixa por unidade" value={brl(result.cashProfitPerUnit)} />
           )}
           <Metric label="Caixa por hora de impressora" value={brl(result.cashPerPrintHour)} />
-          {meuTempo ? (
-            <Metric
-              label="Quanto sua hora rende"
-              value={`${brl0(result.cashPerLaborHour)}/h`}
-            />
-          ) : (
-            <Metric label="Markup sobre o desembolso" value={`${result.markup.toFixed(2)}×`} />
-          )}
-          <Metric label="Margem cheia" value={pct(result.marginPct)} />
+          <Metric label="Markup sobre o desembolso" value={`${result.markup.toFixed(2)}×`} />
+          <Metric label="Margem após desgaste" value={pct(result.marginPct)} />
           <Metric
             label={result.units > 1 ? "Desembolso do kit" : "Desembolso de produção"}
             value={brl(result.cashCost)}
@@ -224,16 +212,6 @@ export function ResultPanel({
             <span className="tabular-nums">{brl(result.cashProfit)}</span>
             <span className="w-12 text-right tabular-nums">{pct(result.cashMarginPct, 0)}</span>
           </li>
-          {meuTempo && (
-            <li className="flex items-center gap-2.5 pl-3 text-[0.8125rem]">
-              <span className="h-2.5 w-2.5 shrink-0 bg-data-time" aria-hidden />
-              <span className="min-w-0 flex-1 truncate text-fg-muted">└ seu tempo dentro dele</span>
-              <span className="tabular-nums text-fg-muted">{brl(result.timeCost)}</span>
-              <span className="w-12 text-right tabular-nums text-fg-muted">
-                {result.price > 0 ? pct((result.timeCost / result.price) * 100, 0) : "—"}
-              </span>
-            </li>
-          )}
           <li className="flex items-center gap-2.5 pl-3 text-[0.8125rem]">
             <span className="h-2.5 w-2.5 shrink-0 bg-data-wear" aria-hidden />
             <span className="min-w-0 flex-1 truncate text-fg-muted">└ desgaste da máquina</span>
@@ -288,7 +266,7 @@ export function ResultPanel({
             <span className="tabular-nums text-fg">{breakEven ? brl(breakEven.price) : "—"}</span>
           </p>
           <p className="flex items-baseline justify-between gap-3">
-            <span>{meuTempo ? "Abaixo disto você trabalha de graça" : "Preço que cobre o desgaste"}</span>
+            <span>Abaixo disto a máquina se gasta de graça</span>
             <span className="tabular-nums text-fg">
               {fullBreakEven ? brl(fullBreakEven.price) : "—"}
             </span>
@@ -313,14 +291,13 @@ function Metric({ label, value }: { label: string; value: string }) {
 export function CompositionBar({ result }: { result: PricingResult }) {
   const noCash = result.cashProfit < 0;
   const denom = Math.max(result.price, result.totalCost, 0.01);
-  // Depois dos desembolsos vem a cauda: o seu tempo e o desgaste saem de
-  // dentro do caixa, e só o que fica depois deles é lucro de verdade.
+  // Depois dos desembolsos vem a cauda: o desgaste sai de dentro do caixa,
+  // e só o que fica depois dele é lucro de verdade.
   const segments = [
     ...result.deductions.map((d) => ({ key: d.key, value: d.value, cls: SEGMENT_COLOR[d.key] })),
     ...(noCash
       ? [{ key: "semcaixa", value: Math.abs(result.cashProfit), cls: "bg-data-loss" }]
       : [
-          { key: "tempo", value: result.timeCost, cls: "bg-data-time" },
           { key: "desgaste", value: result.wearCost, cls: "bg-data-wear" },
           {
             key: "resultado",
@@ -362,7 +339,6 @@ export function Breakdown({
   const kit = p.units > 1;
   const loss = result.profit < 0;
   const noCash = result.cashProfit < 0;
-  const meuTempo = result.timeCost > 0;
   /** Número curto em português: 4,53 h, 135 g. */
   const n = (x: number) => x.toLocaleString("pt-BR", { maximumFractionDigits: 2 });
   const perPiece = kit ? ` × ${p.units} peças` : "";
@@ -389,13 +365,6 @@ export function Breakdown({
       label: "Impressões perdidas",
       value: p.failure,
       note: `${pct(inputs.failureRatePct, 0)} de falha diluídos nas peças boas`,
-    },
-    {
-      label: "Mão de obra",
-      value: p.labor,
-      note: `${inputs.laborMinutes} min${perPiece} × ${brl(inputs.laborCostPerHour)}/h${
-        meuTempo ? " — seu tempo, não sai do caixa" : ""
-      }`,
     },
     {
       label: "Insumos extras",
@@ -521,13 +490,11 @@ export function Breakdown({
             </tr>
             <tr>
               <th scope="row" className="py-2 text-left font-normal text-fg-muted">
-                Não sai do bolso ({meuTempo ? "seu tempo + desgaste" : "desgaste"})
+                Desgaste (não sai do bolso hoje)
               </th>
+              <td className="py-2 text-right tabular-nums text-fg-muted">{brl(p.wear)}</td>
               <td className="py-2 text-right tabular-nums text-fg-muted">
-                {brl(p.time + p.wear)}
-              </td>
-              <td className="py-2 text-right tabular-nums text-fg-muted">
-                {p.total > 0 ? pct(((p.time + p.wear) / p.total) * 100, 0) : "—"}
+                {p.total > 0 ? pct((p.wear / p.total) * 100, 0) : "—"}
               </td>
             </tr>
             <tr className="border-t border-fg/15">
@@ -650,28 +617,6 @@ export function Breakdown({
               </td>
             </tr>
 
-            {meuTempo && (
-              <tr className="border-b border-fg/10">
-                <th scope="row" className="py-2.5 pr-3 text-left font-normal align-top">
-                  Seu tempo
-                  <span className="mt-0.5 block max-w-[46ch] text-[0.75rem] leading-snug text-fg-muted">
-                    {inputs.laborMinutes} min{kit ? ` × ${p.units} peças` : ""} a{" "}
-                    {brl(inputs.laborCostPerHour)}/h — não sai da conta, sai de você
-                  </span>
-                </th>
-                <td className="py-2.5 text-right tabular-nums align-top whitespace-nowrap">
-                  − {brl(result.timeCost)}
-                </td>
-                {kit && (
-                  <td className="w-24 py-2.5 text-right tabular-nums align-top whitespace-nowrap">
-                    − {brl(result.timeCost / p.units)}
-                  </td>
-                )}
-                <td className="w-16 py-2.5 text-right tabular-nums text-fg-muted align-top">
-                  {result.price > 0 ? pct((result.timeCost / result.price) * 100, 0) : "—"}
-                </td>
-              </tr>
-            )}
             <tr className="border-b border-fg/10">
               <th scope="row" className="py-2.5 pr-3 text-left font-normal align-top">
                 Desgaste da máquina
@@ -695,7 +640,7 @@ export function Breakdown({
 
             <tr className="border-t border-fg/25">
               <th scope="row" className="py-3 text-left font-medium">
-                {loss ? "Prejuízo cheio" : "Lucro cheio"}
+                {loss ? "Prejuízo após desgaste" : "Lucro após desgaste"}
                 {kit ? " por anúncio" : ""}
               </th>
               <td
@@ -756,15 +701,9 @@ export function Breakdown({
             tone={monthly < 0 ? "loss" : "profit"}
           />
           <Line
-            label={monthlyFull < 0 ? "Prejuízo cheio" : "Lucro cheio"}
+            label={monthlyFull < 0 ? "Prejuízo após desgaste" : "Lucro após desgaste"}
             value={brl(monthlyFull)}
           />
-          {meuTempo && (
-            <Line
-              label="Seu trabalho no mês"
-              value={`${((monthlyUnits * inputs.laborMinutes * p.units) / 60).toFixed(1)} h`}
-            />
-          )}
           {kit && <Line label="Peças impressas" value={`${monthlyUnits * p.units} un.`} />}
           <Line label="Horas de impressora" value={`${(monthlyUnits * p.hours).toFixed(0)} h`} />
         </dl>

@@ -167,7 +167,6 @@ function exportCsv(items: SavedProduct[]) {
     "Caixa por peça",
     "Caixa por hora de impressora",
     "Margem de caixa (%)",
-    "Seu tempo",
     "Desgaste da máquina",
     "Lucro cheio",
   ];
@@ -187,7 +186,6 @@ function exportCsv(items: SavedProduct[]) {
       num(r.cashProfitPerUnit),
       num(r.cashPerPrintHour),
       num(r.cashMarginPct),
-      num(r.timeCost),
       num(r.wearCost),
       num(r.profit),
     ].join(";");

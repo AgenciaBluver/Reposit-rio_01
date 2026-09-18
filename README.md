@@ -135,33 +135,32 @@ envio de dados. O que a pessoa digita é salvo no `localStorage` dela.
 
 | Bloco | Campos |
 |---|---|
-| A peça | preço do quilo do filamento, peso em gramas, perda de material, tempo de impressão, taxa de falha, **composição do kit** |
-| Máquina e trabalho | consumo em watts, tarifa de kWh, depreciação por hora, minutos de pós-processamento, valor da hora, insumos extras, embalagem |
+| A peça | preço do quilo do filamento (padrão R$ 100), peso em gramas, perda de material, tempo de impressão, taxa de falha, **composição do kit** |
+| Máquina e insumos | consumo em watts, tarifa de kWh, depreciação por hora, insumos extras, embalagem |
 | Anúncio e frete | tipo de anúncio (Grátis/Clássico/Premium), comissão, quem paga o frete, custo do frete, desconto de reputação, logística por unidade |
 | Impostos e extras | imposto, publicidade, outros percentuais, faixas de custo fixo do marketplace |
 
-**O que sai**: lucro e margem líquida por unidade, markup, retorno sobre
-o custo, **lucro por hora de impressora**, composição visual do preço,
+**O que sai**: caixa e margem de caixa por unidade, lucro após desgaste,
+markup, **caixa por hora de impressora**, composição visual do preço,
 custo de produção linha a linha, projeção mensal por volume, preço de
 equilíbrio e o caminho inverso — o preço necessário para uma margem alvo.
 
-**Três camadas de custo, não uma**
+**Mão de obra não é custo aqui**
 
-O custo de uma peça impressa não é um número só, e tratar como se fosse
-reprova produto bom e aprova produto ruim:
+Numa operação de uma pessoa só, o trabalho de imprimir, tirar suporte e
+embalar não sai da conta bancária. Cobrar isso como despesa reprova produto
+que dá dinheiro de verdade — então a ferramenta simplesmente não tem essa
+linha. Sobram duas camadas:
 
 | Camada | O que é | Sai da conta? |
 |---|---|---|
 | **Desembolso** | filamento, energia, perdas, insumos, embalagem, taxas, imposto, frete | sim, hoje |
-| **Seu tempo** | o pós-processamento que você faz | não — sai de você |
 | **Desgaste** | bico, correia, placa e a própria máquina | não hoje — sai quando quebrar |
 
 Daí saem os dois números que a tela mostra juntos: **caixa** (preço menos o
-desembolso — o que entra no banco) e **lucro cheio** (caixa menos o seu
-tempo e o desgaste). Quando o trabalho é seu, a ferramenta também responde
-**quanto a sua hora rendeu** naquela venda: é a régua que separa "vale a
-pena" de "emprego mal pago". O seletor no bloco 02 troca para o modo "pago
-alguém", e aí a mão de obra vira desembolso como qualquer outro.
+desembolso — o que entra no banco) e **lucro após desgaste**. O gargalo da
+operação é a máquina, não a pessoa, por isso a métrica que ordena tudo é
+**caixa por hora de impressora**.
 
 **Kit**
 
