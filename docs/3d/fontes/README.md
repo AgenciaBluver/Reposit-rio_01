@@ -16,6 +16,8 @@ export de planilha, foto de produto.
 | Arquivo | O que é | Onde foi destilado |
 |---|---|---|
 | `2026-09-19-pricing-brain-mercado-livre-3d.md` | Documento-base de precificação: faixas, fórmulas, árvore de decisão, critérios | `../06-politica-de-preco.md` |
+| `2026-09-19-escritorio-organizacao-decoracao.html` | 16 produtos de escritório, organização e decoração, com 64 STLs de licença verificada | `../07-placa-e-kit.md` e `../04-produtos.md` |
+| `2026-09-19-avulso-ou-kit.html` | Os mesmos 16, comparando venda avulsa contra kit peça a peça | `../07-placa-e-kit.md` |
 
 ## Formatos que eu leio direto
 

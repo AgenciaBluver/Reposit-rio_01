@@ -33,6 +33,37 @@ vier do fatiador, não da estimativa.
 
 Peso e tempo usados: 15 a 20 g, 1 a 1,3 h. **Ainda não fatiado.**
 
+## ✅ Os 10 primeiros para testar — fila atual (19/09/2026)
+
+Ordenados por **lucro por hora de placa**, já com a nossa régua de custo (filamento
+R$ 100/kg, máquina R$ 1,50/h, embalagem R$ 2,50, falha 6%, comissão 12%, imposto 6%,
+ads 5%, devolução 3%). Peso, tempo e peças por placa são **estimativa** — fatie
+antes de anunciar.
+
+| # | Produto | Preço | Lucro/venda | Margem | R$/h placa | Un/placa | Anúncios |
+|---|---|---|---|---|---|---|---|
+| 1 | Suporte de carregador de tomada | R$ 39 | **R$ 14,66** | 38% | **R$ 19,55** | 6× | 159 |
+| 2 | Porta-incenso decorativo | R$ 35 | R$ 12,18 | 35% | R$ 15,22 | 5× | 2.010 |
+| 3 | Suporte de mamadeiras e copos | R$ 99 | **R$ 39,79** | 40% | R$ 13,26 | 1× | 1.346 |
+| 4 | Porta-óculos escultural | R$ 49 | R$ 18,54 | 38% | R$ 12,36 | 3× | **132** |
+| 5 | Vaso geométrico (vase mode) | R$ 59 | R$ 24,96 | 42% | R$ 11,09 | 2× | 2.060 |
+| 6 | Organizador de joias (árvore) | R$ 45 | R$ 15,58 | 35% | R$ 10,39 | 3× | **20** |
+| 7 | Porta-caneta facetado | R$ 39 | R$ 12,69 | 33% | R$ 10,15 | 4× | 3.700 |
+| 8 | Organizador de linhas e bobinas | R$ 110 | **R$ 41,96** | 38% | R$ 9,99 | 1× | 426 |
+| 9 | Estojo de filtros ND 77–82 mm | R$ 99 | R$ 34,01 | 34% | R$ 8,72 | 1× | 801 |
+| 10 | Torre de dados desmontável | R$ 99 | R$ 30,19 | 30% | R$ 6,71 | 1× | 492 |
+
+**Ressalvas registradas:**
+- **Porta-incenso (2) e porta-caneta (7)** passam raspando no teste de eliminação —
+  madeira e acrílico brigam nessas duas prateleiras. Entram pelo R$/hora, não pelo
+  diferencial.
+- **Kit de 10 clipes de cabo** aparecia em 2º lugar nos estudos (R$ 16,62/h) e foi
+  **reprovado no teste de eliminação**: clipe de cabo é injetado aos milhões e o
+  termo tem 4.482 anúncios com +10 mil vendidos no líder.
+- **Cúpula de luminária** (R$ 3,25/h) ficou de fora por eficiência, apesar de ser o
+  único produto em que a limitação do FDM vira argumento de venda.
+- **Do 3 ao 10**, os preços acima de R$ 79 já vão com frete grátis embutido.
+
 ## ✅ Da varredura de 30 produtos — os que a faixa de mercado sustenta acima de R$ 79
 
 Anunciados **com frete grátis**, que é o que a categoria pratica:

@@ -21,6 +21,7 @@ Instruções que valem para qualquer sessão neste repositório.
 | `docs/3d/04-produtos.md` | Diário do que já foi avaliado e o veredito de cada um |
 | `docs/3d/05-glossario.md` | **O vocabulário aprovado.** Use só estes termos |
 | `docs/3d/06-politica-de-preco.md` | Faixas de preço, o cálculo exato do degrau dos R$ 79, árvore de decisão, critérios de aprovação |
+| `docs/3d/07-placa-e-kit.md` | Peças por placa, preço mínimo de venda avulsa, quando o kit é obrigatório |
 
 `docs/3d/fontes/` é onde entram documentos crus (prints do ML, tabelas de taxas,
 PDFs). Leia quando a pergunta depender deles; não são leitura obrigatória.
@@ -36,8 +37,10 @@ PDFs). Leia quando a pergunta depender deles; não são leitura obrigatória.
   descarte sem calcular.
 - **Nunca invente número de mercado.** Preço, vendas e número de anúncios vêm de
   página aberta e citada, ou vêm marcados como estimativa.
-- **Peso e tempo de impressão são estimativa** até serem fatiados no Bambu Studio.
-  Diga isso toda vez.
+- **Peso, tempo e peças por placa são estimativa** até serem fatiados no Bambu
+  Studio. Diga isso toda vez.
+- **Sempre calcule por placa, não por peça.** O tempo de cada unidade é o tempo da
+  placa dividido pelas peças que cabem nela (`07-placa-e-kit.md`).
 - **Nunca recomende R$ 79 sem comparar com R$ 78,90 e com um preço acima do ponto
   de equivalência** (`06-politica-de-preco.md`, seção 2).
 - **Nunca trate comissão, tarifa fixa ou frete como número universal.** O valor

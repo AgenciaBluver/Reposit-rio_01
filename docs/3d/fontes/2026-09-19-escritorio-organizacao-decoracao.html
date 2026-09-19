@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Peças Pequenas, Placa Cheia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --surface-2:#EAEDE7; --inset:#F0F2EE;
+  --ink:#151A18; --ink-2:#4A544F; --ink-3:#7A857F; --line:#DCE0D9; --line-2:#C7CDC3;
+  --accent:#0E6B57; --accent-2:#3E9A82; --accent-soft:#D9E9E2; --on-accent:#FFFFFF;
+  --warn:#8E540F; --warn-soft:#F3E6D2; --crit:#9E2A1E; --crit-soft:#F5DFDC;
+  --disp:"IBM Plex Sans Condensed","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}}
+:root[data-theme="dark"]{
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 16px;margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:40px 72px}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6.2vw,58px);letter-spacing:-.015em}
+h2{font-size:clamp(21px,3vw,27px);letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:17px;color:var(--ink-2);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+section{margin-top:56px}
+.sechead{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;
+  border-top:1px solid var(--line-2);padding-top:14px}
+.num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+
+/* rule callout */
+.rule{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  padding:20px 22px;display:grid;gap:14px}
+.rule .big{font-family:var(--disp);font-size:clamp(19px,2.6vw,24px);line-height:1.25}
+.cliff{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:2px}
+.cliff div{background:var(--surface);padding:12px 14px}
+.cliff b{font-family:var(--mono);font-size:19px;display:block;letter-spacing:-.02em}
+.cliff span{font-size:12.5px;color:var(--ink-2);display:block;margin-top:2px}
+.cliff .bad b{color:var(--crit)} .cliff .good b{color:var(--accent)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.kpi .v{font-family:var(--disp);font-size:36px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.kpi .s{font-size:13px;color:var(--ink-2);margin-top:6px}
+
+/* controls */
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px}
+.grid-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px}
+label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+input[type=number],select{width:100%;font-family:var(--mono);font-size:14px;color:var(--ink);
+  background:var(--inset);border:1px solid var(--line-2);border-radius:2px;padding:8px 9px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.reset{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;background:none;border:1px solid var(--line-2);
+  color:var(--ink-2);padding:7px 12px;border-radius:2px;cursor:pointer;margin-top:14px}
+.reset:hover{border-color:var(--accent);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;padding:6px 11px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:880px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  text-align:left;padding:11px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap;
+  background:var(--surface-2);cursor:pointer;user-select:none}
+th.n{text-align:right}
+th[aria-sort]{color:var(--accent)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--inset)}
+tr.det td{background:var(--inset);border-bottom:1px solid var(--line-2)}
+.name{font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.name .ix{font-family:var(--mono);font-size:11px;color:var(--ink-3);min-width:18px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap;
+  border:1px solid var(--line-2);color:var(--ink-2);background:var(--surface)}
+.tag.Alta{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tag.Média{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.tag.Baixa,.tag.Hipótese{color:var(--crit);border-color:var(--crit);background:var(--crit-soft)}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{display:block;width:74px;height:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;overflow:hidden;flex:none}
+.bar .fill{display:block;height:100%;min-width:3px;background:var(--accent);border-radius:4px}
+.det .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;padding:6px 0 10px}
+.det h4{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.det p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.break{font-family:var(--mono);font-size:12.5px}
+.break div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;border-bottom:1px dotted var(--line)}
+.break div.tot{border-bottom:none;border-top:1px solid var(--line-2);margin-top:4px;padding-top:5px;color:var(--ink);font-weight:600}
+.break span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.break span:first-child{color:var(--ink-2)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-2)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:14.5px;color:var(--ink-2)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px}
+ol.steps b{color:var(--ink);font-weight:600}
+.foot{margin-top:56px;border-top:1px solid var(--line-2);padding-top:16px;font-size:13px;color:var(--ink-3)}
+.foot a{color:var(--ink-2)}
+.warnbox{background:var(--warn-soft);border:1px solid var(--warn);padding:16px 18px;font-size:14px;color:var(--ink)}
+@media (max-width:560px){ .wrap{padding-block:28px 52px} .kpi .v{font-size:30px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap"><header class="stack">
+  <p class="eyebrow">Pesquisa de mercado · escritório, organização e decoração · 19 set 2026</p>
+  <h1>Peças pequenas, placa cheia</h1>
+  <p class="lede">Dezesseis produtos varridos no Mercado Livre em 26 buscas, com a métrica trocada: agora o que importa é <b>R$ por hora de placa</b>, contando quantas unidades vendáveis saem de cada impressão. Cada produto vem com quatro STLs de licença comercial verificada, todos fora da STLFLIX.</p>
+</header>
+
+<section>
+  <div class="rule">
+    <p class="eyebrow">Por que a sua intuição estava certa</p>
+    <p class="big">A tarifa fixa do Mercado Livre é cobrada por venda, não por grama. Então peça leve não é peça barata — é peça que dilui o custo fixo em muitas unidades por placa.</p>
+    <p style="font-size:14.5px;color:var(--ink-2);max-width:66ch">No estudo de RPG, as peças tinham 85 a 150 g e saía uma por impressão: o melhor produto dava <b>R$ 7,18 por hora de impressora</b>. Aqui, com peças de 20 a 55 g e três a seis unidades por placa, o topo chega a <b>R$ 17,81</b> — duas vezes e meia mais, no mesmo tempo de máquina e com ticket menor.</p>
+    <div class="cliff">
+      <div class="bad"><b>1 peça / placa</b><span>Os R$ 17 a 25 de taxas caem inteiros sobre uma venda só. R$ 3 a 4 por hora.</span></div>
+      <div class="good"><b>3 a 6 peças / placa</b><span>A mesma hora de máquina gera 3 a 6 vendas. R$ 11 a 18 por hora.</span></div>
+      <div class="good"><b>Peça de 20 a 55 g</b><span>Filamento custa R$ 2 a 5. O custo real é a taxa, não o material.</span></div>
+      <div class="bad"><b>Peça de 140 g +</b><span>Enche a placa sozinha e ainda leva 5 h. É o perfil a evitar.</span></div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><p class="k">Produtos aprovados</p><p class="v" id="k1">16</p><p class="s">todos ≥ R$ 7 de lucro por peça e ≤ 5 h por placa</p></div>
+    <div class="kpi"><p class="k">Melhor R$ por hora de placa</p><p class="v" id="k3">—</p><p class="s">contra R$ 7,18 do melhor produto de RPG</p></div>
+    <div class="kpi"><p class="k">STLs com licença verificada</p><p class="v">64</p><p class="s">4 por produto, todos Cults3D CU ou CU-ND</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">01 — LICENÇA</p>
+    <h2>O que eu descobri antes de procurar modelo</h2>
+    <p class="lede">Gastei a primeira metade da pesquisa nisso e valeu: três das quatro plataformas óbvias não servem para o que você quer fazer.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Plataforma</th><th>Como funciona a licença</th><th>Serve para vender peça impressa?</th></tr></thead>
+      <tbody>
+        <tr><td><b>Cults3D</b></td><td><b>CULTS CU</b> permite vender impresso e modificar. <b>CULTS CU-ND</b> permite vender impresso mas não modificar. <b>CULTS PU</b> é uso pessoal. O direito comercial já vem na compra do arquivo, sem mensalidade.</td><td style="color:var(--accent);font-weight:600">Sim — é o caminho limpo</td></tr>
+        <tr><td><b>CGTrader</b></td><td>A cláusula 21A.1 dos termos diz, literalmente, que os produtos não podem ser vendidos <i>"in 3D printed physical form"</i>. A Royalty Free só cobre o modelo incorporado dentro de outro produto.</td><td style="color:var(--crit);font-weight:600">Não — proíbe expressamente</td></tr>
+        <tr><td><b>MyMiniFactory</b></td><td>A licença padrão da loja é não comercial. O direito de vender vem do designer, em listagem separada (vitalícia) ou assinatura mensal de Tribe — e some se você cancelar.</td><td style="color:var(--warn);font-weight:600">Só caso a caso, lendo o texto do designer</td></tr>
+        <tr><td><b>Thangs</b></td><td>A plataforma não define licença. Designers vendem assinatura comercial própria, de US$ 10 a 25/mês, válida só enquanto a assinatura estiver ativa.</td><td style="color:var(--warn);font-weight:600">Sim, mas alugado, não comprado</td></tr>
+        <tr><td><b>Creative Commons em geral</b></td><td>CC BY e CC BY-SA permitem uso comercial com atribuição. Qualquer coisa com <b>NC</b> no nome não permite.</td><td style="color:var(--warn);font-weight:600">Depende da sigla — leia sempre</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <h3 style="margin-bottom:8px">O atalho que economiza horas</h3>
+    <p style="font-size:14.5px;color:var(--ink-2)">O Cults tem um filtro de licença escondido em <b>MORE FILTERS → LICENSES</b>. Sem ele, cerca de 80% dos resultados são uso pessoal e você perde tempo abrindo página por página. Com ele, a busca já sai limpa. Cole isto e troque o termo no final:</p>
+    <p style="font-family:var(--mono);font-size:13px;background:var(--inset);border:1px solid var(--line-2);padding:10px 12px;margin-top:10px;overflow-x:auto;white-space:nowrap">cults3d.com/en/search?licenses[]=cults_cu&amp;licenses[]=cults_cu_nd&amp;sort=downloads_count&amp;q=<b>desk organizer</b></p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">02 — PREMISSAS</p>
+    <h2>Os custos que eu embuti</h2>
+    <p class="lede">Mexa nos números e a tabela recalcula. Tudo conservador — é o cenário de BO, não o cenário bom. Mão de obra não entra, conforme você pediu.</p>
+  </div>
+  <div class="panel">
+    <div class="grid-in">
+      <div><label for="fil">Filamento R$/kg</label><input type="number" id="fil" value="95" min="1" step="1"></div>
+      <div><label for="com">Comissão ML %</label><input type="number" id="com" value="13" min="0" step="0.5"></div>
+      <div><label for="fixa">Tarifa fixa R$</label><input type="number" id="fixa" value="6.5" min="0" step="0.5"></div>
+      <div><label for="frete">Frete se ≥ R$79</label><input type="number" id="frete" value="25" min="0" step="1"></div>
+      <div><label for="ads">Product Ads %</label><input type="number" id="ads" value="5" min="0" step="0.5"></div>
+      <div><label for="imp">Imposto %</label><input type="number" id="imp" value="5" min="0" step="0.5"></div>
+      <div><label for="ref">Refugo %</label><input type="number" id="ref" value="8" min="0" step="1"></div>
+      <div><label for="bo">Devolução/avaria %</label><input type="number" id="bo" value="3" min="0" step="0.5"></div>
+      <div><label for="emb">Embalagem R$</label><input type="number" id="emb" value="2.20" min="0" step="0.1"></div>
+      <div><label for="man">Manutenção+depreciação R$/h</label><input type="number" id="man" value="0.80" min="0" step="0.05"></div>
+      <div><label for="ene">Energia R$/h</label><input type="number" id="ene" value="0.12" min="0" step="0.01"></div>
+      <div><label for="purga">Purga/desperdício %</label><input type="number" id="purga" value="5" min="0" step="1"></div>
+    </div>
+    <button class="reset" id="reset" type="button">Voltar ao cenário conservador</button>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">03 — OS DEZESSEIS</p>
+    <h2>Ordenados por R$ por hora de placa</h2>
+    <p class="lede">Clique na linha para abrir a conta, o ângulo de entrada, o risco e os quatro STLs com licença comercial verificada.</p>
+  </div>
+  <div class="filters" id="filters">
+    <span class="eyebrow" style="margin-right:4px">Categoria</span>
+    <button class="chip" data-v="Escritório" aria-pressed="false" type="button">Escritório</button>
+    <button class="chip" data-v="Organização" aria-pressed="false" type="button">Organização</button>
+    <button class="chip" data-v="Decoração" aria-pressed="false" type="button">Decoração</button>
+  </div>
+  <div class="tablewrap">
+    <table id="tab">
+      <thead><tr>
+        <th data-s="nome">Produto</th>
+        <th data-s="cat">Categoria</th>
+        <th class="n" data-s="preco">Preço</th>
+        <th class="n" data-s="g">Gramas</th>
+        <th class="n" data-s="un">Un/placa</th>
+        <th class="n" data-s="h">Horas</th>
+        <th class="n" data-s="lucro">Lucro/peça</th>
+        <th class="n" data-s="lucro_placa">Lucro/placa</th>
+        <th class="n" data-s="rsh" aria-sort="descending">R$/hora</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-3);margin-top:10px">Gramas, unidades por placa e horas são estimativas de engenharia a partir das dimensões que as páginas dos modelos informam, para bico 0,4 mm e camada 0,2 mm. Nenhuma página do Cults informa peso — confirme no Bambu Studio antes de anunciar.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">04 — RISCOS</p>
+    <h2>O que derruba a conta</h2>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>CU-ND não deixa você mexer</h3><p>Seis dos modelos da lista são CU-ND: pode imprimir e vender, não pode alterar o STL. Nada de gravar sua marca, furar, remixar ou mudar geometria. Se quiser personalizar, escolha só os CU.</p></div>
+    <div class="card"><h3>Vela de verdade derrete a peça</h3><p>O porta-vela é para vela de LED e ponto. O próprio autor do modelo insiste nisso. Venda com o LED incluso e escreva no anúncio — PLA amolece bem antes de pegar fogo.</p></div>
+    <div class="card"><h3>Vaso de parede segura peso molhado</h3><p>Terra encharcada pendurada na parede é carga real, e sol de janela deforma PLA. Nessa linha é PETG e teste de carga antes de anunciar.</p></div>
+    <div class="card"><h3>Personagem de terceiro continua proibido</h3><p>Apareceram porta-cartões do Mickey e organizadores do Mario com licença Cults válida. A licença cobre o desenho, não a marca. Ficaram de fora da lista de propósito.</p></div>
+    <div class="card"><h3>Kit multiplica ponto de falha</h3><p>Um kit de quatro peças tem quatro chances de sair torto. O refugo de 8% do modelo é por peça, não por venda — em kit, isso pesa o dobro.</p></div>
+    <div class="card"><h3>Peça pequena precisa de muita venda</h3><p>R$ 17 por hora de placa é ótimo, mas vem de seis vendas, seis embalagens e seis etiquetas. O gargalo deixa de ser a impressora e passa a ser você — que é justamente o custo que a gente não contou.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">05 — EXECUÇÃO</p>
+    <h2>Por onde eu começaria</h2>
+  </div>
+  <ol class="steps">
+    <li><b>Organizador de joias e brincos, R$ 45.</b> Vinte anúncios no Mercado Livre inteiro e o líder passando de 500 vendas. É a maior desproporção entre demanda e oferta de toda a varredura, em qualquer nicho que eu olhei. Comece por ele mesmo não sendo o melhor R$/hora.</li>
+    <li><b>Porta-óculos de mesa, R$ 49.</b> 132 anúncios, faixa que vai até R$ 75 e R$ 13,43 por hora de placa. Segundo melhor sinal de escassez com venda provada.</li>
+    <li><b>Kit de 10 organizadores de cabo, R$ 35.</b> Melhor rendimento da lista. Serve como produto de entrada para puxar reputação — barato de errar e rápido de reimprimir.</li>
+    <li><b>Padronize uma cor só no teste inteiro.</b> Você está testando produto, não paleta. Cor entra como variação depois que o anúncio provar que vende.</li>
+    <li><b>R$ 10/dia de ads por anúncio, 14 dias, e corte no dia 14.</b> Cinco vendas ou mais escala; duas a quatro mexe em uma variável só; zero ou uma mata e sobe o próximo da fila.</li>
+    <li><b>Depois do primeiro que vender, construa a linha em volta dele.</b> Todos os modelos da lista vêm de designers que têm família inteira de peças — quem compra organizador de joias compra porta-óculos, e o segundo pedido não custa anúncio novo.</li>
+  </ol>
+</section>
+
+<p class="foot">Preços, número de anúncios e faixas de volume coletados no Mercado Livre Brasil em 19 de setembro de 2026, em 26 buscas de escritório, organização e decoração. Licenças verificadas uma a uma nas páginas dos modelos no <a href="https://cults3d.com/en/licenses">Cults3D</a>, com os termos do <a href="https://www.cgtrader.com/pages/terms-and-conditions">CGTrader</a> e do <a href="https://www.myminifactory.com/object-licensing">MyMiniFactory</a> lidos na fonte. Volume de vendas no ML é faixa acumulada desde a criação do anúncio, não venda mensal.</p>
+
+</div>
+
+<script>
+const DEFAULTS={fil:95,com:13,fixa:6.5,frete:25,ads:5,imp:5,ref:8,bo:3,emb:2.20,man:0.80,ene:0.12,purga:5};
+const IDS=Object.keys(DEFAULTS);
+const P=[{"nome": "Kit 10 organizadores de cabo de mesa", "cat": "Escritório", "preco": 35, "g": 20, "un": 5, "h": 4.0, "extras": 0, "res": "4.482", "faixa": "R$19–37", "vend": "+10 mil", "angulo": "A peça mais eficiente que encontrei: 40 a 77 clipes cabem numa placa. Em kit de 10 o custo de material é quase zero e a tarifa fixa se dilui.", "risco": "Produto commodity, brigado no preço. Ganha no volume por placa, não no ticket.", "stls": [{"t": "Mini 3-Cable Organizer Clip — chenxi_d", "u": "https://cults3d.com/en/3d-model/gadget/mini-3-cable-organizer-clip-chenxi_d", "l": "CULTS CU", "pr": "R$ 2,98", "nota": "14×26×15 mm, 40 a 77 por placa"}, {"t": "Cable clip under desk without screw — Firdana", "u": "https://cults3d.com/en/3d-model/tool/cable-clip-under-desk-without-screw", "l": "CULTS CU", "pr": "grátis", "nota": "39×10×19 mm, margem cheia"}, {"t": "Perfect Desk Cable Management — juihlein", "u": "https://cults3d.com/en/3d-model/home/perfect-desk-cable-management", "l": "CULTS CU-ND", "pr": "R$ 7,46", "nota": "3 tamanhos = 3 SKUs"}, {"t": "RUEDA Cable Roller (print-in-place) — Charles_Regaud", "u": "https://cults3d.com/en/3d-model/gadget/rueda-cable-roller-print-in-place", "l": "CULTS CU", "pr": "preço livre", "nota": "sai montado, 9 por placa no tamanho P"}]}, {"nome": "Porta-incenso decorativo", "cat": "Decoração", "preco": 35, "g": 30, "un": 5, "h": 4.0, "extras": 0, "res": "2.010", "faixa": "R$24–36", "vend": "+100", "angulo": "Nicho esotérico compra por estética e recompra. Dois mil anúncios é concorrência média, e o preço de topo já está em R$ 36.", "risco": "Ticket baixo. Depende de 4 por placa para fechar a conta — se a peça crescer, o produto morre.", "stls": [{"t": "Yoga Incense Holder — CardArt3D", "u": "https://cults3d.com/en/3d-model/home/yoga-incense-holder-meditation-decor-stl", "l": "CULTS CU", "pr": "R$ 11,93", "nota": "precisa de suporte automático"}, {"t": "Incense Holder Hamsa Hand Fatima — Argen3D", "u": "https://cults3d.com/en/3d-model/home/incense-holder-burner-hamsa-hand-fatima", "l": "CULTS CU", "pr": "R$ 14,94", "nota": "recorte e relevo resolvem sem pintura"}, {"t": "Tealight Candle Holders — 4hobbyPrinting", "u": "https://cults3d.com/en/3d-model/home/tealight-candle-holders-for-led-candle", "l": "CULTS CU", "pr": "R$ 11,93", "nota": "vende junto como linha"}, {"t": "Couple Candle Holder — Allexxe", "u": "https://cults3d.com/en/3d-model/home/couple-candle-holder-romantic-commemorative-candlestick-proposal-decorative-c", "l": "CULTS CU", "pr": "R$ 6,75", "nota": "mesma prateleira de decoração"}]}, {"nome": "Suporte de carregador de tomada", "cat": "Escritório", "preco": 32, "g": 35, "un": 6, "h": 4.5, "extras": 0, "res": "159", "faixa": "R$22–30", "vend": "+100", "angulo": "Só 159 anúncios em todo o Mercado Livre. Produto de utilidade pura, com busca constante e nenhum vendedor forte.", "risco": "Ticket baixo e teto de preço baixo. Precisa das 6 por placa para valer a hora de máquina.", "stls": [{"t": "Suportes de Parede para Carregador e iPhone — BrunoTitan3D", "u": "https://cults3d.com/en/3d-model/tool/suportes-de-parede-para-carregador-e-iphone", "l": "CULTS CU", "pr": "R$ 42,19", "nota": "designer brasileiro, 45×120×37 mm"}, {"t": "Perfect Desk Cable Management — juihlein", "u": "https://cults3d.com/en/3d-model/home/perfect-desk-cable-management", "l": "CULTS CU-ND", "pr": "R$ 7,46", "nota": "canaletas, 3 tamanhos"}, {"t": "RUEDA Cable Roller — Charles_Regaud", "u": "https://cults3d.com/en/3d-model/gadget/rueda-cable-roller-print-in-place", "l": "CULTS CU", "pr": "preço livre", "nota": "print-in-place, vende junto"}, {"t": "Cable clip under desk — Firdana", "u": "https://cults3d.com/en/3d-model/tool/cable-clip-under-desk-without-screw", "l": "CULTS CU", "pr": "grátis", "nota": "complemento de kit"}]}, {"nome": "Porta-óculos de mesa", "cat": "Organização", "preco": 49, "g": 55, "un": 3, "h": 4.5, "extras": 0, "res": "132", "faixa": "R$35–75", "vend": "+500", "angulo": "132 anúncios e o topo já vende acima de R$ 38. Faixa de preço vai até R$ 75, ou seja, tem espaço para posicionar caro.", "risco": "Concorre com madeira e acrílico. Precisa de forma escultural, não de caixinha.", "stls": [{"t": "Eyeglass holder — megustaen3d", "u": "https://cults3d.com/en/3d-model/art/soporte-para-anteojos", "l": "CULTS CU", "pr": "R$ 2,98", "nota": "base 100×100×30 mm, 4 por placa"}, {"t": "Cartoon Dog Specs Holder — SARK_3D", "u": "https://cults3d.com/en/3d-model/tool/cartoon-dog-specs-holder-3d-printable-desk-organizer", "l": "CULTS CU", "pr": "R$ 21,47", "nota": "100×110×88 mm, 2 por placa"}, {"t": "Modular eyeglass display stand — SEEKER", "u": "https://cults3d.com/en/3d-model/fashion/exhibidor-de-anteojos-modular", "l": "CULTS CU", "pr": "R$ 5,09", "nota": "expositor, serve p/ vender a óticas"}, {"t": "Magnetic Eyeglass Holder 20 mm — LNCH34", "u": "https://cults3d.com/en/3d-model/fashion/soporte-magnetico-20mm-para-anteojos-support-minimalista-moderno-urban-vibes", "l": "CULTS CU", "pr": "R$ 6,44", "nota": "15×30×4 mm, 60+ por placa — vira kit"}]}, {"nome": "Vaso decorativo geométrico (vase mode)", "cat": "Decoração", "preco": 59, "g": 50, "un": 2, "h": 4.5, "extras": 0, "res": "2.060", "faixa": "R$39–62", "vend": "+5 mil", "angulo": "Mais de 5 mil vendas no segundo colocado e preço médio alto. Vase mode é parede única: leve, rápido e o acabamento de camada vira a textura do produto.", "risco": "Mercado grande e com muito importado. Seu diferencial é forma exclusiva e foto — não preço.", "stls": [{"t": "Set of 9 Geometric Vases (vase mode) — 4hobbyPrinting", "u": "https://cults3d.com/en/3d-model/home/set-of-9-geometric-vases-vase-mode", "l": "CULTS CU", "pr": "R$ 11,93", "nota": "9 modelos num pacote, ~4 h cada em tamanho cheio"}, {"t": "Spiral Pack – vase mode — jackassets", "u": "https://cults3d.com/en/3d-model/various/spiral-pack-vase-mode", "l": "CULTS CU", "pr": "R$ 5,00", "nota": "5 STL, autor libera uso comercial no texto"}, {"t": "Vase 870 — StevePrints", "u": "https://cults3d.com/en/3d-model/home/vase-870", "l": "CULTS CU-ND", "pr": "R$ 6,13", "nota": "120×170 mm, não pode modificar"}, {"t": "Modern Japandi Plant Pots Set — Helo3D", "u": "https://cults3d.com/en/3d-model/home/modern-japandi-style-plant-pots-set", "l": "CULTS CU", "pr": "R$ 29,99", "nota": "3 padrões, config de vase mode na página"}]}, {"nome": "Porta-cartão de visita de mesa", "cat": "Escritório", "preco": 29, "g": 30, "un": 6, "h": 4.5, "extras": 0, "res": "1.093", "faixa": "R$17–30", "vend": "+1000", "angulo": "Mil vendas no terceiro colocado e seis unidades por placa. Peça baixa e rápida, das que pagam a tarifa fixa no volume e não no preço.", "risco": "Teto de preço baixo: a R$ 29 o lucro é o menor da lista. Só se sustenta porque rende seis por impressão.", "stls": [{"t": "Portrait Business Card Holder — BitSizedBuilds", "u": "https://cults3d.com/en/3d-model/tool/portrait-business-card-holder", "l": "CULTS CU", "pr": "preço livre", "nota": "65×65×95 mm, 4 por placa"}, {"t": "Business card holders 3x4, 3x5, 3x3 — FolivoraLabs", "u": "https://cults3d.com/en/3d-model/tool/3-x-5-business-card-holder", "l": "CULTS CU", "pr": "preço livre", "nota": "3 tamanhos num arquivo"}, {"t": "King Arthur business card holder — JellyWobble", "u": "https://cults3d.com/en/3d-model/home/call-me-king-arthur-business-card-holder", "l": "CULTS CU-ND", "pr": "R$ 2,98", "nota": "124×84×47 mm, tema espada na pedra"}, {"t": "Cute Baby Dragon Business Card Holder — taylorlizdill", "u": "https://cults3d.com/en/3d-model/home/cute-baby-dragon-business-card-holder-fantasy-desk-organizer-3d-printable-st", "l": "CULTS CU", "pr": "R$ 25,76", "nota": "página não informa dimensões"}]}, {"nome": "Organizador de joias e brincos", "cat": "Organização", "preco": 45, "g": 55, "un": 3, "h": 4.5, "extras": 0, "res": "20", "faixa": "R$39–45", "vend": "+500", "angulo": "Vinte anúncios no Mercado Livre inteiro, com o líder passando de 500 vendas. É a maior desproporção entre demanda e oferta de toda a varredura — em qualquer nicho.", "risco": "Categoria pequena em volume absoluto. Ótima para margem e reputação, não para encher duas impressoras.", "stls": [{"t": "Jewelry Tree Organizer — MySweetHouse3D", "u": "https://cults3d.com/en/3d-model/jewelry/jewelry-tree-organjewelry-tree-organizer-minimalist-accessory-holder-3d-prin", "l": "CULTS CU", "pr": "R$ 5,50", "nota": "sem suporte"}, {"t": "Geometric Earring Display Stand — WANNAGEEKBR", "u": "https://cults3d.com/en/3d-model/jewelry/geometric-earring-display-stand-minimal-jewelry-organizer-jewelry-holder-for", "l": "CULTS CU", "pr": "R$ 25,00", "nota": "sem suporte, designer BR"}, {"t": "L-Shaped Earring Display Stand — WANNAGEEKBR", "u": "https://cults3d.com/en/3d-model/jewelry/l-shaped-earring-display-stand-minimal-jewelry-holder-for-3d-printing", "l": "CULTS CU", "pr": "R$ 25,00", "nota": "mesma linha do anterior"}, {"t": "Minimalist Tree Jewelry Organizer — Allexxe", "u": "https://cults3d.com/en/3d-model/home/minimalist-tree-jewelry-organizer-desk-accessory-key-holder", "l": "CULTS CU", "pr": "R$ 5,62", "nota": "exige suporte"}]}, {"nome": "Porta-caneta decorativo geométrico", "cat": "Escritório", "preco": 39, "g": 45, "un": 4, "h": 5.0, "extras": 0, "res": "3.700", "faixa": "R$22–39", "vend": "+5 mil", "angulo": "Mais de 5 mil vendas no terceiro colocado e preço de topo já em R$ 39. Quatro por placa mantém o R$/hora saudável mesmo com ticket baixo.", "risco": "Categoria saturada de porta-caneta de acrílico barato. Precisa de forma que o acrílico não faz.", "stls": [{"t": "Pen Holder — Noktla", "u": "https://cults3d.com/en/3d-model/home/pen-holder-noktla", "l": "CULTS CU", "pr": "preço livre", "nota": "80×95×100 mm, facetado"}, {"t": "Low Poly Bowl — FORMBYTE", "u": "https://cults3d.com/en/3d-model/home/low-poly-bowl", "l": "CULTS CU", "pr": "R$ 5,67", "nota": "sem suporte"}, {"t": "Dwarf Viking Barrel – Pen Holder & Planter — BrassarKing", "u": "https://cults3d.com/en/3d-model/home/dwarf-viking-barrel-pen-holder-planter", "l": "CULTS CU", "pr": "R$ 4,00", "nota": "erro de unidade no arquivo: escalar ×1000"}, {"t": "Low Poly Tray – Stackable — FORMBYTE", "u": "https://cults3d.com/en/3d-model/home/low-poly-tray-stackable", "l": "CULTS CU", "pr": "R$ 11,63", "nota": "serve como linha junto com o bowl"}]}, {"nome": "Kit 3 porta-velas para vela de LED", "cat": "Decoração", "preco": 49, "g": 60, "un": 3, "h": 4.5, "extras": 6.0, "res": "7.453", "faixa": "R$21–87", "vend": "+50", "angulo": "Nove unidades por placa e faixa de preço que vai até R$ 87. Vendido como kit com as velas de LED inclusas, vira presente — e presente não pechincha.", "risco": "Só vela de LED. PLA deforma com chama: isso precisa estar escrito no anúncio, não só na sua cabeça.", "stls": [{"t": "Tealight Candle Holders for LED Candle — 4hobbyPrinting", "u": "https://cults3d.com/en/3d-model/home/tealight-candle-holders-for-led-candle", "l": "CULTS CU", "pr": "R$ 11,93", "nota": "3 modelos, 9 a 12 por placa, inserto em vase mode"}, {"t": "Couple Candle Holder / castiçal comemorativo — Allexxe", "u": "https://cults3d.com/en/3d-model/home/couple-candle-holder-romantic-commemorative-candlestick-proposal-decorative-c", "l": "CULTS CU", "pr": "R$ 6,75", "nota": "forte para datas comemorativas"}, {"t": "Yoga Incense Holder — CardArt3D", "u": "https://cults3d.com/en/3d-model/home/yoga-incense-holder-meditation-decor-stl", "l": "CULTS CU", "pr": "R$ 11,93", "nota": "autor libera venda de impressos no texto"}, {"t": "Incense Holder Hamsa Hand — Argen3D", "u": "https://cults3d.com/en/3d-model/home/incense-holder-burner-hamsa-hand-fatima", "l": "CULTS CU", "pr": "R$ 14,94", "nota": "nicho esotérico"}]}, {"nome": "Organizador de mesa modular (kit 4 peças)", "cat": "Escritório", "preco": 55, "g": 110, "un": 2, "h": 5.0, "extras": 0, "res": "1.333", "faixa": "R$28–81", "vend": "+500", "angulo": "Só 1.333 anúncios e preço chegando a R$ 81. Modular puxa recompra e é a categoria onde o design conta mais que o preço.", "risco": "Kit com 4 peças = 4 pontos de falha por venda. Refugo pesa mais aqui que em peça única.", "stls": [{"t": "Stackable Modular Organizer Trays — dengpengyi", "u": "https://cults3d.com/en/3d-model/tool/stackable-modular-organizer-trays-the-ultimate-workspace-storage-system-fdm-o-dengpengyi", "l": "CULTS CU", "pr": "R$ 5,15", "nota": "90×90, empilháveis, FDM otimizado"}, {"t": "Modular Desk Organizer Kit — gadgetworks3d", "u": "https://cults3d.com/en/3d-model/home/modular-desk-organizer-kit-pen-case-tool-tray-triangle-racks-bowl-gadgetworks3d", "l": "CULTS CU-ND", "pr": "preço livre", "nota": "kit completo, não pode modificar"}, {"t": "Low Poly Tray – Stackable — FORMBYTE", "u": "https://cults3d.com/en/3d-model/home/low-poly-tray-stackable", "l": "CULTS CU", "pr": "R$ 11,63", "nota": "mesma família visual do bowl"}, {"t": "Stackable Mini Tote & Rack — adrdt", "u": "https://cults3d.com/en/3d-model/tool/stackable-mini-tote-rack-improved-snap-lid-thinner-larger-v2", "l": "CULTS CU", "pr": "R$ 8,28", "nota": "caixas com tampa de encaixe"}]}, {"nome": "Kit 2 vasos de parede para planta", "cat": "Decoração", "preco": 49, "g": 90, "un": 2, "h": 5.0, "extras": 0, "res": "7.595", "faixa": "R$21–46", "vend": "+5 mil", "angulo": "Duas buscas diferentes confirmam volume alto (suporte de planta e vaso de parede), com preço chegando a R$ 59. Kit de 2 resolve o ticket.", "risco": "Fica na parede segurando terra molhada: PETG e teste de carga. PLA com sol de janela deforma.", "stls": [{"t": "Wall-Mounted Hanging Flower Pot — TahrFab", "u": "https://cults3d.com/en/3d-model/home/wall-mounted-hanging-flower-pot-minimalist-planter", "l": "CULTS CU", "pr": "R$ 17,84", "nota": "autor avisa: ainda não foi impresso fisicamente"}, {"t": "Seashell Wall Pot — 3DStrato", "u": "https://cults3d.com/en/3d-model/home/seashell-wall-pot", "l": "CULTS CU", "pr": "R$ 17,90", "nota": "precisa de suporte"}, {"t": "Ice-Cream Cone Wall Hanging Vase — JadeAndHerBrush", "u": "https://cults3d.com/en/3d-model/home/ice-cream-cone-wall-hanging-vase", "l": "CULTS CU-ND", "pr": "R$ 5,97", "nota": "5 h por peça — no limite"}, {"t": "Orbit Hanging Planter — DeadlyMouse19", "u": "https://cults3d.com/en/3d-model/home/orbit-hanging-planter-modern-flower-pot-with-chain-and-base", "l": "CULTS CU", "pr": "R$ 17,84", "nota": "vaso 153 mm + corrente impressa"}]}, {"nome": "Kit 3 cachepots para suculenta", "cat": "Decoração", "preco": 45, "g": 75, "un": 2, "h": 5.0, "extras": 0, "res": "9.266", "faixa": "R$22–35", "vend": "+10 mil", "angulo": "Volume enorme e peça minúscula: seis unidades por placa. O kit de 3 resolve o problema do preço baixo, que sozinho não pagaria a tarifa fixa.", "risco": "Preço do kit fica acima da faixa unitária observada. Só fecha vendendo o conjunto, nunca a peça avulsa.", "stls": [{"t": "Cute Moon Planter – Succulent Pot — Jhalej3D", "u": "https://cults3d.com/en/3d-model/various/cute-moon-planter-succulent-pot-easy-3d-print-stl", "l": "CULTS CU", "pr": "R$ 5,97", "nota": "6 a 9 por placa, sem suporte"}, {"t": "Ribbed Round Planter with Twisted Rim — Elysium3d", "u": "https://cults3d.com/en/3d-model/home/ribbed-round-planter-with-twisted-rim-elegant-decorative-plant-pot", "l": "CULTS CU-ND", "pr": "R$ 8,89", "nota": "as linhas de camada viram a textura"}, {"t": "Modern Self-Watering Planter — shanhukh", "u": "https://cults3d.com/en/3d-model/home/modern-self-watering-planter-with-removable-drainage-insert-minimal-indoor-pla", "l": "CULTS CU-ND", "pr": "R$ 5,97", "nota": "auto-irrigável, 10 cm, 3 peças"}, {"t": "Modern Japandi Plant Pots Set — Helo3D", "u": "https://cults3d.com/en/3d-model/home/modern-japandi-style-plant-pots-set", "l": "CULTS CU", "pr": "R$ 29,99", "nota": "escalável, vase mode"}]}, {"nome": "Kit divisórias modulares de gaveta", "cat": "Organização", "preco": 69, "g": 140, "un": 1, "h": 5.0, "extras": 0, "res": "9.999", "faixa": "R$35–79", "vend": "+1000", "angulo": "Preço de topo em R$ 79 com mais de mil vendas, e o modelo base é gratuito no Cults. Sistema modular gera recompra: quem compra um kit volta para o próximo.", "risco": "Uma placa por kit e 5 h cheias. Ticket alto compensa, mas não é peça de encher máquina.", "stls": [{"t": "Modular Drawer Base Grid — BogettiDesigns", "u": "https://cults3d.com/en/3d-model/home/modular-drawer-base-grid-organizer-stabilizing-system-stl", "l": "CULTS CU", "pr": "grátis", "nota": "ladrilhos 42×42×4 mm, ~25 por placa"}, {"t": "Stackable Modular Organizer Trays — dengpengyi", "u": "https://cults3d.com/en/3d-model/tool/stackable-modular-organizer-trays-the-ultimate-workspace-storage-system-fdm-o-dengpengyi", "l": "CULTS CU", "pr": "R$ 5,15", "nota": "90×90, 10 a 22 mm de altura"}, {"t": "Hex Organizer Tray 128×128 — voiddo", "u": "https://cults3d.com/en/3d-model/home/print-ready-modular-hex-organizer-tray-128x128mm-9-cell-drawer-insert", "l": "CULTS CU", "pr": "R$ 19,32", "nota": "favo hexagonal, 1 por placa"}, {"t": "Stackable Mini Tote & Rack — adrdt", "u": "https://cults3d.com/en/3d-model/tool/stackable-mini-tote-rack-improved-snap-lid-thinner-larger-v2", "l": "CULTS CU", "pr": "R$ 8,28", "nota": "evite os arquivos de 232 mm"}]}, {"nome": "Kit 4 bandejas empilháveis de gaveta", "cat": "Organização", "preco": 59, "g": 100, "un": 1, "h": 4.5, "extras": 0, "res": "9.999", "faixa": "R$35–79", "vend": "+1000", "angulo": "Quatro bandejas de 90×90 mm ocupam uma placa inteira e saem como um kit só. Preço de topo observado em R$ 79 dá folga para posicionar em R$ 59.", "risco": "Sem um sistema (medidas que encaixam entre si) vira commodity. Padronize as medidas desde o primeiro anúncio.", "stls": [{"t": "Stackable Modular Organizer Trays — dengpengyi", "u": "https://cults3d.com/en/3d-model/tool/stackable-modular-organizer-trays-the-ultimate-workspace-storage-system-fdm-o-dengpengyi", "l": "CULTS CU", "pr": "R$ 5,15", "nota": "90×90×10 a 22 mm, 4 por placa"}, {"t": "Modular Drawer Base Grid — BogettiDesigns", "u": "https://cults3d.com/en/3d-model/home/modular-drawer-base-grid-organizer-stabilizing-system-stl", "l": "CULTS CU", "pr": "grátis", "nota": "grade de base que estabiliza o kit"}, {"t": "Hex Organizer Tray — voiddo", "u": "https://cults3d.com/en/3d-model/home/print-ready-modular-hex-organizer-tray-128x128mm-9-cell-drawer-insert", "l": "CULTS CU", "pr": "R$ 19,32", "nota": "versão hexagonal, 9 células"}, {"t": "Low Poly Tray – Stackable — FORMBYTE", "u": "https://cults3d.com/en/3d-model/home/low-poly-tray-stackable", "l": "CULTS CU", "pr": "R$ 11,63", "nota": "versão facetada da mesma ideia"}]}, {"nome": "Cúpula de luminária pendente (vase mode, E27)", "cat": "Decoração", "preco": 78.9, "g": 110, "un": 1, "h": 5.0, "extras": 12.0, "res": "9.999", "faixa": "R$33–45 (mesa)", "vend": "+10 mil", "angulo": "Vase mode em parede fina difunde a luz — é o único produto da lista em que a limitação do FDM vira argumento de venda. Ticket alto e peça leve.", "risco": "Precisa de soquete, fio e lâmpada comprados (~R$ 12). Verifique se o STL cabe nos 256 mm da A1 antes de comprar.", "stls": [{"t": "Wave Organic Pendant Lamp Shade — LumeCraft3d", "u": "https://cults3d.com/en/3d-model/home/wave-organic-pendant-lamp-shade", "l": "CULTS CU-ND", "pr": "R$ 11,93", "nota": "vase mode, bico 0,4, soquete E27, LED até 10 W"}, {"t": "Table Lamp E27 Twist & Bloom — TIMONs", "u": "https://cults3d.com/en/3d-model/home/table-lamp-e27-twist-bloom-3d-printed-desk-light", "l": "CULTS CU", "pr": "R$ 5,91", "nota": "27 cm montada, vase mode possível"}, {"t": "Wave Table Lamp with Ribbed Shade — I_linki_I", "u": "https://cults3d.com/en/3d-model/home/wave-table-lamp-3d-printed-light-fixture-with-ribbed-shade", "l": "CULTS CU", "pr": "R$ 14,92", "nota": "259 mm montada — conferir cada STL"}, {"t": "Set of 9 Geometric Vases — 4hobbyPrinting", "u": "https://cults3d.com/en/3d-model/home/set-of-9-geometric-vases-vase-mode", "l": "CULTS CU", "pr": "R$ 11,93", "nota": "dá para virar cúpula escalando"}]}, {"nome": "Bandeja organizadora de papéis (3 níveis)", "cat": "Escritório", "preco": 65, "g": 160, "un": 1, "h": 5.0, "extras": 0, "res": "2.996", "faixa": "R$51–68", "vend": "+1000 em 4 dos 5 primeiros", "angulo": "Quatro dos cinco primeiros colocados passam de mil vendas, com preço já consolidado entre R$ 51 e R$ 68. É o maior volume com ticket alto que encontrei em escritório.", "risco": "Peça grande: uma por placa e 5 h cheias. O R$/hora é o pior do lote — entra pelo volume, não pela eficiência.", "stls": [{"t": "Low Poly Tray – Stackable — FORMBYTE", "u": "https://cults3d.com/en/3d-model/home/low-poly-tray-stackable", "l": "CULTS CU", "pr": "R$ 11,63", "nota": "empilhável, facetado"}, {"t": "Stackable Modular Organizer Trays — dengpengyi", "u": "https://cults3d.com/en/3d-model/tool/stackable-modular-organizer-trays-the-ultimate-workspace-storage-system-fdm-o-dengpengyi", "l": "CULTS CU", "pr": "R$ 5,15", "nota": "90×90 mm, otimizado p/ FDM"}, {"t": "Stackable Mini Tote & Rack — adrdt", "u": "https://cults3d.com/en/3d-model/tool/stackable-mini-tote-rack-improved-snap-lid-thinner-larger-v2", "l": "CULTS CU", "pr": "R$ 8,28", "nota": "tampa com encaixe"}, {"t": "Modular Desk Organizer Kit — gadgetworks3d", "u": "https://cults3d.com/en/3d-model/home/modular-desk-organizer-kit-pen-case-tool-tray-triangle-racks-bowl-gadgetworks3d", "l": "CULTS CU-ND", "pr": "preço livre", "nota": "não pode modificar"}]}];
+const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
+function prem(){const o={};IDS.forEach(k=>{const v=parseFloat(document.getElementById(k).value);o[k]=isFinite(v)?v:DEFAULTS[k]});return o}
+function calc(p,q){
+  const hun=p.h/p.un;
+  const material=p.g*(q.fil/1000)*(1+q.purga/100);
+  const energia=hun*q.ene, manut=hun*q.man;
+  const prod=material+energia+manut+p.extras;
+  const refugo=prod*(q.ref/100);
+  const com=p.preco*(q.com/100), fixa=p.preco<79?q.fixa:0, frete=p.preco<79?0:q.frete;
+  const ads=p.preco*(q.ads/100), imposto=p.preco*(q.imp/100), bo=p.preco*(q.bo/100);
+  const custo=prod+refugo+q.emb, taxas=com+fixa+frete+ads+imposto+bo;
+  const lucro=p.preco-custo-taxas;
+  return {material,energia,manut,refugo,emb:q.emb,com,fixa,frete,ads,imposto,bo,custo,taxas,
+          lucro,lucro_placa:lucro*p.un,rsh:lucro*p.un/p.h,margem:100*lucro/p.preco};
+}
+let sortKey='rsh', sortDir=-1, filt=new Set(), open=new Set();
+function render(){
+  const q=prem();
+  let list=P.map((p,i)=>({...p,_i:i,...calc(p,q)}));
+  if(filt.size) list=list.filter(r=>filt.has(r.cat));
+  list.sort((a,b)=>{const x=a[sortKey],y=b[sortKey];return (typeof x==='string'?x.localeCompare(y,'pt'):x-y)*sortDir});
+  const max=Math.max(...list.map(r=>r.rsh),1), tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  list.forEach((r,n)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><div class="name"><span class="ix">${String(n+1).padStart(2,'0')}</span><span>${r.nome}</span></div></td>
+      <td style="color:var(--ink-2);font-size:13px">${r.cat}</td>
+      <td class="n">${brl(r.preco)}</td>
+      <td class="n">${r.g} g</td>
+      <td class="n" style="font-weight:600">${r.un}×</td>
+      <td class="n">${r.h.toFixed(1)} h</td>
+      <td class="n">${brl(r.lucro)}</td>
+      <td class="n" style="color:var(--ink-2)">${brl(r.lucro_placa)}</td>
+      <td class="n"><span class="bar"><span class="track"><span class="fill" style="width:${Math.max(4,100*r.rsh/max)}%"></span></span>${brl(r.rsh)}</span></td>`;
+    tr.addEventListener('click',()=>{open.has(r._i)?open.delete(r._i):open.add(r._i);render()});
+    tb.appendChild(tr);
+    if(open.has(r._i)){
+      const d=document.createElement('tr'); d.className='det';
+      const links=r.stls.map(s=>`<li style="margin-bottom:9px"><a href="${s.u}" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600;text-decoration:none">${s.t}</a><br><span style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">${s.l} · ${s.pr} · ${s.nota}</span></li>`).join('');
+      d.innerHTML=`<td colspan="9"><div class="in">
+        <div><h4>Por que esse</h4><p>${r.angulo}</p>
+             <h4 style="margin-top:14px">Risco / BO</h4><p>${r.risco}</p>
+             <h4 style="margin-top:14px">Mercado no ML</h4><p>${r.res} anúncios · ${r.faixa} · topo com ${r.vend}</p></div>
+        <div><h4>STLs com licença comercial</h4><ul style="list-style:none;padding:0;margin:0;font-size:13px">${links}</ul></div>
+        <div><h4>Conta por unidade</h4><div class="break">
+          <div><span>Filamento (${r.g} g)</span><span>${brl(r.material)}</span></div>
+          ${r.extras?`<div><span>Insumos (LED, ímã, soquete)</span><span>${brl(r.extras)}</span></div>`:''}
+          <div><span>Energia + manutenção (${(r.h/r.un).toFixed(2)} h/un)</span><span>${brl(r.energia+r.manut)}</span></div>
+          <div><span>Refugo / reimpressão</span><span>${brl(r.refugo)}</span></div>
+          <div><span>Embalagem</span><span>${brl(r.emb)}</span></div>
+          <div><span>Comissão + tarifa fixa</span><span>${brl(r.com+r.fixa)}</span></div>
+          ${r.frete?`<div><span>Frete por sua conta</span><span>${brl(r.frete)}</span></div>`:''}
+          <div><span>Ads + imposto + devolução</span><span>${brl(r.ads+r.imposto+r.bo)}</span></div>
+          <div class="tot"><span>Lucro por peça (${r.margem.toFixed(0)}%)</span><span>${brl(r.lucro)}</span></div>
+          <div class="tot"><span>Lucro da placa (${r.un} un)</span><span>${brl(r.lucro_placa)}</span></div>
+        </div></div></div></td>`;
+      tb.appendChild(d);
+    }
+  });
+  const all=P.map(p=>({...p,...calc(p,q)}));
+  document.getElementById('k1').textContent=all.filter(r=>r.lucro>=7&&r.h<=5).length;
+  document.getElementById('k3').textContent=brl(Math.max(...all.map(r=>r.rsh)));
+}
+document.querySelectorAll('#tab th').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k=th.dataset.s;
+    if(sortKey===k) sortDir*=-1; else {sortKey=k; sortDir=(k==='nome'||k==='cat')?1:-1;}
+    document.querySelectorAll('#tab th').forEach(t=>t.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort',sortDir===1?'ascending':'descending');
+    render();
+  });
+});
+document.querySelectorAll('#filters .chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const v=c.dataset.v;
+    if(filt.has(v)){filt.delete(v);c.setAttribute('aria-pressed','false')}
+    else{filt.add(v);c.setAttribute('aria-pressed','true')}
+    render();
+  });
+});
+IDS.forEach(k=>document.getElementById(k).addEventListener('input',render));
+document.getElementById('reset').addEventListener('click',()=>{IDS.forEach(k=>document.getElementById(k).value=DEFAULTS[k]);render()});
+render();
+</script>
+</body>
+</html>

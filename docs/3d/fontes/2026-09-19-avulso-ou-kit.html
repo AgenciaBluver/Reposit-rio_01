@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Avulso ou Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --surface-2:#EAEDE7; --inset:#F0F2EE;
+  --ink:#151A18; --ink-2:#4A544F; --ink-3:#7A857F; --line:#DCE0D9; --line-2:#C7CDC3;
+  --accent:#0E6B57; --accent-2:#3E9A82; --accent-soft:#D9E9E2; --on-accent:#FFFFFF;
+  --warn:#8E540F; --warn-soft:#F3E6D2; --crit:#9E2A1E; --crit-soft:#F5DFDC;
+  --disp:"IBM Plex Sans Condensed","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}}
+:root[data-theme="dark"]{
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 16px;margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:40px 72px}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6.2vw,58px);letter-spacing:-.015em}
+h2{font-size:clamp(21px,3vw,27px);letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:17px;color:var(--ink-2);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+section{margin-top:56px}
+.sechead{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;
+  border-top:1px solid var(--line-2);padding-top:14px}
+.num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+
+/* rule callout */
+.rule{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  padding:20px 22px;display:grid;gap:14px}
+.rule .big{font-family:var(--disp);font-size:clamp(19px,2.6vw,24px);line-height:1.25}
+.cliff{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:2px}
+.cliff div{background:var(--surface);padding:12px 14px}
+.cliff b{font-family:var(--mono);font-size:19px;display:block;letter-spacing:-.02em}
+.cliff span{font-size:12.5px;color:var(--ink-2);display:block;margin-top:2px}
+.cliff .bad b{color:var(--crit)} .cliff .good b{color:var(--accent)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.kpi .v{font-family:var(--disp);font-size:36px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.kpi .s{font-size:13px;color:var(--ink-2);margin-top:6px}
+
+/* controls */
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px}
+.grid-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px}
+label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+input[type=number],select{width:100%;font-family:var(--mono);font-size:14px;color:var(--ink);
+  background:var(--inset);border:1px solid var(--line-2);border-radius:2px;padding:8px 9px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.reset{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;background:none;border:1px solid var(--line-2);
+  color:var(--ink-2);padding:7px 12px;border-radius:2px;cursor:pointer;margin-top:14px}
+.reset:hover{border-color:var(--accent);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;padding:6px 11px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:880px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  text-align:left;padding:11px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap;
+  background:var(--surface-2);cursor:pointer;user-select:none}
+th.n{text-align:right}
+th[aria-sort]{color:var(--accent)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--inset)}
+tr.det td{background:var(--inset);border-bottom:1px solid var(--line-2)}
+.name{font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.name .ix{font-family:var(--mono);font-size:11px;color:var(--ink-3);min-width:18px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap;
+  border:1px solid var(--line-2);color:var(--ink-2);background:var(--surface)}
+.tag.Alta{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tag.Média{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.tag.Baixa,.tag.Hipótese{color:var(--crit);border-color:var(--crit);background:var(--crit-soft)}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{display:block;width:74px;height:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;overflow:hidden;flex:none}
+.bar .fill{display:block;height:100%;min-width:3px;background:var(--accent);border-radius:4px}
+.det .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;padding:6px 0 10px}
+.det h4{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.det p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.break{font-family:var(--mono);font-size:12.5px}
+.break div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;border-bottom:1px dotted var(--line)}
+.break div.tot{border-bottom:none;border-top:1px solid var(--line-2);margin-top:4px;padding-top:5px;color:var(--ink);font-weight:600}
+.break span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.break span:first-child{color:var(--ink-2)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-2)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:14.5px;color:var(--ink-2)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px}
+ol.steps b{color:var(--ink);font-weight:600}
+.foot{margin-top:56px;border-top:1px solid var(--line-2);padding-top:16px;font-size:13px;color:var(--ink-3)}
+.foot a{color:var(--ink-2)}
+.warnbox{background:var(--warn-soft);border:1px solid var(--warn);padding:16px 18px;font-size:14px;color:var(--ink)}
+@media (max-width:560px){ .wrap{padding-block:28px 52px} .kpi .v{font-size:30px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap"><header class="stack">
+  <p class="eyebrow">Escritório, organização e decoração · custo unitário e por placa · 19 set 2026</p>
+  <h1>Avulso ou kit</h1>
+  <p class="lede">Os mesmos 16 produtos, agora com a conta aberta peça por peça: quanto custa fazer <b>uma</b>, por quanto ela precisa ser vendida para sobrar dinheiro, quanto sobra de verdade, e em quais casos o kit é obrigatório em vez de opcional.</p>
+</header>
+
+<section>
+  <div class="rule">
+    <p class="eyebrow">A regra que decide tudo</p>
+    <p class="big">A tarifa de R$ 6,50 é cobrada por venda, não por peça. Então cada produto tem um <b>preço mínimo de venda avulsa</b> — e quando o mercado não paga esse preço por uma peça sozinha, o kit deixa de ser estratégia e vira obrigação.</p>
+    <p style="font-family:var(--mono);font-size:15px;background:var(--inset);border:1px solid var(--line-2);padding:14px 16px;overflow-x:auto;white-space:nowrap">preço mínimo avulso = ( R$ 7 + custo da peça + embalagem + R$ 6,50 ) ÷ 0,74</p>
+    <p style="font-size:13.5px;color:var(--ink-2)">Os 0,74 são o que sobra depois de 26% de comissão, ads, imposto e devolução. Os R$ 7 são o lucro mínimo que você aceitou. Troque o R$ 7 pelo lucro que quiser e a fórmula continua valendo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">01 — O EXEMPLO</p>
+    <h2>Porta-incenso, do grama ao lucro</h2>
+    <p class="lede">Você pediu esse. Acompanhe a conta inteira — todos os outros funcionam igual.</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <h3>Passo 1 — o que custa fazer uma</h3>
+      <div class="break" style="margin-top:10px">
+        <div><span>Filamento · 30 g × R$ 0,0998</span><span>R$ 2,99</span></div>
+        <div><span>Energia + manutenção · 0,80 h × R$ 0,92</span><span>R$ 0,74</span></div>
+        <div><span>Refugo · 8% sobre o acima</span><span>R$ 0,30</span></div>
+        <div class="tot"><span>Custo da peça</span><span>R$ 4,03</span></div>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:var(--ink-3)">A hora de máquina é 0,80 h porque cabem 5 peças numa placa de 4 h. Uma peça sozinha levaria mais tempo — e é por isso que se imprime a placa cheia.</p>
+    </div>
+    <div class="card">
+      <h3>Passo 2 — o que custa vender uma</h3>
+      <div class="break" style="margin-top:10px">
+        <div><span>Custo da peça</span><span>R$ 4,03</span></div>
+        <div><span>Embalagem + etiqueta</span><span>R$ 2,20</span></div>
+        <div><span>Comissão, ads, imposto, devolução · 26%</span><span>R$ 9,10</span></div>
+        <div><span>Tarifa fixa do Mercado Livre</span><span>R$ 6,50</span></div>
+        <div class="tot"><span>Custo total da venda a R$ 35</span><span>R$ 21,83</span></div>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:var(--ink-3)">Repare: de R$ 21,83 de custo, só R$ 4,03 é a peça. <b>O produto não é caro de fazer — é caro de vender.</b></p>
+    </div>
+    <div class="card">
+      <h3>Passo 3 — o que sobra</h3>
+      <div class="break" style="margin-top:10px">
+        <div><span>Venda avulsa</span><span>R$ 35,00</span></div>
+        <div><span>Custo total</span><span>− R$ 21,83</span></div>
+        <div class="tot" style="color:var(--accent)"><span>Lucro por venda</span><span>R$ 13,17</span></div>
+        <div style="border:none;padding-top:10px"><span>Preço mínimo para dar R$ 7</span><span>R$ 26,66</span></div>
+        <div style="border:none"><span>Mercado paga hoje</span><span>R$ 24–36</span></div>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:var(--ink-3)">O mercado paga acima do seu mínimo. Logo, <b>vale vender avulso</b> — e a placa de 4 h vira 5 vendas, R$ 65,87 de lucro, R$ 16,47 por hora.</p>
+    </div>
+    <div class="card">
+      <h3>Passo 4 — e se fosse kit?</h3>
+      <div class="break" style="margin-top:10px">
+        <div><span>Kit de 3 · preço</span><span>R$ 89,00</span></div>
+        <div><span>3 peças + embalagem maior</span><span>− R$ 14,89</span></div>
+        <div><span>Taxas (passou de R$ 79: frete é seu)</span><span>− R$ 48,14</span></div>
+        <div class="tot"><span>Lucro do kit</span><span>R$ 25,98</span></div>
+        <div style="border:none;padding-top:10px"><span>Lucro por peça dentro do kit</span><span>R$ 8,66</span></div>
+        <div style="border:none"><span>R$ por hora de placa</span><span>R$ 10,82</span></div>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:var(--crit)"><b>Kit é pior aqui.</b> R$ 8,66 por peça contra R$ 13,17 avulso. O incenso já se paga sozinho — juntar três só serve para atravessar os R$ 79 e perder R$ 25 de frete.</p>
+    </div>
+  </div>
+  <div class="warnbox" style="margin-top:20px">
+    <p><b>Agora o contrário: o clipe de cabo.</b> Custa R$ 0,29 para fazer. Mas o preço mínimo de venda avulsa dele é <b>R$ 21,61</b> — porque a tarifa fixa e os 26% não sabem que a peça é minúscula. Ninguém paga R$ 21,61 num clipe de cabo. Por isso ele <b>só existe como kit</b>: dez clipes a R$ 35 custam R$ 5,70 no total e deixam R$ 13,65 na sua mão. O kit não está aumentando o preço — está pagando a tarifa uma vez em vez de dez.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">02 — PREMISSAS</p>
+    <h2>Mexa nos números</h2>
+  </div>
+  <div class="panel">
+    <div class="grid-in">
+      <div><label for="fil">Filamento R$/kg</label><input type="number" id="fil" value="95" min="1" step="1"></div>
+      <div><label for="alvo">Lucro mínimo aceito R$</label><input type="number" id="alvo" value="7" min="0" step="0.5"></div>
+      <div><label for="com">Comissão ML %</label><input type="number" id="com" value="13" min="0" step="0.5"></div>
+      <div><label for="fixa">Tarifa fixa R$</label><input type="number" id="fixa" value="6.5" min="0" step="0.5"></div>
+      <div><label for="frete">Frete se ≥ R$79</label><input type="number" id="frete" value="25" min="0" step="1"></div>
+      <div><label for="ads">Product Ads %</label><input type="number" id="ads" value="5" min="0" step="0.5"></div>
+      <div><label for="imp">Imposto %</label><input type="number" id="imp" value="5" min="0" step="0.5"></div>
+      <div><label for="bo">Devolução/avaria %</label><input type="number" id="bo" value="3" min="0" step="0.5"></div>
+      <div><label for="embu">Embalagem avulso R$</label><input type="number" id="embu" value="2.20" min="0" step="0.1"></div>
+      <div><label for="embk">Embalagem kit R$</label><input type="number" id="embk" value="2.80" min="0" step="0.1"></div>
+      <div><label for="man">Manutenção+deprec. R$/h</label><input type="number" id="man" value="0.80" min="0" step="0.05"></div>
+      <div><label for="ene">Energia R$/h</label><input type="number" id="ene" value="0.12" min="0" step="0.01"></div>
+      <div><label for="ref">Refugo %</label><input type="number" id="ref" value="8" min="0" step="1"></div>
+      <div><label for="purga">Purga/desperdício %</label><input type="number" id="purga" value="5" min="0" step="1"></div>
+    </div>
+    <button class="reset" id="reset" type="button">Voltar ao cenário conservador</button>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">03 — OS DEZESSEIS</p>
+    <h2>Avulso e kit, lado a lado</h2>
+    <p class="lede">Clique na linha para abrir as duas contas completas. A coluna do veredito diz qual das duas você deve anunciar.</p>
+  </div>
+  <div class="filters" id="filters">
+    <span class="eyebrow" style="margin-right:4px">Veredito</span>
+    <button class="chip" data-v="Só avulso" aria-pressed="false" type="button">Só avulso</button>
+    <button class="chip" data-v="Avulso rende mais" aria-pressed="false" type="button">Avulso rende mais</button>
+    <button class="chip" data-v="Kit rende mais" aria-pressed="false" type="button">Kit rende mais</button>
+    <button class="chip" data-v="Só kit" aria-pressed="false" type="button">Só kit</button>
+  </div>
+  <div class="tablewrap">
+    <table id="tab">
+      <thead><tr>
+        <th data-s="nome">Produto</th>
+        <th class="n" data-s="g">g/peça</th>
+        <th class="n" data-s="npl">peças/placa</th>
+        <th class="n" data-s="custo_peca">custo da peça</th>
+        <th class="n" data-s="pmin_avulso">preço mín. avulso</th>
+        <th class="n" data-s="preco_u">avulso</th>
+        <th class="n" data-s="lucro_u">lucro</th>
+        <th class="n" data-s="preco_k">kit</th>
+        <th class="n" data-s="lucro_k">lucro</th>
+        <th class="n" data-s="melhor" aria-sort="descending">R$/hora</th>
+        <th data-s="veredito">Veredito</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-3);margin-top:10px">O tempo por peça é o tempo da placa dividido pelas peças que cabem nela — é assim que você realmente imprime. Gramas e quantidade por placa são estimativas a partir das dimensões que os modelos informam; confirme no Bambu Studio.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">04 — OS QUATRO GRUPOS</p>
+    <h2>Como ler a decisão</h2>
+  </div>
+  <div class="cards">
+    <div class="card"><h3 style="color:var(--accent)">Só avulso</h3><p><b>Bandeja de papéis e cúpula de luminária.</b> Peça grande, uma por placa. Juntar duas dobraria o tempo de máquina sem dobrar o preço que alguém paga — e ainda atravessaria os R$ 79, onde o frete vira seu.</p></div>
+    <div class="card"><h3 style="color:var(--accent)">Avulso rende mais</h3><p><b>Incenso, porta-óculos, vaso, joias, porta-cartão, vaso de parede.</b> O preço unitário já cobre a tarifa fixa sozinho. Aqui o kit só reduz o número de vendas por placa — você pode oferecer, mas o anúncio principal é a peça.</p></div>
+    <div class="card"><h3 style="color:var(--warn)">Kit rende mais</h3><p><b>Suporte de carregador e porta-caneta.</b> Ficam na fronteira: o unitário fecha a conta, mas o kit de 2 fecha melhor. Anuncie os dois e deixe o comprador escolher — o kit é o que você empurra na foto.</p></div>
+    <div class="card"><h3 style="color:var(--crit)">Só kit</h3><p><b>Clipe de cabo, ladrilho de gaveta, porta-vela, cachepot, bandeja de gaveta, peça modular.</b> O preço mínimo avulso está acima do que o mercado paga por uma peça. Não é escolha de posicionamento — avulso simplesmente dá prejuízo.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">05 — O QUE ISSO MUDA</p>
+    <h2>Três conclusões práticas</h2>
+  </div>
+  <ol class="steps">
+    <li><b>Peça barata de fazer não é peça barata de vender.</b> O clipe custa R$ 0,29 e precisa de R$ 21,61 para se pagar sozinho. Sempre calcule o preço mínimo antes de decidir o formato do anúncio — é a primeira conta, não a última.</li>
+    <li><b>Kit não é para aumentar o ticket. É para pagar a tarifa uma vez só.</b> Quando o unitário já paga a tarifa, o kit atrapalha: você usa a mesma placa para gerar menos vendas.</li>
+    <li><b>Nunca monte kit que atravesse os R$ 79 sem necessidade.</b> O kit de 3 incensos perde R$ 25 de frete e cai de R$ 13,17 para R$ 8,66 de lucro por peça. Se precisar de kit acima de R$ 79, o preço tem que subir para compensar — não só acompanhar.</li>
+    <li><b>O gargalo real deixou de ser a impressora.</b> Os produtos de melhor R$/hora geram cinco ou seis vendas por placa — cinco ou seis embalagens, etiquetas e idas à agência. É trabalho seu, que é o custo que a gente combinou de não contar. Na hora de escalar, ele aparece.</li>
+  </ol>
+</section>
+
+<p class="foot">Preços, número de anúncios e faixas de volume coletados no Mercado Livre Brasil em 19 de setembro de 2026. Modelo de custo com filamento a R$ 95/kg mais 5% de purga, energia a R$ 0,12/h, manutenção e depreciação a R$ 0,80/h, refugo de 8%, comissão de 13%, tarifa fixa de R$ 6,50 abaixo de R$ 79, frete de R$ 25 acima disso, 5% de ads, 5% de imposto e 3% de devolução. Mão de obra não contabilizada. Os STLs com licença comercial de cada produto estão no estudo anterior.</p>
+
+</div>
+
+<script>
+const DEFAULTS={fil:95,alvo:7,com:13,fixa:6.5,frete:25,ads:5,imp:5,bo:3,embu:2.20,embk:2.80,man:0.80,ene:0.12,ref:8,purga:5};
+const IDS=Object.keys(DEFAULTS);
+const P=[{"nome": "Clipe organizador de cabo", "cat": "Escritório", "g": 2, "npl": 50, "hpl": 4.0, "kitN": 10, "preco_u": null, "preco_k": 35, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "não se vende avulso", "fx_k": "R$19–37 o kit", "res": "4.482", "vend": "+10 mil", "porque": "Avulso precisaria custar R$ 21.61 para dar R$ 7 — muito acima do que alguém paga por uma peça dessas."}, {"nome": "Porta-incenso decorativo", "cat": "Decoração", "g": 30, "npl": 5, "hpl": 4.0, "kitN": 3, "preco_u": 35, "preco_k": 89, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$24–36", "fx_k": "R$79+ (pouco comum)", "res": "2.010", "vend": "+100", "porque": "O preço unitário já absorve a tarifa fixa sozinho. Kit só reduz o número de vendas."}, {"nome": "Suporte de carregador de tomada", "cat": "Escritório", "g": 35, "npl": 6, "hpl": 4.5, "kitN": 2, "preco_u": 32, "preco_k": 55, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$22–30", "fx_k": "não observado", "res": "159", "vend": "+100", "porque": "O kit dilui a tarifa fixa em mais peças e supera o avulso por hora de placa."}, {"nome": "Vaso de parede para planta", "cat": "Decoração", "g": 45, "npl": 4, "hpl": 5.0, "kitN": 2, "preco_u": 45, "preco_k": 79, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$21–46", "fx_k": "não observado", "res": "7.595", "vend": "+5 mil", "porque": "O preço unitário já absorve a tarifa fixa sozinho. Kit só reduz o número de vendas."}, {"nome": "Porta-óculos de mesa", "cat": "Organização", "g": 55, "npl": 3, "hpl": 4.5, "kitN": 2, "preco_u": 49, "preco_k": 89, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$35–75", "fx_k": "não observado", "res": "132", "vend": "+500", "porque": "O preço unitário já absorve a tarifa fixa sozinho. Kit só reduz o número de vendas."}, {"nome": "Ladrilho divisório de gaveta 42×42", "cat": "Organização", "g": 6, "npl": 25, "hpl": 5.0, "kitN": 12, "preco_u": null, "preco_k": 69, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "não se vende avulso", "fx_k": "R$35–79 o kit", "res": "9.999", "vend": "+1000", "porque": "Avulso precisaria custar R$ 22.36 para dar R$ 7 — muito acima do que alguém paga por uma peça dessas."}, {"nome": "Vaso decorativo geométrico (vase mode)", "cat": "Decoração", "g": 50, "npl": 2, "hpl": 4.5, "kitN": 3, "preco_u": 59, "preco_k": 149, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$39–62", "fx_k": "não observado", "res": "2.060", "vend": "+5 mil", "porque": "O preço unitário já absorve a tarifa fixa sozinho. Kit só reduz o número de vendas."}, {"nome": "Porta-caneta decorativo geométrico", "cat": "Escritório", "g": 45, "npl": 4, "hpl": 5.0, "kitN": 2, "preco_u": 39, "preco_k": 69, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$22–39", "fx_k": "não observado", "res": "3.700", "vend": "+5 mil", "porque": "O kit dilui a tarifa fixa em mais peças e supera o avulso por hora de placa."}, {"nome": "Porta-cartão de visita de mesa", "cat": "Escritório", "g": 30, "npl": 6, "hpl": 4.5, "kitN": 4, "preco_u": 29, "preco_k": 69, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$17–30", "fx_k": "não observado", "res": "1.093", "vend": "+1000", "porque": "O preço unitário já absorve a tarifa fixa sozinho. Kit só reduz o número de vendas."}, {"nome": "Organizador de joias e brincos", "cat": "Organização", "g": 55, "npl": 3, "hpl": 4.5, "kitN": 2, "preco_u": 45, "preco_k": 79, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$39–45", "fx_k": "não observado", "res": "20", "vend": "+500", "porque": "O preço unitário já absorve a tarifa fixa sozinho. Kit só reduz o número de vendas."}, {"nome": "Porta-vela para vela de LED [+LED]", "cat": "Decoração", "g": 20, "npl": 9, "hpl": 4.5, "kitN": 3, "preco_u": null, "preco_k": 49, "extras_u": 0.0, "extras_k": 6.0, "fx_u": "R$21–30 avulso", "fx_k": "R$49–87 o kit", "res": "7.453", "vend": "+50", "porque": "Avulso precisaria custar R$ 24.80 para dar R$ 7 — muito acima do que alguém paga por uma peça dessas."}, {"nome": "Cachepot para suculenta", "cat": "Decoração", "g": 25, "npl": 6, "hpl": 5.0, "kitN": 3, "preco_u": null, "preco_k": 45, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$22–35", "fx_k": "kit pouco comum", "res": "9.266", "vend": "+10 mil", "porque": "Avulso precisaria custar R$ 25.97 para dar R$ 7 — muito acima do que alguém paga por uma peça dessas."}, {"nome": "Bandeja modular de gaveta 90×90", "cat": "Organização", "g": 25, "npl": 4, "hpl": 4.5, "kitN": 4, "preco_u": null, "preco_k": 59, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "não se vende avulso", "fx_k": "R$35–79 o kit", "res": "9.999", "vend": "+1000", "porque": "Avulso precisaria custar R$ 26.37 para dar R$ 7 — muito acima do que alguém paga por uma peça dessas."}, {"nome": "Cúpula de luminária pendente E27 [+soquete]", "cat": "Decoração", "g": 110, "npl": 1, "hpl": 5.0, "kitN": null, "preco_u": 78.9, "preco_k": null, "extras_u": 12.0, "extras_k": 0.0, "fx_u": "R$33–45 (de mesa)", "fx_k": "—", "res": "9.999", "vend": "+10 mil", "porque": "Peça grande: uma por placa. Kit dobraria o tempo sem dobrar o preço."}, {"nome": "Bandeja organizadora de papéis", "cat": "Escritório", "g": 160, "npl": 1, "hpl": 5.0, "kitN": null, "preco_u": 65, "preco_k": null, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "R$51–68", "fx_k": "—", "res": "2.996", "vend": "+1000", "porque": "Peça grande: uma por placa. Kit dobraria o tempo sem dobrar o preço."}, {"nome": "Peça de organizador de mesa modular", "cat": "Escritório", "g": 27, "npl": 4, "hpl": 5.0, "kitN": 4, "preco_u": null, "preco_k": 55, "extras_u": 0.0, "extras_k": 0.0, "fx_u": "não se vende avulso", "fx_k": "R$28–81 o kit", "res": "1.333", "vend": "+500", "porque": "Avulso precisaria custar R$ 26.83 para dar R$ 7 — muito acima do que alguém paga por uma peça dessas."}];
+const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
+function prem(){const o={};IDS.forEach(k=>{const v=parseFloat(document.getElementById(k).value);o[k]=isFinite(v)?v:DEFAULTS[k]});return o}
+function calc(p,q){
+  const PCT=(q.com+q.ads+q.imp+q.bo)/100;
+  const hpc=p.hpl/p.npl;
+  const mat=p.g*(q.fil/1000)*(1+q.purga/100);
+  const maq=hpc*(q.ene+q.man);
+  const cp=(mat+maq)*(1+q.ref/100);
+  const tax=v=>v*PCT+(v<79?q.fixa:q.frete);
+  const o={PCT,hpc,mat,maq,cp,pmin:(q.alvo+cp+q.embu+q.fixa)/(1-PCT)};
+  if(p.preco_u!=null){
+    const cv=cp+(p.extras_u||0)+q.embu;
+    const l=p.preco_u-cv-tax(p.preco_u);
+    o.u={custo_venda:cv,taxas:tax(p.preco_u),lucro:l,placa:l*p.npl,rsh:l*p.npl/p.hpl};
+  }
+  if(p.preco_k!=null&&p.kitN){
+    const ck=cp*p.kitN+(p.extras_k||0);
+    const cv=ck+q.embk;
+    const l=p.preco_k-cv-tax(p.preco_k);
+    const kits=p.npl/p.kitN;
+    o.k={custo_pecas:ck,custo_venda:cv,taxas:tax(p.preco_k),lucro:l,por_peca:l/p.kitN,kits,placa:l*kits,rsh:l*kits/p.hpl};
+  }
+  o.melhor=Math.max(o.u?o.u.rsh:0,o.k?o.k.rsh:0);
+  if(!p.kitN) o.veredito='Só avulso';
+  else if(p.preco_u==null) o.veredito='Só kit';
+  else o.veredito=(o.k&&o.k.rsh>o.u.rsh)?'Kit rende mais':'Avulso rende mais';
+  return o;
+}
+let sortKey='melhor', sortDir=-1, filt=new Set(), open=new Set();
+const VCOL={'Só avulso':'var(--accent)','Avulso rende mais':'var(--accent)','Kit rende mais':'var(--warn)','Só kit':'var(--crit)'};
+function render(){
+  const q=prem();
+  let list=P.map((p,i)=>({...p,_i:i,c:calc(p,q)}));
+  if(filt.size) list=list.filter(r=>filt.has(r.c.veredito));
+  const key=sortKey;
+  list.sort((a,b)=>{
+    const get=o=>key==='melhor'?o.c.melhor:key==='veredito'?o.c.veredito:key==='custo_peca'?o.c.cp:key==='pmin_avulso'?o.c.pmin:
+      key==='lucro_u'?(o.c.u?o.c.u.lucro:-1):key==='lucro_k'?(o.c.k?o.c.k.lucro:-1):o[key];
+    const x=get(a),y=get(b);
+    if(x==null)return 1; if(y==null)return -1;
+    return (typeof x==='string'?x.localeCompare(y,'pt'):x-y)*sortDir;
+  });
+  const max=Math.max(...list.map(r=>r.c.melhor),1), tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  list.forEach((r,n)=>{
+    const c=r.c, tr=document.createElement('tr');
+    tr.innerHTML=`<td><div class="name"><span class="ix">${String(n+1).padStart(2,'0')}</span><span>${r.nome}</span></div></td>
+      <td class="n">${r.g} g</td>
+      <td class="n" style="font-weight:600">${r.npl}×</td>
+      <td class="n" style="color:var(--ink-2)">${brl(c.cp)}</td>
+      <td class="n" style="color:var(--ink-2)">${brl(c.pmin)}</td>
+      <td class="n">${c.u?brl(r.preco_u):'—'}</td>
+      <td class="n" style="font-weight:600">${c.u?brl(c.u.lucro):'—'}</td>
+      <td class="n">${c.k?'×'+r.kitN+' · '+brl(r.preco_k):'—'}</td>
+      <td class="n" style="font-weight:600">${c.k?brl(c.k.lucro):'—'}</td>
+      <td class="n"><span class="bar"><span class="track"><span class="fill" style="width:${Math.max(4,100*c.melhor/max)}%"></span></span>${brl(c.melhor)}</span></td>
+      <td style="font-size:12.5px;color:${VCOL[c.veredito]};font-weight:600;white-space:nowrap">${c.veredito}</td>`;
+    tr.addEventListener('click',()=>{open.has(r._i)?open.delete(r._i):open.add(r._i);render()});
+    tb.appendChild(tr);
+    if(open.has(r._i)){
+      const d=document.createElement('tr'); d.className='det';
+      const peca=`<div><h4>A peça (1 unidade)</h4><div class="break">
+          <div><span>Filamento · ${r.g} g</span><span>${brl(c.mat)}</span></div>
+          <div><span>Energia + manutenção · ${c.hpc.toFixed(2)} h</span><span>${brl(c.maq)}</span></div>
+          <div><span>Refugo</span><span>${brl(c.cp-c.mat-c.maq)}</span></div>
+          <div class="tot"><span>Custo da peça</span><span>${brl(c.cp)}</span></div>
+          <div style="border:none;padding-top:8px"><span>Cabem por placa (${r.hpl.toFixed(1)} h)</span><span>${r.npl} peças</span></div>
+          <div style="border:none"><span>Preço mín. de venda avulsa</span><span>${brl(c.pmin)}</span></div>
+          <div style="border:none"><span>Mercado paga (avulso)</span><span>${r.fx_u}</span></div>
+        </div></div>`;
+      const av=c.u?`<div><h4 style="color:var(--accent)">Vendendo avulso — ${brl(r.preco_u)}</h4><div class="break">
+          <div><span>Custo da peça</span><span>${brl(c.cp)}</span></div>
+          ${r.extras_u?`<div><span>Insumos comprados</span><span>${brl(r.extras_u)}</span></div>`:''}
+          <div><span>Embalagem</span><span>${brl(q.embu)}</span></div>
+          <div><span>Taxas + tarifa fixa${r.preco_u>=79?' + frete':''}</span><span>${brl(c.u.taxas)}</span></div>
+          <div class="tot"><span>Lucro por venda</span><span>${brl(c.u.lucro)}</span></div>
+          <div style="border:none;padding-top:8px"><span>Vendas por placa</span><span>${r.npl}</span></div>
+          <div style="border:none"><span>Lucro da placa</span><span>${brl(c.u.placa)}</span></div>
+          <div style="border:none"><span>R$ por hora de placa</span><span>${brl(c.u.rsh)}</span></div>
+        </div></div>`:`<div><h4>Vendendo avulso</h4><p>Não fecha. O preço mínimo seria <b>${brl(c.pmin)}</b> e o mercado paga ${r.fx_u} por uma peça dessas.</p></div>`;
+      const kt=c.k?`<div><h4 style="color:var(--warn)">Vendendo em kit de ${r.kitN} — ${brl(r.preco_k)}</h4><div class="break">
+          <div><span>${r.kitN} peças</span><span>${brl(c.k.custo_pecas)}</span></div>
+          <div><span>Embalagem maior</span><span>${brl(q.embk)}</span></div>
+          <div><span>Taxas${r.preco_k>=79?' + frete (passou de R$ 79)':' + tarifa fixa'}</span><span>${brl(c.k.taxas)}</span></div>
+          <div class="tot"><span>Lucro por venda</span><span>${brl(c.k.lucro)}</span></div>
+          <div style="border:none;padding-top:8px"><span>Lucro por peça dentro do kit</span><span>${brl(c.k.por_peca)}</span></div>
+          <div style="border:none"><span>Kits por placa</span><span>${c.k.kits.toFixed(2)}</span></div>
+          <div style="border:none"><span>R$ por hora de placa</span><span>${brl(c.k.rsh)}</span></div>
+          <div style="border:none"><span>Mercado paga (kit)</span><span>${r.fx_k}</span></div>
+        </div></div>`:`<div><h4>Vendendo em kit</h4><p>Não faz sentido: peça grande, uma por placa. O kit dobraria o tempo de máquina sem dobrar o preço.</p></div>`;
+      d.innerHTML=`<td colspan="11"><div class="in">${peca}${av}${kt}
+        <div><h4>Veredito</h4><p style="color:${VCOL[c.veredito]};font-weight:600">${c.veredito}</p><p style="margin-top:6px">${r.porque}</p>
+        <h4 style="margin-top:14px">Mercado no ML</h4><p>${r.res} anúncios · topo com ${r.vend}</p></div></div></td>`;
+      tb.appendChild(d);
+    }
+  });
+}
+document.querySelectorAll('#tab th').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k=th.dataset.s;
+    if(sortKey===k) sortDir*=-1; else {sortKey=k; sortDir=(k==='nome'||k==='veredito')?1:-1;}
+    document.querySelectorAll('#tab th').forEach(t=>t.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort',sortDir===1?'ascending':'descending');
+    render();
+  });
+});
+document.querySelectorAll('#filters .chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const v=c.dataset.v;
+    if(filt.has(v)){filt.delete(v);c.setAttribute('aria-pressed','false')}
+    else{filt.add(v);c.setAttribute('aria-pressed','true')}
+    render();
+  });
+});
+IDS.forEach(k=>document.getElementById(k).addEventListener('input',render));
+document.getElementById('reset').addEventListener('click',()=>{IDS.forEach(k=>document.getElementById(k).value=DEFAULTS[k]);render()});
+render();
+</script>
+</body>
+</html>

@@ -13,6 +13,9 @@ ou qualquer coisa inventada para a ocasião.
 | **Lucro por hora de impressora** | Lucro ÷ horas de impressão. **A métrica que ordena tudo** |
 | **Preço mínimo** | Preço em que o lucro é zero |
 | **Tarifa fixa** | O valor fixo por venda que o ML cobra abaixo de R$ 79 |
+| **Peças por placa** | Quantas unidades vendáveis saem de uma impressão |
+| **Lucro por hora de placa** | Lucro × peças por placa ÷ horas da placa |
+| **Preço mínimo de venda avulsa** | O preço abaixo do qual a peça só existe como kit |
 
 ## Linhas do custo do produto
 

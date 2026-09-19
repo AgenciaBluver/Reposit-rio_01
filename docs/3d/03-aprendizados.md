@@ -84,6 +84,30 @@ Só serve: CC-BY, CC-BY-SA, CC0, domínio público, licença comercial paga, ou 
 desenhado por você. E modelo próprio é também o que impede o concorrente de clonar
 o anúncio.
 
+### Onde procurar — três das quatro plataformas óbvias não servem
+
+| Plataforma | Como funciona | Serve? |
+|---|---|---|
+| **Cults3D** | `CULTS CU` permite vender impresso e modificar. `CULTS CU-ND` permite vender impresso mas **não modificar**. `CULTS PU` é uso pessoal. O direito comercial vem na compra do arquivo, sem mensalidade | **Sim — é o caminho limpo** |
+| CGTrader | A cláusula 21A.1 dos termos proíbe literalmente vender os modelos *"in 3D printed physical form"* | **Não** |
+| MyMiniFactory | Licença padrão da loja é não comercial. O direito de vender vem do designer, em listagem separada ou assinatura Tribe — e some se cancelar | Caso a caso |
+| Thangs | A plataforma não define licença. Designers vendem assinatura própria (US$ 10 a 25/mês), válida só enquanto ativa | Alugado, não comprado |
+
+**Atalho que economiza horas:** o Cults tem filtro de licença escondido em
+`MORE FILTERS → LICENSES`. Sem ele, ~80% dos resultados são uso pessoal. Cole e
+troque o termo no fim:
+
+```
+cults3d.com/en/search?licenses[]=cults_cu&licenses[]=cults_cu_nd&sort=downloads_count&q=desk organizer
+```
+
+**CU-ND não deixa você mexer.** Nada de gravar sua marca, furar, remixar ou mudar
+geometria. Se quiser personalizar, filtre só por CU.
+
+**Licença válida não cobre marca de terceiro.** Aparecem no Cults porta-cartões do
+Mickey e organizadores do Mario com licença comercial válida — a licença cobre o
+desenho do autor, não a propriedade intelectual do personagem.
+
 ## 7. Personalizar quebra a comparação de preço
 
 Dois topos de bolo com o mesmo nome não existem. Quando o produto é personalizado,
