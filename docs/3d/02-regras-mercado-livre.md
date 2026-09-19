@@ -47,19 +47,35 @@ não muda o seu lucro:
 **Nunca deixe o comprador pagar frete em produto leve.** É por isso que quase todo
 concorrente anuncia "Frete grátis" — não é generosidade, é aritmética.
 
-## O degrau dos R$ 79 — atravesse para cima, não pare embaixo
+## O degrau dos R$ 79
 
-Acima de R$ 79 a tarifa fixa some e o frete vira seu. Parece ruim; não é. Para
-peça leve, o que você ganha tirando a tarifa fixa mais o desconto de frete é maior
-que o frete que passa a pagar:
+Duas coisas verdadeiras ao mesmo tempo. A regra completa e a fórmula estão em
+`06-politica-de-preco.md`, seção 2.
+
+**O degrau é real.** R$ 79,00 deixa menos dinheiro que R$ 78,90: você troca uma
+tarifa fixa de R$ 6,75 por um frete de R$ 16 ou mais. Nunca suba de R$ 78,90 para
+R$ 79 e pouco.
+
+**Mas existe um preço a partir do qual atravessar paga mais.** Com os nossos
+números, o equivalente de R$ 78,90 é **R$ 91,40**; o equivalente de R$ 69,00 é
+**R$ 81,50**. Acima disso, atravessar ganha:
 
 | Esconderijo de chave (45 g) | Comprador paga | Você fica com |
 |---|---|---|
 | R$ 69,00 + frete | R$ 94,00 | R$ 29,51 |
 | **R$ 89,00 com frete grátis** | **R$ 89,00** | **R$ 35,06** |
 
-Os dois lados ganham. **Precificar em R$ 78,90 para "fugir" do degrau é o pior dos
-mundos** — o comprador vê o preço mais o frete cheio.
+Aqui os dois lados ganham porque R$ 89 está acima do equivalente de R$ 81,50. O
+mesmo salto partindo de R$ 78,90 **perderia**, porque o equivalente seria R$ 91,40.
+
+O número depende inteiramente do frete real do pacote: com frete de R$ 25, o
+equivalente de R$ 78,90 sobe para R$ 103,56. **Calcule, não chute.**
+
+## Peso volumétrico
+
+O Mercado Envios cobra pelo maior entre peso real e peso volumétrico. Peça 3D é
+leve e ocupa espaço — **diminuir a caixa costuma valer mais que economizar
+gramas**. Peça que desmonta ou empilha ganha de peça única volumosa.
 
 ## Imposto
 

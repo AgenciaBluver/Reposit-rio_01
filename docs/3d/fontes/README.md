@@ -11,6 +11,12 @@ export de planilha, foto de produto.
    de produto), eu gravo no arquivo certo de `docs/3d/` — a fonte fica aqui só como
    comprovante.
 
+## O que já está aqui
+
+| Arquivo | O que é | Onde foi destilado |
+|---|---|---|
+| `2026-09-19-pricing-brain-mercado-livre-3d.md` | Documento-base de precificação: faixas, fórmulas, árvore de decisão, critérios | `../06-politica-de-preco.md` |
+
 ## Formatos que eu leio direto
 
 Markdown, texto, CSV, JSON, HTML, PDF, PNG e JPG.

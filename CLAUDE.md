@@ -20,6 +20,7 @@ Instruções que valem para qualquer sessão neste repositório.
 | `docs/3d/03-aprendizados.md` | As lições que já custaram tempo. Não repita os erros listados |
 | `docs/3d/04-produtos.md` | Diário do que já foi avaliado e o veredito de cada um |
 | `docs/3d/05-glossario.md` | **O vocabulário aprovado.** Use só estes termos |
+| `docs/3d/06-politica-de-preco.md` | Faixas de preço, o cálculo exato do degrau dos R$ 79, árvore de decisão, critérios de aprovação |
 
 `docs/3d/fontes/` é onde entram documentos crus (prints do ML, tabelas de taxas,
 PDFs). Leia quando a pergunta depender deles; não são leitura obrigatória.
@@ -37,6 +38,12 @@ PDFs). Leia quando a pergunta depender deles; não são leitura obrigatória.
   página aberta e citada, ou vêm marcados como estimativa.
 - **Peso e tempo de impressão são estimativa** até serem fatiados no Bambu Studio.
   Diga isso toda vez.
+- **Nunca recomende R$ 79 sem comparar com R$ 78,90 e com um preço acima do ponto
+  de equivalência** (`06-politica-de-preco.md`, seção 2).
+- **Nunca trate comissão, tarifa fixa ou frete como número universal.** O valor
+  oficial é o do simulador de custos do próprio anúncio.
+- **Faturamento não é lucro.** Ao simular, mostre premissas, fórmula, lucro por
+  produto, margem de lucro e lucro por hora de impressora.
 - Quando um número novo virar decisão (custo, taxa, veredito de produto),
   **grave no arquivo certo de `docs/3d/`** em vez de deixar só no chat.
 
