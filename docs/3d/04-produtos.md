@@ -33,7 +33,76 @@ vier do fatiador, não da estimativa.
 
 Peso e tempo usados: 15 a 20 g, 1 a 1,3 h. **Ainda não fatiado.**
 
-## ✅ Os 10 primeiros para testar — fila atual (19/09/2026)
+## ✅ Fila atual — 25 STLs com preço (20/09/2026)
+
+Fonte: `fontes/2026-09-20-vinte-e-cinco-arquivos-com-preco.html`, **recalculado na
+nossa régua** (`01-custos.md`: filamento R$ 100/kg, máquina R$ 1,50/h, embalagem
+R$ 2,50, falha 6%, comissão 12%, tarifa fixa por faixa, frete líquido R$ 16 acima
+de R$ 79, imposto 6%, ads 5%, devolução 3%). Só entraram produtos que passam no
+**termômetro** (`08-termometro-de-preco.md`).
+
+Ordenado por **lucro por hora de placa**. Peso, tempo e peças por placa são
+**estimativa** — fatie no Bambu Studio antes de anunciar.
+
+| # | Produto | Arquivo | Preço | Lucro/venda | Margem | R$/h placa | g | Un/placa | Licença |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Vaso geométrico | Finned Spherical Vase (loayessawy) | R$ 69 | R$ 34,21 | 50% | **R$ 22,81** | 45 | 3× | Cults CU-ND |
+| 2 | Vaso geométrico | Wavy Spiral Flower Vase (Noktla) | **R$ 78,90** | R$ 39,13 | 50% | R$ 17,39 | 55 | 2× | Cults CU |
+| 3 | Vaso geométrico | Modern Japandi Plant Pot (Helo3D) | R$ 69 | R$ 32,79 | 48% | R$ 16,40 | 50 | 2× | Cults CU |
+| 4 | Vaso geométrico | Tall Soft Waves Vase (Helo3D) | R$ 89 | R$ 35,25 | 40% | R$ 14,10 | 70 | 2× | Cults CU |
+| 5 | Expositor de brincos | Arara de mini-cabides (luciadigiano) | ~~R$ 79~~ **R$ 78,90** | R$ 38,57 | 49% | R$ 17,14 | 60 | 2× | Cults CU |
+| 6 | Vaso geométrico | Set of 9 Geometric Vases (4hobbyPrinting) | R$ 59 | R$ 25,39 | 43% | R$ 12,70 | 50 | 2× | Cults CU |
+| 7 | Expositor de brincos | Hand for jewelry (AERO3D) | R$ 89 | R$ 33,27 | 37% | R$ 11,09 | 80 | 1× | Cults CU-ND |
+| 8 | Expositor de brincos | 3 fileiras de bancada (POLYCUTZ) | R$ 55 | R$ 21,87 | 40% | R$ 10,94 | 55 | 2× | CC BY |
+| 9 | Expositor de brincos | Stand / Display (Imagine That) | R$ 59 | R$ 23,84 | 40% | R$ 10,60 | 60 | 2× | CC BY-SA |
+| 10 | Porta-caneta | Lizard Multi-Purpose Holder (Decorart0r) | R$ 65 | R$ 26,18 | 40% | R$ 10,47 | 75 | 2× | Cults CU-ND |
+
+Os 15 restantes ficam entre **R$ 3,04 e R$ 10,35 por hora de placa** e estão na
+fonte. Os quatro piores são todos suporte de cabo de carro elétrico no ML — peça
+de 145 a 150 g, uma por placa, acima do degrau. **Esse produto é bom, o canal é que
+está errado** (`09-canais.md`).
+
+### Os quatro anúncios a R$ 79 do estudo — corrigidos
+
+O estudo precificou quatro arquivos em **exatamente R$ 79**, que é o pior ponto da
+régua inteira (`06-politica-de-preco.md`). Recalculado:
+
+| Arquivo | A R$ 78,90 | A R$ 79,00 | Perda | Equivalência |
+|---|---|---|---|---|
+| Expositor arara | R$ 38,57 | R$ 29,39 | **− R$ 9,17** | R$ 91,40 |
+| Giraffe Glasses Stand | R$ 33,37 | R$ 24,20 | **− R$ 9,17** | R$ 91,40 |
+| Low-Poly Skull Stand | R$ 33,07 | R$ 23,90 | **− R$ 9,17** | R$ 91,40 |
+| EV Cable Holder / Tidy | R$ 24,35 | R$ 15,18 | **− R$ 9,17** | R$ 91,40 |
+
+Dez centavos a mais no preço custam **R$ 9,17** de lucro. Ou desce para R$ 78,90,
+ou sobe acima de R$ 91,40. Nunca R$ 79,00.
+
+### O jogo de 10 vasos a R$ 89,79 — não
+
+Dez vasos de 12 cm em vase mode: ~270 g, ~15 h de impressora, três placas cheias.
+Na nossa régua dá **prejuízo de R$ 7,97** (o estudo calculou − R$ 6,05; mesma
+direção). O comprador está pagando R$ 8,98 por vaso, que é preço de cerâmica
+importada em escala.
+
+O nicho é bom — arranjo de festa, decoração de evento, buffet. O tamanho de kit é
+que está errado:
+
+| Kit | Preço | Lucro | Por peça | R$/h placa |
+|---|---|---|---|---|
+| 3 vasos | **R$ 78,90** | R$ 32,36 | R$ 10,79 | **R$ 7,19** |
+| 3 vasos | R$ 89 | R$ 30,59 | R$ 10,20 | R$ 6,80 |
+| 5 vasos | R$ 119 | R$ 41,60 | R$ 8,32 | R$ 5,55 |
+| 5 vasos | R$ 99 | R$ 26,80 | R$ 5,36 | R$ 3,57 |
+| 10 vasos | R$ 149 | R$ 35,85 | R$ 3,58 | R$ 2,39 |
+| 10 vasos | R$ 89,79 | **− R$ 7,97** | − R$ 0,80 | negativo |
+
+Mesmo o melhor kit (R$ 7,19/h) perde feio para o vaso avulso a R$ 78,90
+(R$ 17,39/h). **Vaso geométrico é produto avulso.** Kit só como upsell de vitrine.
+
+É a regra do kit pelo avesso: cada peça a mais custa mais uma peça de máquina e
+**não traz mais uma venda** (`07-placa-e-kit.md`, seção 4).
+
+## ❌ Fila antiga (19/09/2026) — parcialmente derrubada pelo termômetro
 
 Ordenados por **lucro por hora de placa**, já com a nossa régua de custo (filamento
 R$ 100/kg, máquina R$ 1,50/h, embalagem R$ 2,50, falha 6%, comissão 12%, imposto 6%,
@@ -52,6 +121,12 @@ antes de anunciar.
 | 8 | Organizador de linhas e bobinas | R$ 110 | **R$ 41,96** | 38% | R$ 9,99 | 1× | 426 |
 | 9 | Estojo de filtros ND 77–82 mm | R$ 99 | R$ 34,01 | 34% | R$ 8,72 | 1× | 801 |
 | 10 | Torre de dados desmontável | R$ 99 | R$ 30,19 | 30% | R$ 6,71 | 1× | 492 |
+
+> **Esta fila foi montada antes do termômetro** (`08-termometro-de-preco.md`).
+> Os dois primeiros colocados **reprovam agora**: suporte de carregador de tomada
+> (razão 0,63, líder a R$ 19 contra mediana R$ 30) e porta-incenso (razão 0,66,
+> líder a R$ 25 com 5 mil vendas). Organizador de gaveta e vaso de parede também.
+> Lucro por hora de placa diz quanto rende **se vender**, não se vai vender.
 
 **Ressalvas registradas:**
 - **Porta-incenso (2) e porta-caneta (7)** passam raspando no teste de eliminação —

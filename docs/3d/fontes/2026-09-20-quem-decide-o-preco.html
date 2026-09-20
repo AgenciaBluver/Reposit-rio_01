@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Quem Decide o Preço</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --surface-2:#EAEDE7; --inset:#F0F2EE;
+  --ink:#151A18; --ink-2:#4A544F; --ink-3:#7A857F; --line:#DCE0D9; --line-2:#C7CDC3;
+  --accent:#0E6B57; --accent-2:#3E9A82; --accent-soft:#D9E9E2; --on-accent:#FFFFFF;
+  --warn:#8E540F; --warn-soft:#F3E6D2; --crit:#9E2A1E; --crit-soft:#F5DFDC;
+  --disp:"IBM Plex Sans Condensed","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}}
+:root[data-theme="dark"]{
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 16px;margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:40px 72px}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6.2vw,58px);letter-spacing:-.015em}
+h2{font-size:clamp(21px,3vw,27px);letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:17px;color:var(--ink-2);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+section{margin-top:56px}
+.sechead{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;
+  border-top:1px solid var(--line-2);padding-top:14px}
+.num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+
+/* rule callout */
+.rule{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  padding:20px 22px;display:grid;gap:14px}
+.rule .big{font-family:var(--disp);font-size:clamp(19px,2.6vw,24px);line-height:1.25}
+.cliff{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:2px}
+.cliff div{background:var(--surface);padding:12px 14px}
+.cliff b{font-family:var(--mono);font-size:19px;display:block;letter-spacing:-.02em}
+.cliff span{font-size:12.5px;color:var(--ink-2);display:block;margin-top:2px}
+.cliff .bad b{color:var(--crit)} .cliff .good b{color:var(--accent)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.kpi .v{font-family:var(--disp);font-size:36px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.kpi .s{font-size:13px;color:var(--ink-2);margin-top:6px}
+
+/* controls */
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px}
+.grid-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px}
+label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+input[type=number],select{width:100%;font-family:var(--mono);font-size:14px;color:var(--ink);
+  background:var(--inset);border:1px solid var(--line-2);border-radius:2px;padding:8px 9px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.reset{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;background:none;border:1px solid var(--line-2);
+  color:var(--ink-2);padding:7px 12px;border-radius:2px;cursor:pointer;margin-top:14px}
+.reset:hover{border-color:var(--accent);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;padding:6px 11px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:880px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  text-align:left;padding:11px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap;
+  background:var(--surface-2);cursor:pointer;user-select:none}
+th.n{text-align:right}
+th[aria-sort]{color:var(--accent)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--inset)}
+tr.det td{background:var(--inset);border-bottom:1px solid var(--line-2)}
+.name{font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.name .ix{font-family:var(--mono);font-size:11px;color:var(--ink-3);min-width:18px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap;
+  border:1px solid var(--line-2);color:var(--ink-2);background:var(--surface)}
+.tag.Alta{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tag.Média{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.tag.Baixa,.tag.Hipótese{color:var(--crit);border-color:var(--crit);background:var(--crit-soft)}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{display:block;width:74px;height:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;overflow:hidden;flex:none}
+.bar .fill{display:block;height:100%;min-width:3px;background:var(--accent);border-radius:4px}
+.det .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;padding:6px 0 10px}
+.det h4{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.det p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.break{font-family:var(--mono);font-size:12.5px}
+.break div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;border-bottom:1px dotted var(--line)}
+.break div.tot{border-bottom:none;border-top:1px solid var(--line-2);margin-top:4px;padding-top:5px;color:var(--ink);font-weight:600}
+.break span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.break span:first-child{color:var(--ink-2)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-2)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:14.5px;color:var(--ink-2)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px}
+ol.steps b{color:var(--ink);font-weight:600}
+.foot{margin-top:56px;border-top:1px solid var(--line-2);padding-top:16px;font-size:13px;color:var(--ink-3)}
+.foot a{color:var(--ink-2)}
+.warnbox{background:var(--warn-soft);border:1px solid var(--warn);padding:16px 18px;font-size:14px;color:var(--ink)}
+@media (max-width:560px){ .wrap{padding-block:28px 52px} .kpi .v{font-size:30px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap"><header class="stack">
+  <p class="eyebrow">Análise de concorrência de preço · Mercado Livre · 19 set 2026</p>
+  <h1>Quem decide o preço</h1>
+  <p class="lede">Li a primeira página inteira das dez buscas no Mercado Livre — 569 anúncios com preço e volume — e apliquei um único teste a cada categoria: <b>o anúncio mais vendido é caro ou barato em relação à mediana?</b> É o que separa mercado de guerra de preço de mercado onde dá para vender melhor e cobrar mais.</p>
+</header>
+
+<section>
+  <div class="rule">
+    <p class="eyebrow">O termômetro</p>
+    <p class="big">Se o campeão de vendas é o mais barato, o comprador decide por preço e você perde. Se o campeão é caro, o comprador decide por produto — e aí você tem chance.</p>
+    <div class="cliff">
+      <div class="bad"><b>Abaixo de 0,80</b><span>O líder vende barato. Guerra de preço: quem baixa mais, vende.</span></div>
+      <div class="good"><b>0,80 a 1,00</b><span>Preço não é o decisor. Foto, forma e descrição mandam.</span></div>
+      <div class="good"><b>Acima de 1,00</b><span>O mais vendido é mais caro que a mediana. O mercado paga por produto melhor.</span></div>
+      <div class="good"><b>Piso de preço alto</b><span>Nenhum anúncio abaixo de X. Barreira natural contra guerra de preço.</span></div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><p class="k">Anúncios lidos</p><p class="v">569</p><p class="s">primeira página completa das 10 buscas</p></div>
+    <div class="kpi"><p class="k">Que se dizem impressos em 3D</p><p class="v">3</p><p class="s">de 569 — em 8 das 10 categorias, zero</p></div>
+    <div class="kpi"><p class="k">Passam no termômetro</p><p class="v">5</p><p class="s">e só 3 eu subiria agora</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="rule" style="border-left-color:var(--warn)">
+    <p class="eyebrow">O achado estrutural</p>
+    <p class="big">Em 8 das 10 categorias, nenhum dos ~57 anúncios da primeira página se identifica como impresso em 3D.</p>
+    <p style="font-size:14.5px;color:var(--ink-2);max-width:66ch">Isso corta dos dois lados. A boa notícia: você não vai brigar com outros impressores clonando o mesmo arquivo. A má: o seu concorrente é injeção plástica e importado, que tem custo unitário muito menor que o seu. <b>Por isso o termômetro importa mais que a contagem de anúncios</b> — não adianta a categoria estar vazia de 3D se o comprador de lá só olha preço.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">01 — O DIAGNÓSTICO</p>
+    <h2>As dez, medidas</h2>
+    <p class="lede">Clique na linha para abrir a leitura completa e a estratégia de unitário ou kit.</p>
+  </div>
+  <div class="tablewrap">
+    <table id="tab">
+      <thead><tr>
+        <th data-s="nome">Produto</th>
+        <th class="n" data-s="anuncios">Anúncios</th>
+        <th class="n" data-s="pmin_obs">Piso</th>
+        <th class="n" data-s="med">Mediana</th>
+        <th class="n" data-s="preco_lider">Líder</th>
+        <th class="n" data-s="vendas_lider">Vendas do líder</th>
+        <th class="n" data-s="lider_vs_med" aria-sort="descending">Líder ÷ mediana</th>
+        <th class="n" data-s="n3d">3D</th>
+        <th data-s="veredito">Veredito</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-3);margin-top:10px">Piso = o anúncio mais barato da primeira página. Mediana = do conjunto lido. Líder = preço do anúncio com mais vendas acumuladas. Volume no ML é faixa ("+1000"), não número exato — usei o piso de cada faixa.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">02 — A CORREÇÃO</p>
+    <h2>Eu errei no vaso de parede</h2>
+  </div>
+  <div class="warnbox">
+    <p>No estudo anterior eu coloquei o vaso de parede entre os melhores, com o argumento de que os três marketplaces mostravam demanda alta e <b>nenhum</b> concorrente impresso em 3D. O argumento estava certo e a conclusão estava errada.</p>
+    <p style="margin-top:10px">Lendo a página inteira agora: o anúncio mais vendido da categoria move <b>5 mil unidades a R$ 21</b>, enquanto a mediana é R$ 55. Razão de 0,38 — a mais baixa das dez. Isso não é uma lacuna esperando alguém: é um mercado onde o comprador escolhe o mais barato, e o mais barato é fibra de coco, que custa uma fração do seu filamento.</p>
+    <p style="margin-top:10px">A ausência de concorrente 3D naquela categoria não é oportunidade. É sintoma.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">03 — A DECISÃO</p>
+    <h2>Os três que eu subiria</h2>
+  </div>
+  <ol class="steps">
+    <li><b>Expositor de brincos — unitário a R$ 59.</b> Dezoito anúncios na busca exata, zero impressos em 3D, e o líder cobra R$ 62 contra mediana de R$ 67. É o único caso em que baixa concorrência <i>e</i> indiferença a preço aparecem juntos. O preço mínimo viável é R$ 29,43, então você tem o dobro de espaço.</li>
+    <li><b>Suporte de cabo de carro elétrico Tipo 2 — unitário a R$ 89, na Amazon.</b> Em 51 anúncios lidos, nenhum abaixo de R$ 30. Piso de preço protegido é a melhor defesa que existe contra guerra de preço, e o dono do carro elétrico não pesquisa R$ 10 de diferença. No Mercado Livre não: acima de R$ 79 o frete vira seu e o retorno por hora cai de R$ 7,58 para R$ 3,51.</li>
+    <li><b>Vaso decorativo geométrico — unitário a R$ 78,90, kit de 3 como upsell.</b> O único dos dez em que o campeão de vendas é <i>mais caro</i> que a mediana: R$ 59 contra R$ 43, com 5 mil vendas. Quando o mais vendido é o mais caro, o mercado está dizendo que paga por produto melhor — e vase mode em parede única é onde a impressão 3D faz algo que cerâmica e vidro não fazem.</li>
+  </ol>
+  <div class="cards" style="margin-top:22px">
+    <div class="card"><h3>A regra do kit, em uma linha</h3><p>Kit só quando o preço mínimo viável da peça é maior do que o mercado paga por ela sozinha. Nos três acima isso nunca acontece — todos têm preço unitário bem acima do mínimo. <b>Por isso os três são unitário.</b> Kit ali só reduziria o número de vendas por placa.</p></div>
+    <div class="card"><h3>Onde o kit é obrigatório</h3><p>Clipe de cabo: mínimo viável de R$ 20,28 por peça e ninguém paga isso por um clipe. Kit de 10 a R$ 35 paga a tarifa uma vez em vez de dez. É o único da lista nessa situação — e mesmo assim entra por reputação, não por lucro.</p></div>
+    <div class="card"><h3>Onde o kit é fuga, não estratégia</h3><p>Porta-incenso: o líder vende a R$ 25 e você não consegue competir ali. Kit de 3 a R$ 99 funciona porque não tem com o que ser comparado — mas é manobra defensiva. Se precisar de kit para fugir da comparação, o mercado já te disse algo.</p></div>
+  </div>
+</section>
+
+<p class="foot">569 anúncios lidos na primeira página de dez buscas no Mercado Livre Brasil em 19 de setembro de 2026: porta óculos de mesa, porta incenso decorativo, vaso de parede para planta, suporte carregador tomada parede, vaso decorativo geométrico, expositor de brincos, organizador de gaveta divisória, porta caneta decorativo, organizador de cabos mesa e suporte cabo carregador carro elétrico. Preço mínimo viável calculado para lucro de R$ 7 por venda, com filamento a R$ 95/kg, comissão de 12% na Amazon mais logística DBA de R$ 5,50, ou 13% mais tarifa fixa de R$ 6,50 no Mercado Livre, além de 5% de ads, 5% de imposto, 3% de devolução, 8% de refugo e R$ 2,20 de embalagem. Mão de obra não contabilizada.</p>
+
+</div>
+
+<script>
+const P=[{"nome": "Expositor de brincos", "anuncios": 18, "pmin_obs": 19, "p25": 39, "med": 67, "p75": 101, "n3d": 0, "com_venda": 33, "med_vend": 67, "preco_lider": 62, "vendas_lider": 5000, "g": 50, "un": 2, "h": 4.0, "custo_peca": 7.37, "lider_vs_med": 0.93, "disp": 2.59, "pmin_ml": 31.18, "pmin_amz": 29.43, "preco_u": 59, "lucro_u_ml": 27.59, "lucro_u_amz": 29.18, "rsh_u_amz": 14.59, "veredito": "ENTRAR", "leitura": "O líder de vendas cobra R$ 62 contra mediana de R$ 67 — o comprador não está escolhendo pelo preço. Some a isso 18 anúncios na busca exata e nenhum concorrente impresso em 3D.", "estrategia": "Unitário a R$ 59", "porque_kit": "Kit não: o preço unitário já paga a tarifa com folga (mínimo viável R$ 29,43). Juntar peças só reduziria o número de vendas por placa."}, {"nome": "Suporte cabo carro elétrico Tipo 2", "anuncios": 228, "pmin_obs": 30, "p25": 49, "med": 60, "p75": 80, "n3d": 0, "com_venda": 24, "med_vend": 60, "preco_lider": 40, "vendas_lider": 1000, "g": 150, "un": 1, "h": 5.0, "custo_peca": 21.13, "lider_vs_med": 0.67, "disp": 1.63, "pmin_ml": 49.77, "pmin_amz": 47.77, "preco_u": 89, "lucro_u_ml": 17.53, "lucro_u_amz": 37.92, "rsh_u_amz": 7.58, "veredito": "ENTRAR", "leitura": "O dado mais forte de todos: em 51 anúncios lidos, <b>nenhum custa menos de R$ 30</b>. Piso de preço protegido é o que impede guerra de preço, e a mediana é R$ 60.", "estrategia": "Unitário a R$ 89, na Amazon", "porque_kit": "Kit é impossível: ninguém compra dois suportes de carregador. E no ML esse preço atravessa os R$ 79 e o frete vira seu — por isso Amazon."}, {"nome": "Vaso decorativo geométrico", "anuncios": 2059, "pmin_obs": 20, "p25": 33, "med": 43, "p75": 62, "n3d": 1, "com_venda": 18, "med_vend": 43, "preco_lider": 59, "vendas_lider": 5000, "g": 55, "un": 2, "h": 4.5, "custo_peca": 8.16, "lider_vs_med": 1.37, "disp": 1.88, "pmin_ml": 32.24, "pmin_amz": 30.48, "preco_u": 78.9, "lucro_u_ml": 41.53, "lucro_u_amz": 43.31, "rsh_u_amz": 19.25, "kitN": 3, "preco_k": 179, "lucro_k_ml": 80.18, "lucro_k_amz": 101.47, "lucro_k_peca": 33.82, "rsh_k_amz": 15.03, "veredito": "ENTRAR", "leitura": "O único mercado da lista em que o líder de vendas é <b>mais caro</b> que a mediana: R$ 59 contra R$ 43, com 5 mil vendas. Quando o mais vendido é o mais caro, o comprador está pagando por produto melhor — e é exatamente aí que você ganha.", "estrategia": "Unitário a R$ 78,90 + kit de 3 a R$ 179", "porque_kit": "Aqui o kit faz sentido como upsell, não como anúncio principal: o arquivo de nove vasos permite montar trio combinando, e trio de decoração é compra por composição."}, {"nome": "Porta-óculos de mesa", "anuncios": 548, "pmin_obs": 19, "p25": 33, "med": 45, "p75": 66, "n3d": 0, "com_venda": 18, "med_vend": 47, "preco_lider": 32, "vendas_lider": 1000, "g": 55, "un": 2, "h": 4.5, "custo_peca": 8.16, "lider_vs_med": 0.71, "disp": 2.0, "pmin_ml": 32.24, "pmin_amz": 30.48, "preco_u": 59, "lucro_u_ml": 26.8, "lucro_u_amz": 28.39, "rsh_u_amz": 12.62, "veredito": "ENTRAR COM RESSALVA", "leitura": "548 anúncios, nenhum impresso em 3D, e o formato 'bichinho' já vende em resina. Mas o líder cobra R$ 32 contra mediana de R$ 45 — o preço pesa mais do que eu gostaria.", "estrategia": "Unitário a R$ 49–59", "porque_kit": "Só funciona com forma realmente diferenciada. Porta-óculos liso a R$ 59 perde para o de R$ 32; panda, moai ou girafa a R$ 59 não é o mesmo produto."}, {"nome": "Porta-caneta decorativo temático", "anuncios": 3696, "pmin_obs": 15, "p25": 25, "med": 37, "p75": 60, "n3d": 2, "com_venda": 29, "med_vend": 35, "preco_lider": 45, "vendas_lider": 10000, "g": 60, "un": 2, "h": 4.5, "custo_peca": 8.7, "lider_vs_med": 1.22, "disp": 2.4, "pmin_ml": 32.97, "pmin_amz": 31.2, "preco_u": 65, "lucro_u_ml": 30.7, "lucro_u_amz": 32.35, "rsh_u_amz": 14.38, "veredito": "TALVEZ", "leitura": "O líder cobra R$ 45 contra mediana de R$ 37 — sinal bom, o tema paga prêmio. Mas são 3.696 anúncios e dois já são impressos em 3D: é a categoria mais disputada que sobreviveu.", "estrategia": "Unitário a R$ 65, só com tema forte", "porque_kit": "Nunca kit. O valor está no tema de cada peça; kit de dois porta-canetas iguais não existe na cabeça do comprador."}, {"nome": "Porta-incenso decorativo", "anuncios": 2017, "pmin_obs": 17, "p25": 29, "med": 38, "p75": 45, "n3d": 0, "com_venda": 39, "med_vend": 36, "preco_lider": 25, "vendas_lider": 5000, "g": 30, "un": 4, "h": 4.5, "custo_peca": 4.35, "lider_vs_med": 0.66, "disp": 1.55, "pmin_ml": 27.09, "pmin_amz": 25.4, "preco_u": 39, "lucro_u_ml": 15.81, "lucro_u_amz": 17.2, "rsh_u_amz": 15.29, "kitN": 3, "preco_k": 99, "lucro_k_ml": 32.41, "lucro_k_amz": 52.9, "lucro_k_peca": 17.63, "rsh_k_amz": 15.67, "veredito": "NÃO AGORA", "leitura": "O líder vende 5 mil unidades a R$ 25 contra mediana de R$ 38. Quando o mais vendido é 34% mais barato que a mediana, o comprador está decidindo por preço.", "estrategia": "Se entrar: kit de 3 a R$ 99", "porque_kit": "O kit é a única saída, e por um motivo específico: kit de 3 não tem com o que ser comparado diretamente, então foge da briga de preço do anúncio unitário."}, {"nome": "Suporte de carregador de tomada", "anuncios": 159, "pmin_obs": 10, "p25": 23, "med": 30, "p75": 75, "n3d": 0, "com_venda": 14, "med_vend": 29, "preco_lider": 19, "vendas_lider": 100, "g": 35, "un": 4, "h": 5.0, "custo_peca": 5.01, "lider_vs_med": 0.63, "disp": 3.26, "pmin_ml": 27.99, "pmin_amz": 26.28, "preco_u": 35, "lucro_u_ml": 12.19, "lucro_u_amz": 13.54, "rsh_u_amz": 10.83, "kitN": 2, "preco_k": 59, "lucro_k_ml": 24.33, "lucro_k_amz": 25.92, "lucro_k_peca": 12.96, "rsh_k_amz": 10.37, "veredito": "NÃO", "leitura": "Mediana de R$ 30 e líder a R$ 19 — o teto é baixo demais. E a dispersão de 3,26 entre o primeiro e o terceiro quartil mostra um mercado sem padrão, onde o comprador não sabe quanto a peça deveria custar.", "estrategia": "—", "porque_kit": "O mínimo viável na Amazon é R$ 26,28 e a mediana do mercado é R$ 30. Sobra pouco mais de R$ 3 de espaço — não vale a hora de máquina."}, {"nome": "Organizador de gaveta divisória", "anuncios": 9999, "pmin_obs": 19, "p25": 32, "med": 40, "p75": 66, "n3d": 0, "com_venda": 51, "med_vend": 43, "preco_lider": 26, "vendas_lider": 10000, "g": 90, "un": 1, "h": 3.5, "custo_peca": 13.17, "lider_vs_med": 0.65, "disp": 2.06, "pmin_ml": 39.02, "pmin_amz": 37.16, "preco_u": 69, "lucro_u_ml": 29.19, "lucro_u_amz": 30.88, "rsh_u_amz": 8.82, "veredito": "NÃO", "leitura": "Quase dez mil anúncios e o líder vende 10 mil unidades a R$ 26, contra mediana de R$ 40. Do outro lado do balcão está a Acrimet, que injeta em escala e vende mais de mil kits por mês na Amazon.", "estrategia": "—", "porque_kit": "Só existiria como medida sob encomenda — e isso é trabalho manual por pedido, que é justamente o custo que a gente combinou de não contar."}, {"nome": "Organizador de cabos de mesa", "anuncios": 4442, "pmin_obs": 13, "p25": 22, "med": 33, "p75": 52, "n3d": 0, "com_venda": 41, "med_vend": 27, "preco_lider": 37, "vendas_lider": 10000, "g": 4, "un": 50, "h": 4.0, "custo_peca": 0.51, "lider_vs_med": 1.12, "disp": 2.36, "pmin_ml": 21.91, "pmin_amz": 20.28, "kitN": 10, "preco_k": 35, "lucro_k_ml": 11.5, "lucro_k_amz": 12.85, "lucro_k_peca": 1.28, "rsh_k_amz": 16.06, "veredito": "SÓ COMO ENTRADA", "leitura": "Curiosamente o líder cobra R$ 37 contra mediana de R$ 33 — levemente acima. Mas a mediana é baixa, são 4.442 anúncios e o produto é commodity injetada.", "estrategia": "Só kit de 10 a R$ 35", "porque_kit": "Avulso é impossível: o mínimo viável de uma peça é R$ 20,28 e ninguém paga isso por um clipe. Serve como produto de entrada para construir reputação, não para lucro."}, {"nome": "Vaso de parede para planta", "anuncios": 9999, "pmin_obs": 14, "p25": 38, "med": 55, "p75": 71, "n3d": 0, "com_venda": 39, "med_vend": 49, "preco_lider": 21, "vendas_lider": 5000, "g": 60, "un": 2, "h": 4.5, "custo_peca": 8.7, "lider_vs_med": 0.38, "disp": 1.87, "pmin_ml": 32.97, "pmin_amz": 31.2, "preco_u": 69, "lucro_u_ml": 33.66, "lucro_u_amz": 35.35, "rsh_u_amz": 15.71, "veredito": "NÃO — EU ERREI ANTES", "leitura": "Aqui eu preciso me corrigir. Eu tinha apontado como a melhor lacuna, porque não existe concorrente 3D. Mas o líder vende 5 mil unidades a <b>R$ 21</b> contra mediana de R$ 55 — razão de 0,38, a mais baixa das dez. A ausência de 3D não é oportunidade: é guerra de preço contra fibra de coco barata.", "estrategia": "—", "porque_kit": "A lacuna existe, mas no lugar errado da faixa. Para vender a R$ 69 você teria que educar o mercado inteiro — e ninguém tem verba para isso."}];
+const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
+const brl0=n=>'R$ '+Math.round(n);
+const VC={"ENTRAR":"var(--accent)","ENTRAR COM RESSALVA":"var(--accent)","TALVEZ":"var(--warn)","SÓ COMO ENTRADA":"var(--warn)","NÃO AGORA":"var(--crit)","NÃO":"var(--crit)","NÃO — EU ERREI ANTES":"var(--crit)"};
+const vfmt=n=>n>=1000?('+'+(n/1000)+' mil'):('+'+n);
+let sortKey='lider_vs_med', sortDir=-1, open=new Set();
+function render(){
+  const list=P.slice().sort((a,b)=>{const x=a[sortKey],y=b[sortKey];return (typeof x==='string'?x.localeCompare(y,'pt'):x-y)*sortDir});
+  const tb=document.getElementById('tbody'); tb.innerHTML='';
+  list.forEach((r,n)=>{
+    const i=P.indexOf(r), tr=document.createElement('tr');
+    const cor=r.lider_vs_med>=1?'var(--accent)':r.lider_vs_med>=0.8?'var(--accent)':r.lider_vs_med>=0.65?'var(--warn)':'var(--crit)';
+    tr.innerHTML=`<td><div class="name"><span class="ix">${String(n+1).padStart(2,'0')}</span><span>${r.nome}</span></div></td>
+      <td class="n">${r.anuncios.toLocaleString('pt-BR')}</td>
+      <td class="n" style="color:var(--ink-2)">${brl0(r.pmin_obs)}</td>
+      <td class="n">${brl0(r.med)}</td>
+      <td class="n">${brl0(r.preco_lider)}</td>
+      <td class="n" style="color:var(--ink-2)">${vfmt(r.vendas_lider)}</td>
+      <td class="n"><span class="bar"><span class="track"><span class="fill" style="width:${Math.min(100,100*r.lider_vs_med/1.4)}%;background:${cor}"></span></span><b style="color:${cor}">${r.lider_vs_med.toFixed(2)}</b></span></td>
+      <td class="n" style="color:${r.n3d?'var(--warn)':'var(--ink-3)'}">${r.n3d}</td>
+      <td style="font-size:12.5px;color:${VC[r.veredito]};font-weight:600;white-space:nowrap">${r.veredito}</td>`;
+    tr.addEventListener('click',()=>{open.has(i)?open.delete(i):open.add(i);render()});
+    tb.appendChild(tr);
+    if(open.has(i)){
+      const d=document.createElement('tr'); d.className='det';
+      d.innerHTML=`<td colspan="9"><div class="in">
+        <div><h4>O que os números dizem</h4><p>${r.leitura}</p></div>
+        <div><h4>Estratégia</h4><p style="color:${VC[r.veredito]};font-weight:600;font-size:15px">${r.estrategia}</p><p style="margin-top:6px">${r.porque_kit}</p></div>
+        <div><h4>Faixa de preço observada</h4><div class="break">
+          <div><span>Mais barato da página</span><span>${brl0(r.pmin_obs)}</span></div>
+          <div><span>1º quartil</span><span>${brl0(r.p25)}</span></div>
+          <div><span>Mediana</span><span>${brl0(r.med)}</span></div>
+          <div><span>3º quartil</span><span>${brl0(r.p75)}</span></div>
+          <div><span>Dispersão (3º ÷ 1º quartil)</span><span>${r.disp.toFixed(2)}×</span></div>
+          <div style="border:none;padding-top:8px"><span>Anúncios com venda registrada</span><span>${r.com_venda}</span></div>
+          <div style="border:none"><span>Mediana dos que vendem</span><span>${brl0(r.med_vend)}</span></div>
+        </div></div>
+        <div><h4>A sua conta</h4><div class="break">
+          <div><span>Peça: ${r.g} g · ${r.un} por placa · ${r.h} h</span><span></span></div>
+          <div><span>Custo da peça</span><span>${brl(r.custo_peca)}</span></div>
+          <div><span>Preço mínimo viável no ML</span><span>${brl(r.pmin_ml)}</span></div>
+          <div><span>Preço mínimo viável na Amazon</span><span>${brl(r.pmin_amz)}</span></div>
+          ${r.preco_u?`<div class="tot"><span>Preço sugerido (unitário)</span><span>${brl(r.preco_u)}</span></div>
+          <div style="border:none"><span>Lucro na Amazon</span><span>${brl(r.lucro_u_amz)}</span></div>
+          <div style="border:none"><span>R$ por hora de placa</span><span>${brl(r.rsh_u_amz)}</span></div>`:''}
+          ${r.preco_k?`<div class="tot"><span>Kit de ${r.kitN}</span><span>${brl(r.preco_k)}</span></div>
+          <div style="border:none"><span>Lucro do kit na Amazon</span><span>${brl(r.lucro_k_amz)}</span></div>
+          <div style="border:none"><span>Lucro por peça no kit</span><span>${brl(r.lucro_k_peca)}</span></div>`:''}
+        </div></div></div></td>`;
+      tb.appendChild(d);
+    }
+  });
+}
+document.querySelectorAll('#tab th').forEach(th=>{
+  th.addEventListener('click',()=>{const k=th.dataset.s;
+    if(sortKey===k) sortDir*=-1; else {sortKey=k; sortDir=(k==='nome'||k==='veredito')?1:-1;}
+    document.querySelectorAll('#tab th').forEach(t=>t.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort',sortDir===1?'ascending':'descending'); render();});
+});
+render();
+</script>
+</body>
+</html>

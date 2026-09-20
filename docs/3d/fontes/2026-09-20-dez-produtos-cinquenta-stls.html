@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Dez Produtos e Cinquenta Arquivos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --surface-2:#EAEDE7; --inset:#F0F2EE;
+  --ink:#151A18; --ink-2:#4A544F; --ink-3:#7A857F; --line:#DCE0D9; --line-2:#C7CDC3;
+  --accent:#0E6B57; --accent-2:#3E9A82; --accent-soft:#D9E9E2; --on-accent:#FFFFFF;
+  --warn:#8E540F; --warn-soft:#F3E6D2; --crit:#9E2A1E; --crit-soft:#F5DFDC;
+  --disp:"IBM Plex Sans Condensed","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}}
+:root[data-theme="dark"]{
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 16px;margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:40px 72px}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6.2vw,58px);letter-spacing:-.015em}
+h2{font-size:clamp(21px,3vw,27px);letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:17px;color:var(--ink-2);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+section{margin-top:56px}
+.sechead{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;
+  border-top:1px solid var(--line-2);padding-top:14px}
+.num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+
+/* rule callout */
+.rule{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  padding:20px 22px;display:grid;gap:14px}
+.rule .big{font-family:var(--disp);font-size:clamp(19px,2.6vw,24px);line-height:1.25}
+.cliff{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:2px}
+.cliff div{background:var(--surface);padding:12px 14px}
+.cliff b{font-family:var(--mono);font-size:19px;display:block;letter-spacing:-.02em}
+.cliff span{font-size:12.5px;color:var(--ink-2);display:block;margin-top:2px}
+.cliff .bad b{color:var(--crit)} .cliff .good b{color:var(--accent)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.kpi .v{font-family:var(--disp);font-size:36px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.kpi .s{font-size:13px;color:var(--ink-2);margin-top:6px}
+
+/* controls */
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px}
+.grid-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px}
+label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+input[type=number],select{width:100%;font-family:var(--mono);font-size:14px;color:var(--ink);
+  background:var(--inset);border:1px solid var(--line-2);border-radius:2px;padding:8px 9px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.reset{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;background:none;border:1px solid var(--line-2);
+  color:var(--ink-2);padding:7px 12px;border-radius:2px;cursor:pointer;margin-top:14px}
+.reset:hover{border-color:var(--accent);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;padding:6px 11px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:880px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  text-align:left;padding:11px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap;
+  background:var(--surface-2);cursor:pointer;user-select:none}
+th.n{text-align:right}
+th[aria-sort]{color:var(--accent)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--inset)}
+tr.det td{background:var(--inset);border-bottom:1px solid var(--line-2)}
+.name{font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.name .ix{font-family:var(--mono);font-size:11px;color:var(--ink-3);min-width:18px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap;
+  border:1px solid var(--line-2);color:var(--ink-2);background:var(--surface)}
+.tag.Alta{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tag.Média{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.tag.Baixa,.tag.Hipótese{color:var(--crit);border-color:var(--crit);background:var(--crit-soft)}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{display:block;width:74px;height:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;overflow:hidden;flex:none}
+.bar .fill{display:block;height:100%;min-width:3px;background:var(--accent);border-radius:4px}
+.det .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;padding:6px 0 10px}
+.det h4{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.det p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.break{font-family:var(--mono);font-size:12.5px}
+.break div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;border-bottom:1px dotted var(--line)}
+.break div.tot{border-bottom:none;border-top:1px solid var(--line-2);margin-top:4px;padding-top:5px;color:var(--ink);font-weight:600}
+.break span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.break span:first-child{color:var(--ink-2)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-2)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:14.5px;color:var(--ink-2)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px}
+ol.steps b{color:var(--ink);font-weight:600}
+.foot{margin-top:56px;border-top:1px solid var(--line-2);padding-top:16px;font-size:13px;color:var(--ink-3)}
+.foot a{color:var(--ink-2)}
+.warnbox{background:var(--warn-soft);border:1px solid var(--warn);padding:16px 18px;font-size:14px;color:var(--ink)}
+@media (max-width:560px){ .wrap{padding-block:28px 52px} .kpi .v{font-size:30px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap"><header class="stack">
+  <p class="eyebrow">Dez produtos · cinco marketplaces · 50 STLs com licença comercial · 19 set 2026</p>
+  <h1>Dez produtos e cinquenta arquivos</h1>
+  <p class="lede">Os dez produtos que sobreviveram ao cruzamento de Mercado Livre, Amazon, Shopee, Magalu e Americanas — cada um com a conta feita nos dois canais que valem a pena e <b>cinco STLs diferentes</b>, com licença comercial lida na página de cada modelo.</p>
+</header>
+
+<section>
+  <div class="rule">
+    <p class="eyebrow">Três coisas que mudaram desde o último estudo</p>
+    <p class="big">O Elo7 fechou, a Amazon não cobra tarifa fixa por item, e apareceu um produto de R$ 89 que leva o mesmo tempo de um porta-óculos.</p>
+    <div class="cliff">
+      <div class="bad"><b>Elo7: encerrado</b><span>O Enjoei desligou a plataforma em 11/05/2026. Era o único canal com comportamento de preço de artesanal. Não existe mais.</span></div>
+      <div class="good"><b>Amazon: sem tarifa fixa</b><span>No plano Profissional (grátis no 1º ano) não há tarifa por item. Aquele piso de R$ 40 do ML não existe lá.</span></div>
+      <div class="good"><b>Cabo de carro elétrico</b><span>Vendedores 3D cobram R$ 56–90 por um suporte de cabo Tipo 2. O de celular vale R$ 15–19.</span></div>
+      <div class="bad"><b>Shopee: R$ 80 a R$ 99</b><span>Item de R$ 85 rende menos líquido que um de R$ 79,99. Nunca precifique nessa faixa lá.</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">01 — OS CANAIS</p>
+    <h2>Onde vale a pena anunciar</h2>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Canal</th><th>Comissão</th><th>Custo fixo por venda</th><th>Frete</th><th>Veredito</th></tr></thead>
+      <tbody>
+        <tr><td><b>Amazon BR</b></td><td>12% Casa · 13% Papelaria</td><td style="color:var(--accent)">Nenhum no plano Profissional (grátis no 1º ano; depois R$ 19/mês)</td><td>DBA R$ 4,50–6,75 por item abaixo de R$ 79</td><td style="color:var(--accent);font-weight:600">Canal principal — melhor em todo ticket de R$ 29 a R$ 79</td></tr>
+        <tr><td><b>Mercado Livre</b></td><td>13% (Clássico)</td><td style="color:var(--crit)">R$ 6,50 abaixo de R$ 79 · R$ 25 de frete acima</td><td>Comprador paga abaixo de R$ 79</td><td style="color:var(--accent);font-weight:600">Segundo canal — é onde está o volume de busca</td></tr>
+        <tr><td><b>Magalu</b></td><td>9,9% nos 3 primeiros meses · depois ~16%</td><td>Existe, valor só na área logada</td><td>Subsidiado em parte</td><td style="color:var(--warn);font-weight:600">Vale pelos 9,9% iniciais — exige CNPJ com 3+ meses</td></tr>
+        <tr><td><b>Shopee</b></td><td>20% até R$ 79,99 · 14% acima</td><td style="color:var(--crit)">R$ 4,00 até R$ 79,99 · R$ 16 a 26 acima</td><td>Frete grátis obrigatório desde março/2026</td><td style="color:var(--warn);font-weight:600">Só ancorando tudo em R$ 79,90</td></tr>
+        <tr><td><b>Americanas</b></td><td>16,5% utilidades e papelaria</td><td>Taxa fixa de R$ 5 foi eliminada</td><td>Próprio ou subsidiado</td><td style="color:var(--crit);font-weight:600">Catálogo de decoração esvaziado. Depois, se der</td></tr>
+        <tr><td><b>Elo7</b></td><td colspan="3">Encerrado em 11/05/2026 pelo Grupo Enjoei</td><td style="color:var(--crit);font-weight:600">Não existe mais</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warnbox" style="margin-top:18px">
+    <p><b>A Shopee eu não consegui medir.</b> A busca dela é 100% renderizada por JavaScript e a API pública devolve erro 403 para qualquer cliente que não seja um navegador logado — e eu não entro em conta sua. Confirmei que os anúncios existem, mas não vi um único preço nem contagem de vendidos. O que está na tabela acima é a estrutura de taxas, essa sim confirmada em duas fontes independentes. Se quiser os dados da Shopee, abra a busca logada no seu navegador que eu leio a tela.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">02 — PREMISSAS</p>
+    <h2>Mexa nos números</h2>
+  </div>
+  <div class="panel">
+    <div class="grid-in">
+      <div><label for="fil">Filamento R$/kg</label><input type="number" id="fil" value="95" min="1" step="1"></div>
+      <div><label for="mlcom">Comissão ML %</label><input type="number" id="mlcom" value="13" min="0" step="0.5"></div>
+      <div><label for="mlfixa">Tarifa fixa ML R$</label><input type="number" id="mlfixa" value="6.5" min="0" step="0.5"></div>
+      <div><label for="mlfrete">Frete ML se ≥ R$79</label><input type="number" id="mlfrete" value="25" min="0" step="1"></div>
+      <div><label for="amzcom">Comissão Amazon %</label><input type="number" id="amzcom" value="12" min="0" step="0.5"></div>
+      <div><label for="amzlog">Logística Amazon R$</label><input type="number" id="amzlog" value="5.50" min="0" step="0.25"></div>
+      <div><label for="ads">Product Ads %</label><input type="number" id="ads" value="5" min="0" step="0.5"></div>
+      <div><label for="imp">Imposto %</label><input type="number" id="imp" value="5" min="0" step="0.5"></div>
+      <div><label for="bo">Devolução/avaria %</label><input type="number" id="bo" value="3" min="0" step="0.5"></div>
+      <div><label for="emb">Embalagem R$</label><input type="number" id="emb" value="2.20" min="0" step="0.1"></div>
+      <div><label for="man">Manutenção+deprec. R$/h</label><input type="number" id="man" value="0.80" min="0" step="0.05"></div>
+      <div><label for="ene">Energia R$/h</label><input type="number" id="ene" value="0.12" min="0" step="0.01"></div>
+      <div><label for="ref">Refugo %</label><input type="number" id="ref" value="8" min="0" step="1"></div>
+      <div><label for="purga">Purga %</label><input type="number" id="purga" value="5" min="0" step="1"></div>
+    </div>
+    <button class="reset" id="reset" type="button">Voltar ao cenário conservador</button>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">03 — OS DEZ</p>
+    <h2>Mercado Livre e Amazon, lado a lado</h2>
+    <p class="lede">Clique na linha para abrir a leitura de mercado, os riscos e os <b>cinco STLs</b> com licença comercial verificada.</p>
+  </div>
+  <div class="tablewrap">
+    <table id="tab">
+      <thead><tr>
+        <th data-s="nome">Produto</th>
+        <th class="n" data-s="preco">Preço</th>
+        <th class="n" data-s="g">g/peça</th>
+        <th class="n" data-s="un">un/placa</th>
+        <th class="n" data-s="h">Horas</th>
+        <th class="n" data-s="custo_peca">Custo da peça</th>
+        <th class="n" data-s="lucro_ml">Lucro ML</th>
+        <th class="n" data-s="rsh_ml">R$/h ML</th>
+        <th class="n" data-s="lucro_amz">Lucro Amazon</th>
+        <th class="n" data-s="rsh_amz" aria-sort="descending">R$/h Amazon</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-3);margin-top:10px">Gramas e unidades por placa respeitam uma vazão realista da A1 de 24 a 30 g por hora — nenhuma linha aqui assume que a máquina imprime mais rápido do que imprime. Confirme no Bambu Studio antes de anunciar.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">04 — O QUE FICOU DE FORA</p>
+    <h2>Três produtos que eu cortei, e por quê</h2>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>Porta-cartão de visita</h3><p>Dez mil concorrentes na Amazon e <b>zero anúncios com selo de volume</b> na primeira página inteira — o único produto da varredura sem nenhuma prova de venda. Piso de R$ 11,90 no Magalu. Cartão de visita físico é categoria em declínio.</p></div>
+    <div class="card"><h3>Porta-joias em caixa</h3><p>Ticket alto de verdade (mediana R$ 79,99 na Amazon, a maior de todas), mas o comprador quer <b>veludo, couro e acrílico com forro</b>. PLA não entrega isso. Por isso virou "expositor de brincos" na lista — que é peça estrutural e imprime bem.</p></div>
+    <div class="card"><h3>Vaso geométrico na Amazon</h3><p>O produto ficou na lista, mas o canal não: 30 mil concorrentes e o que tem volume é vidro de marca a R$ 12–33. Esse é produto de Mercado Livre e Magalu, onde a peça impressa já consegue R$ 70–89.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">05 — LICENÇA</p>
+    <h2>O que cada sigla te deixa fazer</h2>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>CULTS CU</h3><p>Compra o arquivo e pronto: pode vender a peça impressa <b>e</b> modificar o modelo. É a licença mais livre da lista e não tem mensalidade.</p></div>
+    <div class="card"><h3>CULTS CU-ND</h3><p>Pode vender a peça impressa, <b>não pode modificar o STL</b>. Nada de gravar sua marca, furar ou remixar. Escala simples costuma ser tolerada.</p></div>
+    <div class="card"><h3>CC BY e CC BY-SA</h3><p>Uso comercial liberado, mas <b>exige crédito ao designer</b>. Na prática: uma linha na descrição do anúncio ("modelo original: fulano, CC BY 4.0"). O SA só obriga algo a mais se você distribuir o arquivo modificado — vender a peça não dispara isso.</p></div>
+    <div class="card"><h3>CC0 / Public Domain</h3><p>Sem nenhuma obrigação. Pode vender, modificar e não precisa creditar. É a melhor situação possível.</p></div>
+    <div class="card"><h3 style="color:var(--crit)">Qualquer coisa com NC</h3><p>CC BY-NC, BY-NC-SA, BY-NC-ND: <b>não pode vender</b>. A maioria dos modelos bonitos do Printables é NC — sempre confira antes de se apaixonar por um.</p></div>
+    <div class="card"><h3 style="color:var(--crit)">CGTrader e MyMiniFactory</h3><p>A Royalty Free do CGTrader proíbe venda "in 3D printed physical form" (cláusula 21A.1). A licença padrão do MyMiniFactory também é não comercial. <b>Não compre lá achando que está coberta.</b></p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">06 — POR ONDE COMEÇAR</p>
+    <h2>A ordem que eu seguiria</h2>
+  </div>
+  <ol class="steps">
+    <li><b>Abra a Amazon primeiro, no plano Profissional.</b> É grátis no primeiro ano, não tem tarifa por item e a comissão de Casa é 12% contra 13% + R$ 6,50 do Mercado Livre. Comece por DBA — o FBA custa R$ 10 a R$ 51 por unidade e destrói a margem nesse ticket.</li>
+    <li><b>Primeiro anúncio: porta-óculos de mesa.</b> Só 257 concorrentes na Amazon e 132 no ML, com o formato "bichinho" já validado vendendo em resina a R$ 23–95. É a menor concorrência que apareceu nos três marketplaces ao mesmo tempo.</li>
+    <li><b>Segundo: vaso de parede para planta.</b> Os três canais concordam — demanda alta e <b>nenhum</b> concorrente impresso em 3D. O mercado está partido entre fibra de coco a R$ 23–40 e ferro importado a R$ 140–273, com o meio vazio.</li>
+    <li><b>Terceiro: suporte de cabo de carro elétrico Tipo 2.</b> Ticket de R$ 89 e nicho crescendo. Anuncie na Amazon, não no ML — acima de R$ 79 o frete do Mercado Livre é seu e derruba o R$/hora de R$ 7,58 para R$ 3,51.</li>
+    <li><b>Espelhe no Mercado Livre o que funcionar.</b> O ML tem mais volume de busca, mas a tarifa fixa cobra caro pelo ticket baixo. Use-o para os produtos de R$ 55 para cima.</li>
+    <li><b>Magalu só quando o CNPJ tiver 3 meses.</b> Os 9,9% de comissão nos primeiros três meses valem 6 a 9 pontos de margem contra o ML. É o melhor terceiro canal.</li>
+  </ol>
+</section>
+
+<p class="foot">Dados de preço, número de anúncios e sinais de volume coletados em 18 e 19 de setembro de 2026 no Mercado Livre, Amazon BR, Magalu, Americanas e Elo7. Licenças lidas individualmente nas páginas dos 50 modelos, em <a href="https://cults3d.com/en/licenses">Cults3D</a>, <a href="https://www.printables.com/">Printables</a> e MakerWorld. Taxas: <a href="https://venda.amazon.com.br/precos">Amazon</a>, <a href="https://universo.magalu.com/">Magalu</a>, <a href="https://ecommercenapratica.com/blog/taxa-shopee/">Shopee</a>, <a href="https://gefersonalencar.com.br/2026/02/21/americanas-marketplace-2026-novas-taxas/">Americanas</a>. Encerramento do Elo7: <a href="https://www.ecommercebrasil.com.br/noticias/enjoei-anuncia-encerramento-das-operacoes-da-plataforma-elo7">E-Commerce Brasil</a>. Volume no ML e na Amazon é faixa acumulada ou mensal aproximada, não número exato.</p>
+
+</div>
+
+<script>
+const DEFAULTS={fil:95,mlcom:13,mlfixa:6.5,mlfrete:25,amzcom:12,amzlog:5.50,ads:5,imp:5,bo:3,emb:2.20,man:0.80,ene:0.12,ref:8,purga:5};
+const IDS=Object.keys(DEFAULTS);
+const P=[{"nome": "Kit 10 organizadores de cabo", "cat": "Escritório", "preco": 35, "g": 20, "un": 5, "h": 4.0, "mkt": "ML: 4.482 anúncios, topo +10 mil vendas · Amazon: 9 anúncios com volume, mas <b>0 de 48 são 3D</b> · Magalu: kit 3D clonado a R$27,54 por três vendedores ao mesmo tempo", "angulo": "Melhor rendimento de placa da lista: 40 a 77 clipes numa impressão. Serve como produto de entrada para construir reputação — barato de errar e rápido de reimprimir.", "risco": "É commodity e você não ganha de injeção em escala. Na Amazon o kit de 40 clipes custa R$22,99 e tem selo de volume — margem fina. Entre por reputação, não por lucro.", "stls": [{"t": "RUEDA Cable Roller print-in-place — Charles_Regaud", "u": "https://cults3d.com/en/3d-model/gadget/rueda-cable-roller-print-in-place", "l": "CULTS CU", "pr": "preço livre", "dif": "carretel 100% print-in-place: o cabo enrola de verdade, vídeo pronto"}, {"t": "Cable Management Trays EcoSystem — Drak3D", "u": "https://cults3d.com/en/3d-model/gadget/cable-management-trays-ecosystem", "l": "CULTS CU", "pr": "R$ 11,92", "dif": "sistema de calhas com curva, T e cruzamento — kit configurável"}, {"t": "Cable Organizer print-in-place — Barto", "u": "https://www.printables.com/model/1215835-cable-organizer-clip-easy-to-open-print-in-place", "l": "CC BY (comercial ✔)", "pr": "grátis", "dif": "dobradiça viva que abre com uma mão; 20 a 30 por placa"}, {"t": "Magnetic Cable Clip print-in-place — SteveMYoung", "u": "https://www.printables.com/model/873014-print-in-place-magnetic-cable-clip", "l": "CC BY-SA (comercial ✔)", "pr": "grátis", "dif": "fecha com ímã 6×2 mm, abre com um puxão leve"}, {"t": "Cable Clip print-in-place — Locos08", "u": "https://makerworld.com/en/models/114508", "l": "CC BY", "pr": "grátis", "dif": "14 minutos por peça, 30+ por placa"}]}, {"nome": "Vaso decorativo geométrico (vase mode)", "cat": "Decoração", "preco": 78.9, "g": 55, "un": 2, "h": 4.5, "mkt": "ML: 2.060 anúncios, topo +5 mil vendas, R$39–62 · Magalu: 3D vendendo a R$70 (Desenvolve3D) e R$89 (Vellari Studio) · Amazon: 30 mil concorrentes, mas o que vende é vidro de marca a R$12–33", "angulo": "É a categoria em que a peça impressa já conseguiu preço de cerâmica e metal: R$70 a R$89 no Magalu. Vase mode é parede única — leve, rápido, e as linhas de camada viram a textura do produto em vez de defeito.", "risco": "Na Amazon não entre: 30 mil concorrentes e o que tem volume é vidro WOLFF a R$12–33. Esse produto é de ML e Magalu.", "stls": [{"t": "Set of 9 Geometric Vases — 4hobbyPrinting", "u": "https://cults3d.com/en/3d-model/home/set-of-9-geometric-vases-vase-mode", "l": "CULTS CU", "pr": "R$ 11,93", "dif": "nove vasos da mesma altura, feitos para compor trio — kit de ticket maior"}, {"t": "Wavy Spiral Flower Vase — Noktla", "u": "https://cults3d.com/en/3d-model/home/wavy-spiral-flower-vase-watertight-vase-mode-support-noktla-v-2", "l": "CULTS CU", "pr": "preço livre", "dif": "estanque de verdade: aceita flor natural com água"}, {"t": "Tall Soft Waves Vase — Helo3D", "u": "https://cults3d.com/en/3d-model/home/tall-soft-waves-vase", "l": "CULTS CU", "pr": "R$ 9,97", "dif": "alto e esguio, domina a foto; combina com flor seca vendida junto"}, {"t": "Finned Spherical Vase — loayessawy", "u": "https://cults3d.com/en/3d-model/home/finned-spherical-vase-pot-pencil-holder-or-planter-loayessawy", "l": "CULTS CU-ND", "pr": "R$ 8,94", "dif": "esfera com aletas: três anúncios (vaso, porta-lápis, cachepô) de um arquivo"}, {"t": "Modern Japandi Plant Pot Geometric — Helo3D", "u": "https://cults3d.com/en/3d-model/home/modern-japandi-style-plant-pot-geometric", "l": "CULTS CU", "pr": "R$ 9,98", "dif": "estética japandi — o público de decoração procura por esse nome"}]}, {"nome": "Vaso de parede para planta", "cat": "Decoração", "preco": 69, "g": 60, "un": 2, "h": 4.5, "mkt": "ML: 7.595 anúncios, topo +5 mil vendas · Amazon: 0 de 60 são 3D, <b>vazio de oferta entre R$45 e R$130</b> · Magalu: nenhum concorrente 3D encontrado", "angulo": "A única categoria em que os três marketplaces concordam: tem demanda alta e não existe concorrente impresso em 3D. O mercado está partido entre fibra de coco barata (R$23–40) e ferro importado caro (R$140–273) — e o meio está vazio.", "risco": "Segura terra molhada pendurada na parede e pega sol de janela: PETG e teste de carga antes de anunciar. Peça média, só 3 por placa.", "stls": [{"t": "Seashell Wall Pot — 3DStrato", "u": "https://cults3d.com/en/3d-model/home/seashell-wall-pot", "l": "CULTS CU", "pr": "R$ 17,88", "dif": "concha marinha esculpida — silhueta orgânica é a foto do anúncio"}, {"t": "ArcWall Planter — LayerFlow", "u": "https://cults3d.com/en/3d-model/home/arcwall-planter", "l": "CULTS CU", "pr": "R$ 2,98", "dif": "arco vazado que emoldura a planta como um nicho"}, {"t": "Cloud Rain small planter — DonCipriano", "u": "https://cults3d.com/en/3d-model/home/cloud-rain-small-planter", "l": "CULTS CU-ND", "pr": "R$ 7,45", "dif": "nuvem com gotas pendentes — quarto infantil e decor kawaii"}, {"t": "Planter Wall mount Hexagon Set — Mano22", "u": "https://cults3d.com/en/3d-model/home/planter-wall-mount-hexagon-set", "l": "CULTS CU", "pr": "R$ 6,33", "dif": "hexágonos modulares com tampa rosqueável — vende como composição"}, {"t": "Self-Watering Mountable Wall Planter — Level UP", "u": "https://makerworld.com/en/models/413710-self-watering-mountable-wall-planter-print-ready", "l": "CC BY", "pr": "grátis", "dif": "rega por baixo, 60×60×35 mm — 12 a 16 por placa"}]}, {"nome": "Porta-incenso decorativo", "cat": "Decoração", "preco": 39, "g": 30, "un": 4, "h": 4.5, "mkt": "ML: 2.010 anúncios, R$24–36 · Amazon: 0 de 60 títulos são 3D, mediana R$34,99 · Magalu: 3D a R$17–33, e temático chega a R$142", "angulo": "Nenhum dos 60 anúncios da primeira página da Amazon é impresso em 3D — é tudo madeira, resina e cerâmica. E o Magalu mostra que peça com tema forte vende a R$86–142 enquanto a lisa vende a R$18.", "risco": "O sinal de demanda na Amazon é fraco (1 anúncio com selo de volume em 60). No ML é melhor. Teste primeiro no ML.", "stls": [{"t": "Lucky Gate (torii) — Neandrou", "u": "https://cults3d.com/en/3d-model/architecture/lucky-gate", "l": "CULTS CU-ND", "pr": "R$ 14,95", "dif": "portal torii japonês em 3 peças — ornamento mesmo sem incenso"}, {"t": "Triple Moon Incense Holder — Kittycani", "u": "https://cults3d.com/en/3d-model/art/triple-moon-incence-holder-wicca-pagan-commercial-license", "l": "CULTS CU-ND", "pr": "R$ 29,81", "dif": "símbolo wicca da tríplice lua — nicho esotérico recompra em outras cores"}, {"t": "Dragão/serpente porta-incenso — oscarvargasdep", "u": "https://cults3d.com/en/3d-model/home/porta-sahumerios-dragon-serpiente", "l": "CULTS CU", "pr": "R$ 5,67", "dif": "dragão enrolado na vareta inteira; vem fatiado em partes p/ a A1"}, {"t": "3-in-1 Incense Holder lua — ElMonzoniano", "u": "https://cults3d.com/en/3d-model/home/3-in-1-incense-holder-sage-palo-santo-stick-incense-moon-design", "l": "CULTS CU", "pr": "preço livre", "dif": "sálvia, palo santo e vareta na mesma peça — o '3 em 1' é o anúncio pronto"}, {"t": "Backflow Incense Burner Mountain — Pandorite", "u": "https://cults3d.com/en/3d-model/home/backflow-incense-burner-mountain", "l": "CULTS CU-ND", "pr": "R$ 59,62", "dif": "cascata de fumaça descendo a montanha — gera vídeo, e vídeo vende incensário"}]}, {"nome": "Porta-caneta decorativo temático", "cat": "Escritório", "preco": 65, "g": 60, "un": 2, "h": 4.5, "mkt": "ML: 3.700 anúncios, topo +5 mil vendas · Amazon: 3D cobra R$40 contra R$9,70 do aramado genérico · Magalu: liso vende a R$18–35 e <b>temático a R$65–78</b>", "angulo": "Os três marketplaces mostram o mesmo padrão com clareza: porta-caneta liso impresso vale R$18–35 e porta-caneta com tema forte vale R$65–78. O prêmio de preço é do tema, não da impressão.", "risco": "Categoria muito disputada (identifiquei 10 vendedores 3D só no Magalu) e nenhum deles mostra volume de venda. Sem tema forte e foto boa, não entre.", "stls": [{"t": "Low-Poly Skull Stand — 3Dream4Fan", "u": "https://cults3d.com/en/3d-model/art/low-poly-skull-stand-the-ultimate-pen-headset-organizer", "l": "CULTS CU", "pr": "grátis", "dif": "caveira low-poly 2 em 1: canetas nas órbitas, headset no topo"}, {"t": "Hoodie Pen Holder — VoxelVaultSTL", "u": "https://cults3d.com/en/3d-model/home/hoodie-pen-holder-stl-stylish-desk-organizer-for-office-home-3d-printabl", "l": "CULTS CU", "pr": "R$ 5,96", "dif": "moletom com capuz, o bolso canguru vira compartimento"}, {"t": "Lizard Multi-Purpose Holder — Decorart0r", "u": "https://cults3d.com/en/3d-model/home/lizard-multi-purpose-holder-functional-3d-home-decor", "l": "CULTS CU-ND", "pr": "preço livre", "dif": "lagarto num tronco oco: casca e escamas entregam detalhe sem tinta"}, {"t": "Porta-lápis caneta-tinteiro — kanosc", "u": "https://cults3d.com/en/3d-model/home/portalapices-forma-de-pluma-estilografca", "l": "CULTS CU", "pr": "R$ 5,96", "dif": "caneta-tinteiro gigante deitada — piada visual que funciona em miniatura"}, {"t": "Dwarf Viking Barrel — BrassarKing", "u": "https://cults3d.com/en/3d-model/home/dwarf-viking-barrel-pen-holder-planter", "l": "CULTS CU", "pr": "R$ 4,00", "dif": "barril viking com aduelas em alto relevo; erro de unidade: escalar ×1000"}]}, {"nome": "Expositor de brincos e joias", "cat": "Organização", "preco": 55, "g": 50, "un": 2, "h": 4.0, "mkt": "ML: <b>só 20 anúncios</b>, topo +500 vendas, R$39–45 · Amazon: mediana R$79,99, a mais alta da lista, mas 0 de 60 são 3D · Magalu: nenhum 3D em duas buscas", "angulo": "Vinte anúncios no ML inteiro é a maior desproporção que encontrei. Mas a leitura correta é outra: caixa de joias o comprador quer em veludo e acrílico, e o PLA perde. O que a impressão 3D ganha é o <b>expositor</b> — árvore, grade, display vertical, que é peça estrutural.", "risco": "Não tente competir com caixa forrada. Se o anúncio disser 'porta-joias', você briga com veludo e perde. Tem que ser expositor.", "stls": [{"t": "Earring display tipo arara — luciadigiano", "u": "https://cults3d.com/en/3d-model/jewelry/exhibidor-de-aros-pendientes-en-forma-de-percha-alto", "l": "CULTS CU", "pr": "R$ 17,01", "dif": "mini cabides numa arara — o brinco vira peça de vitrine"}, {"t": "Hand for jewelry — AERO3D", "u": "https://cults3d.com/en/3d-model/jewelry/hand-for-jewelry-3dcouple_", "l": "CULTS CU-ND", "pr": "R$ 17,88", "dif": "mão escultórica — é decoração antes de ser porta-joia"}, {"t": "Earring Holder Hanger Organizer — Ryan Millar", "u": "https://www.printables.com/model/84458-earring-holder-hanger-organizer", "l": "CC BY (comercial ✔)", "pr": "grátis", "dif": "painel de parede para 24 pares, 200×200 mm"}, {"t": "Earring Holder 3 fileiras — POLYCUTZ", "u": "https://www.printables.com/model/838816-earring-holder-earring-stand", "l": "CC BY (comercial ✔)", "pr": "grátis", "dif": "display de bancada — formato de expositor de feira e loja"}, {"t": "Earring Stand / Display — Imagine That", "u": "https://www.printables.com/model/735642-earring-stand-display", "l": "CC BY-SA (comercial ✔)", "pr": "grátis", "dif": "monta e desmonta por encaixe, sem cola — ótimo para frete"}]}, {"nome": "Porta-óculos de mesa", "cat": "Organização", "preco": 59, "g": 55, "un": 2, "h": 4.5, "mkt": "ML: 132 anúncios, topo +500 vendas, R$35–75 · Amazon: <b>só 257 concorrentes</b>, mediana R$62,98 · Magalu: um 3D a R$57", "angulo": "A menor concorrência que apareceu em três marketplaces ao mesmo tempo. Na Amazon são 257 anúncios contra 10 a 30 mil das outras categorias, e o formato que já vende é 'bichinho fofo' em resina a R$23–95 — exatamente o que a impressão 3D faz melhor e mais barato.", "risco": "O nicho é pequeno em volume absoluto. Serve para margem e reputação, não para encher duas impressoras.", "stls": [{"t": "Panda Glasses Holder — MySweetHouse3D", "u": "https://cults3d.com/en/3d-model/fashion/panda-glasses-holder-porta-oculos-decorativo-stl", "l": "CULTS CU", "pr": "R$ 4,00", "dif": "panda minimalista em peça única, sem suporte"}, {"t": "Eyeglass holder moai — megustaen3d", "u": "https://cults3d.com/en/3d-model/art/soporte-para-anteojos", "l": "CULTS CU", "pr": "R$ 2,98", "dif": "cabeça moai — os óculos vestem a escultura"}, {"t": "Cartoon Dog Specs Holder — SARK_3D", "u": "https://cults3d.com/en/3d-model/tool/cartoon-dog-specs-holder-3d-printable-desk-organizer", "l": "CULTS CU", "pr": "R$ 21,47", "dif": "cachorro sentado, óculos apoiam no focinho"}, {"t": "Giraffe Glasses Stand — Vogel3DCrafts", "u": "https://cults3d.com/en/3d-model/art/giraffe-glasses-stand", "l": "CULTS CU-ND", "pr": "R$ 61,83", "dif": "girafa vertical, ocupa pouca mesa — precisa de suporte"}, {"t": "Modular eyeglass display stand — SEEKER", "u": "https://cults3d.com/en/3d-model/fashion/exhibidor-de-anteojos-modular", "l": "CULTS CU", "pr": "R$ 5,09", "dif": "módulos encaixáveis: kit de 2, 3 ou 4 óculos"}]}, {"nome": "Suporte de carregador de celular (tomada/parede)", "cat": "Escritório", "preco": 35, "g": 35, "un": 4, "h": 5.0, "mkt": "ML: <b>só 159 anúncios</b>, R$22–30 · Amazon: ~1.000 concorrentes e já existe um PET-G a R$19,90 · Magalu: 3D a R$28,09", "angulo": "Na Amazon é a segunda categoria menos disputada e já tem alguém vendendo peça impressa sem nem dizer que é impressa. No ML são 159 anúncios em todo o site. Peça pequena, seis por placa.", "risco": "Teto de preço baixo. Só fecha a conta pelas seis unidades por placa — se a peça crescer, o produto morre.", "stls": [{"t": "Gothic Architecture Phone Stand — LithosbyMelocrate", "u": "https://cults3d.com/en/3d-model/gadget/gothic-architecture-phone-stand-ornate-arched-design-with-charger-pass-through", "l": "CULTS CU", "pr": "preço livre", "dif": "rendilhado de catedral gótica com passagem de cabo"}, {"t": "Cyberpunk Phone Stand dobrável — LithosbyMelocrate", "u": "https://cults3d.com/en/3d-model/gadget/cyberpunk-phone-stand-with-charger-pass-through-folding-design-melocrate-3", "l": "CULTS CU-ND", "pr": "R$ 10,20", "dif": "mecanismo abre e fecha — dobra e vira peça de bolso"}, {"t": "Hen on Nest charger cover — taylorlizdill", "u": "https://cults3d.com/en/3d-model/home/hen-on-nest-iphone-usb-c-charger-cover-cord-organizer", "l": "CULTS CU", "pr": "R$ 25,76", "dif": "galinha no ninho que veste a fonte e enrola o cabo"}, {"t": "Foldable Phone Holder for Wall Plug — András Sümegi", "u": "https://www.printables.com/model/1568971-foldable-phone-holder-for-wall-plug-charger", "l": "CC0 Public Domain (comercial ✔)", "pr": "grátis", "dif": "pendura na tomada e dobra virando uma plaquinha"}, {"t": "Soporte cargador celular pared — Printify 3D", "u": "https://www.printables.com/model/649494-soporte-cargador-celular-pared", "l": "CC BY (comercial ✔)", "pr": "grátis", "dif": "encaixa no próprio bloco do carregador, sem furar parede"}]}, {"nome": "Organizador de gaveta sob medida", "cat": "Organização", "preco": 69, "g": 90, "un": 1, "h": 3.5, "mkt": "ML: R$35–79, topo +1000 vendas · Amazon: <b>8 anúncios com selo de volume, o maior sinal da lista</b> (Acrimet vende +1 mil/mês) · Magalu: nenhum concorrente 3D", "angulo": "A demanda é a maior de todas: a Acrimet sozinha vende mais de mil kits por mês na Amazon. Mas ela é injeção em escala a R$29–74 — você não ganha de frente. O que ela não faz é medida sob encomenda da gaveta do cliente, e é aí que o modelo paramétrico entra.", "risco": "Se você anunciar organizador genérico, briga com a Acrimet e perde. O anúncio tem que ser 'me diga a medida da sua gaveta'. Isso é trabalho manual por pedido — o custo que a gente não contou.", "stls": [{"t": "2x2 Drawer Organizer paramétrico — HALOCORE", "u": "https://cults3d.com/en/3d-model/home/2x2-drawer-organizer-stl-4-compartment-desk-drawer-insert-3d-print-halocore", "l": "CULTS CU", "pr": "R$ 20,56", "dif": "vem com a fonte paramétrica: muda colunas e linhas por medida"}, {"t": "Modular Drawer Base Grid — BogettiDesigns", "u": "https://cults3d.com/en/3d-model/home/modular-drawer-base-grid-organizer-stabilizing-system-stl", "l": "CULTS CU", "pr": "grátis", "dif": "grade que trava os potes na gaveta — o argumento contra o injetado"}, {"t": "Modern Fluted Modular Storage Box — shanhukh", "u": "https://cults3d.com/en/3d-model/tool/modern-fluted-modular-desktop-storage-box-stackable-drawer-organizer-3d-prin", "l": "CULTS CU-ND", "pr": "grátis", "dif": "textura canelada + gaveta deslizante: acabamento de móvel"}, {"t": "Modular Drawer Organizer (.scad) — wbu", "u": "https://www.printables.com/model/577911-modular-drawer-organizer", "l": "CC BY (comercial ✔)", "pr": "grátis", "dif": "paramétrico de verdade — gera qualquer medida de cliente"}, {"t": "Milk Crates 3 tamanhos — TerraFlorens", "u": "https://cults3d.com/en/3d-model/home/milk-crates-adorable-old-fashioned-storage-boxes-3-sizes-desk-or-drawer-organization-gift-boxes-print-your-own-set", "l": "CULTS CU", "pr": "R$ 20,61", "dif": "caixote de leite vintage vazado, 12 a 16 pequenos por placa"}]}, {"nome": "Suporte de parede p/ cabo de carro elétrico (Tipo 2)", "cat": "Auto", "preco": 89, "g": 150, "un": 1, "h": 5.0, "mkt": "Magalu: vendedores 3D a R$56,05 (cs3dprintshop) e R$85,41 (3dsbr) · nicho novo, poucos concorrentes", "angulo": "O maior salto de preço que encontrei: o suporte de celular genérico vale R$15–19 e o de cabo Tipo 2 vale R$56–90. Mesma impressora, mesmo tempo, quatro vezes o preço — porque o comprador tem um carro de R$ 200 mil na garagem.", "risco": "Peça grande (150 g, uma por placa) e fica em garagem com sol e calor: PETG obrigatório. Acima de R$79 o frete do ML é seu — na Amazon não tem esse degrau.", "stls": [{"t": "Electric Car Charger Holder — WardHill3DP", "u": "https://www.printables.com/model/513494-electric-car-charger-holder", "l": "CC BY (uso comercial ✔)", "pr": "grátis", "dif": "raio vazado na placa + carretel + gancho: três funções"}, {"t": "Mennekes type 2 connector Holder — OK1HRA", "u": "https://www.printables.com/model/1209608-mennekes-type-2-connector-holder", "l": "CC BY-SA (uso comercial ✔)", "pr": "grátis", "dif": "trava flexível que prende o conector — o mais 'produto de loja'"}, {"t": "EV Cable Holder / Tidy — asteven5", "u": "https://www.printables.com/model/39739-ev-cable-holder-tidy", "l": "CC BY (uso comercial ✔)", "pr": "grátis", "dif": "berço curvo que abraça o cabo inteiro, sem suporte"}, {"t": "Tesla wall charger plug holder — Totor", "u": "https://www.printables.com/model/908457-tesla-wall-charger-plug-holder", "l": "CC BY (uso comercial ✔)", "pr": "grátis", "dif": "berço fechado para plugue Tesla — o público que mais paga"}, {"t": "EV Charger Type 2 — husjon", "u": "https://www.printables.com/model/458034-ev-charger-type-2", "l": "CC BY-SA (uso comercial ✔)", "pr": "grátis", "dif": "vem com 'testfit' do encaixe: testa a folga antes de gastar a peça"}]}];
+const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
+function prem(){const o={};IDS.forEach(k=>{const v=parseFloat(document.getElementById(k).value);o[k]=isFinite(v)?v:DEFAULTS[k]});return o}
+function calc(p,q){
+  const h=p.h/p.un;
+  const mat=p.g*(q.fil/1000)*(1+q.purga/100);
+  const maq=h*(q.ene+q.man);
+  const cp=(mat+maq)*(1+q.ref/100);
+  const base=cp+q.emb;
+  const pct=(q.ads+q.imp+q.bo)/100;
+  const tml=p.preco*(q.mlcom/100+pct)+(p.preco<79?q.mlfixa:q.mlfrete);
+  const tam=p.preco*(q.amzcom/100+pct)+q.amzlog;
+  const lml=p.preco-base-tml, lam=p.preco-base-tam;
+  return {h,mat,maq,cp,base,tml,tam,lml,lam,rml:lml*p.un/p.h,ram:lam*p.un/p.h,
+          pml:lml*p.un,pam:lam*p.un,vazao:p.g*p.un/p.h};
+}
+let sortKey='rsh_amz', sortDir=-1, open=new Set();
+function render(){
+  const q=prem();
+  const list=P.map((p,i)=>({...p,_i:i,c:calc(p,q)}));
+  const get=(o,k)=>({rsh_amz:o.c.ram,rsh_ml:o.c.rml,lucro_ml:o.c.lml,lucro_amz:o.c.lam,custo_peca:o.c.cp}[k])??o[k];
+  list.sort((a,b)=>{const x=get(a,sortKey),y=get(b,sortKey);return (typeof x==='string'?x.localeCompare(y,'pt'):x-y)*sortDir});
+  const max=Math.max(...list.map(r=>r.c.ram),1), tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  list.forEach((r,n)=>{
+    const c=r.c, tr=document.createElement('tr');
+    tr.innerHTML=`<td><div class="name"><span class="ix">${String(n+1).padStart(2,'0')}</span><span>${r.nome}</span></div></td>
+      <td class="n">${brl(r.preco)}</td>
+      <td class="n">${r.g} g</td>
+      <td class="n" style="font-weight:600">${r.un}×</td>
+      <td class="n">${r.h.toFixed(1)} h</td>
+      <td class="n" style="color:var(--ink-2)">${brl(c.cp)}</td>
+      <td class="n">${brl(c.lml)}</td>
+      <td class="n" style="color:var(--ink-2)">${brl(c.rml)}</td>
+      <td class="n" style="font-weight:600">${brl(c.lam)}</td>
+      <td class="n"><span class="bar"><span class="track"><span class="fill" style="width:${Math.max(4,100*c.ram/max)}%"></span></span>${brl(c.ram)}</span></td>`;
+    tr.addEventListener('click',()=>{open.has(r._i)?open.delete(r._i):open.add(r._i);render()});
+    tb.appendChild(tr);
+    if(open.has(r._i)){
+      const d=document.createElement('tr'); d.className='det';
+      const links=r.stls.map((s,i)=>`<li style="margin-bottom:10px"><a href="${s.u}" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600;text-decoration:none">${i+1}. ${s.t}</a><br><span style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">${s.l} · ${s.pr}</span><br><span style="font-size:12.5px;color:var(--ink-2)">${s.dif}</span></li>`).join('');
+      d.innerHTML=`<td colspan="10"><div class="in">
+        <div><h4>Leitura de mercado</h4><p>${r.mkt}</p>
+             <h4 style="margin-top:14px">Por que esse</h4><p>${r.angulo}</p>
+             <h4 style="margin-top:14px">Risco</h4><p>${r.risco}</p></div>
+        <div style="grid-column:span 2"><h4>Cinco STLs com licença comercial verificada</h4><ul style="list-style:none;padding:0;margin:0">${links}</ul></div>
+        <div><h4>A conta</h4><div class="break">
+          <div><span>Filamento · ${r.g} g</span><span>${brl(c.mat)}</span></div>
+          <div><span>Energia + manutenção · ${c.h.toFixed(2)} h</span><span>${brl(c.maq)}</span></div>
+          <div><span>Refugo</span><span>${brl(c.cp-c.mat-c.maq)}</span></div>
+          <div><span>Embalagem</span><span>${brl(q.emb)}</span></div>
+          <div class="tot"><span>Custo por venda</span><span>${brl(c.base)}</span></div>
+          <div style="border:none;padding-top:8px"><span>Taxas Mercado Livre</span><span>${brl(c.tml)}</span></div>
+          <div style="border:none"><span>Lucro no ML</span><span>${brl(c.lml)}</span></div>
+          <div style="border:none;padding-top:8px"><span>Taxas Amazon</span><span>${brl(c.tam)}</span></div>
+          <div style="border:none"><span>Lucro na Amazon</span><span>${brl(c.lam)}</span></div>
+          <div class="tot"><span>Placa (${r.un} un) na Amazon</span><span>${brl(c.pam)}</span></div>
+          <div style="border:none"><span>Vazão da placa</span><span>${c.vazao.toFixed(1)} g/h</span></div>
+        </div></div></div></td>`;
+      tb.appendChild(d);
+    }
+  });
+}
+document.querySelectorAll('#tab th').forEach(th=>{
+  th.addEventListener('click',()=>{const k=th.dataset.s;
+    if(sortKey===k) sortDir*=-1; else {sortKey=k; sortDir=(k==='nome')?1:-1;}
+    document.querySelectorAll('#tab th').forEach(t=>t.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort',sortDir===1?'ascending':'descending'); render();});
+});
+IDS.forEach(k=>document.getElementById(k).addEventListener('input',render));
+document.getElementById('reset').addEventListener('click',()=>{IDS.forEach(k=>document.getElementById(k).value=DEFAULTS[k]);render()});
+render();
+</script>
+</body>
+</html>

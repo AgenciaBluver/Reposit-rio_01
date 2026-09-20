@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Vinte e Cinco Arquivos Com Preço</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --surface-2:#EAEDE7; --inset:#F0F2EE;
+  --ink:#151A18; --ink-2:#4A544F; --ink-3:#7A857F; --line:#DCE0D9; --line-2:#C7CDC3;
+  --accent:#0E6B57; --accent-2:#3E9A82; --accent-soft:#D9E9E2; --on-accent:#FFFFFF;
+  --warn:#8E540F; --warn-soft:#F3E6D2; --crit:#9E2A1E; --crit-soft:#F5DFDC;
+  --disp:"IBM Plex Sans Condensed","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}}
+:root[data-theme="dark"]{
+  --bg:#101311; --surface:#181C19; --surface-2:#1F2420; --inset:#141814;
+  --ink:#E7EBE6; --ink-2:#A6B0A9; --ink-3:#76817B; --line:#2A312B; --line-2:#3A423B;
+  --accent:#4DBB99; --accent-2:#2E8C74; --accent-soft:#16332B; --on-accent:#08130F;
+  --warn:#D79E55; --warn-soft:#332A1B; --crit:#E08274; --crit-soft:#341F1C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 16px;margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:40px 72px}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6.2vw,58px);letter-spacing:-.015em}
+h2{font-size:clamp(21px,3vw,27px);letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:17px;color:var(--ink-2);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+section{margin-top:56px}
+.sechead{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;
+  border-top:1px solid var(--line-2);padding-top:14px}
+.num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+
+/* rule callout */
+.rule{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  padding:20px 22px;display:grid;gap:14px}
+.rule .big{font-family:var(--disp);font-size:clamp(19px,2.6vw,24px);line-height:1.25}
+.cliff{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:2px}
+.cliff div{background:var(--surface);padding:12px 14px}
+.cliff b{font-family:var(--mono);font-size:19px;display:block;letter-spacing:-.02em}
+.cliff span{font-size:12.5px;color:var(--ink-2);display:block;margin-top:2px}
+.cliff .bad b{color:var(--crit)} .cliff .good b{color:var(--accent)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.kpi .v{font-family:var(--disp);font-size:36px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.kpi .s{font-size:13px;color:var(--ink-2);margin-top:6px}
+
+/* controls */
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px}
+.grid-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px}
+label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+input[type=number],select{width:100%;font-family:var(--mono);font-size:14px;color:var(--ink);
+  background:var(--inset);border:1px solid var(--line-2);border-radius:2px;padding:8px 9px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.reset{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;background:none;border:1px solid var(--line-2);
+  color:var(--ink-2);padding:7px 12px;border-radius:2px;cursor:pointer;margin-top:14px}
+.reset:hover{border-color:var(--accent);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;padding:6px 11px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:880px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  text-align:left;padding:11px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap;
+  background:var(--surface-2);cursor:pointer;user-select:none}
+th.n{text-align:right}
+th[aria-sort]{color:var(--accent)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--inset)}
+tr.det td{background:var(--inset);border-bottom:1px solid var(--line-2)}
+.name{font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.name .ix{font-family:var(--mono);font-size:11px;color:var(--ink-3);min-width:18px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap;
+  border:1px solid var(--line-2);color:var(--ink-2);background:var(--surface)}
+.tag.Alta{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tag.Média{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.tag.Baixa,.tag.Hipótese{color:var(--crit);border-color:var(--crit);background:var(--crit-soft)}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{display:block;width:74px;height:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;overflow:hidden;flex:none}
+.bar .fill{display:block;height:100%;min-width:3px;background:var(--accent);border-radius:4px}
+.det .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;padding:6px 0 10px}
+.det h4{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.det p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.break{font-family:var(--mono);font-size:12.5px}
+.break div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;border-bottom:1px dotted var(--line)}
+.break div.tot{border-bottom:none;border-top:1px solid var(--line-2);margin-top:4px;padding-top:5px;color:var(--ink);font-weight:600}
+.break span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.break span:first-child{color:var(--ink-2)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-2)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:14.5px;color:var(--ink-2)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px}
+ol.steps b{color:var(--ink);font-weight:600}
+.foot{margin-top:56px;border-top:1px solid var(--line-2);padding-top:16px;font-size:13px;color:var(--ink-3)}
+.foot a{color:var(--ink-2)}
+.warnbox{background:var(--warn-soft);border:1px solid var(--warn);padding:16px 18px;font-size:14px;color:var(--ink)}
+@media (max-width:560px){ .wrap{padding-block:28px 52px} .kpi .v{font-size:30px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>
+.prod{margin-top:44px;border-top:2px solid var(--line-2);padding-top:18px}
+.prodhead{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between;margin-bottom:6px}
+.faixa{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0 6px}
+.faixa div{background:var(--surface);padding:9px 11px}
+.faixa b{font-family:var(--mono);font-size:16px;display:block}
+.faixa span{font-size:11px;color:var(--ink-3);display:block;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono)}
+.stl{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);padding:16px 18px;display:grid;
+  grid-template-columns:minmax(260px,1.6fr) minmax(200px,1fr);gap:18px;margin-top:12px}
+.stl.warn{border-left-color:var(--warn)}
+.stl h3{font-size:16px;margin-bottom:4px}
+.stl h3 a{color:var(--ink);text-decoration:none}
+.stl h3 a:hover{color:var(--accent)}
+.meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;margin-bottom:8px}
+.stl p{font-size:13.5px;color:var(--ink-2)}
+.stl .dif{color:var(--ink);font-weight:500;margin-bottom:8px}
+.pricebox{background:var(--inset);border:1px solid var(--line);padding:12px 14px;align-self:start}
+.pricebox .big{font-family:var(--disp);font-size:30px;line-height:1;letter-spacing:-.02em}
+.pricebox .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.pos{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:2px;margin-top:8px;
+  border:1px solid var(--line-2);color:var(--ink-2)}
+.pos.ok{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.pos.alerta{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+@media (max-width:640px){.stl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap"><header class="stack">
+  <p class="eyebrow">Estudo produto por produto · 25 STLs precificados um a um · 19 set 2026</p>
+  <h1>Vinte e cinco arquivos com preço</h1>
+  <p class="lede">Cinco produtos que passaram no teste de concorrência de preço do Mercado Livre, e para cada um <b>todos os STLs que eu testaria</b> — com o preço de venda específico daquele modelo, o lucro que ele dá, onde o preço cai dentro da faixa real do mercado e a estratégia de anúncio.</p>
+</header>
+
+<section>
+  <div class="rule">
+    <p class="eyebrow">Como eu filtrei</p>
+    <p class="big">Só entraram STLs cujo preço de venda cabe dentro da faixa que o Mercado Livre realmente pratica — e que ainda assim deixam R$ 20 ou mais de lucro por venda.</p>
+    <p style="font-size:14.5px;color:var(--ink-2);max-width:68ch">Li 569 anúncios da primeira página de dez buscas e tirei de cada categoria o piso, o 1º quartil, a mediana e o 3º quartil de preço. Cada arquivo abaixo tem um preço sugerido, e ao lado dele está onde esse preço cai naquela régua. <b>Nada aqui está precificado no escuro.</b></p>
+    <div class="cliff">
+      <div class="good"><b>Entre mediana e 3º quartil</b><span>Zona confortável: você cobra acima da média sem sair da faixa que o comprador aceita.</span></div>
+      <div class="bad"><b>Acima do 3º quartil</b><span>Dá o maior lucro, mas só se sustenta com foto excepcional e diferencial real.</span></div>
+      <div class="good"><b>Abaixo da mediana</b><span>Produto de entrada: serve para pegar as primeiras avaliações, não para ganhar dinheiro.</span></div>
+      <div class="bad"><b>Cinco produtos cortados</b><span>Onde o líder de vendas é o mais barato, nenhum STL salva. Não tem arquivo nessa lista.</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">01 — O ANÚNCIO QUE VOCÊ MANDOU</p>
+    <h2>Jogo de 10 vasos a R$ 89,79</h2>
+  </div>
+  <div class="warnbox">
+    <p><b>Não dá — e o motivo é instrutivo.</b> Dez vasos de 12 cm em vase mode somam ~270 g e <b>15 horas de impressora</b>, três placas cheias. Custo total R$ 47,49. No Mercado Livre o preço passa de R$ 79, então o frete vira seu: taxas de R$ 48,35 e o resultado é <b>prejuízo de R$ 6,05</b>. Na Amazon sobra R$ 14,35, mas em 15 horas de máquina — <b>R$ 0,96 por hora</b>, o pior número de todo o estudo.</p>
+    <p style="margin-top:10px">O comprador está pagando <b>R$ 8,98 por vaso</b>. Isso é preço de cerâmica importada em escala.</p>
+    <p style="margin-top:10px">Mas o <b>nicho</b> é bom, e é outra coisa: arranjo de festa e decoração de evento, onde quem compra é decoradora, noiva e buffet. A versão que fecha a conta é o kit pequeno — <b>kit de 3 a R$ 89 rende R$ 45,25 de lucro e R$ 10,06 por hora</b>. Kit de 5 a R$ 99 já cai para R$ 5,81/h. Kit de 10, R$ 0,96/h.</p>
+    <p style="margin-top:10px">É a regra do kit aparecendo pelo avesso: <b>cada peça a mais custa mais uma peça de máquina e não traz mais uma venda.</b> Acima de três ou quatro unidades, kit deixa de ser estratégia e vira armadilha.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">02 — OS CINCO PRODUTOS</p>
+    <h2>Arquivo por arquivo, com preço</h2>
+    <p class="lede">Cada bloco abre com a faixa de preço real medida no Mercado Livre. Os arquivos vêm ordenados por lucro por hora de placa.</p>
+  </div>
+  <div id="prods"></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="num">03 — OS QUE NÃO TÊM ARQUIVO</p>
+    <h2>Cinco produtos que eu cortei</h2>
+    <p class="lede">Não coloquei STL nenhum aqui de propósito: quando o campeão de vendas da categoria é o mais barato, nenhum arquivo resolve.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>Vaso de parede para planta</h3><p>Líder vende 5 mil unidades a <b>R$ 21</b> contra mediana de R$ 55. Razão de 0,38, a pior das dez. É guerra de preço contra fibra de coco.</p></div>
+    <div class="card"><h3>Porta-incenso</h3><p>Líder a R$ 25 com 5 mil vendas, mediana R$ 38. Se um dia entrar, só como kit de 3 a R$ 99 — e isso é fuga da comparação, não estratégia.</p></div>
+    <div class="card"><h3>Suporte de carregador de tomada</h3><p>Mediana de R$ 30 com mínimo viável de R$ 26,28 na Amazon. Sobra R$ 3 de espaço. Não vale a hora de máquina.</p></div>
+    <div class="card"><h3>Organizador de gaveta</h3><p>Dez mil anúncios, líder a R$ 26 com 10 mil vendas, e a Acrimet injetando em escala. Só existiria sob medida, que é trabalho manual por pedido.</p></div>
+    <div class="card"><h3>Kit de clipes de cabo</h3><p>Continua valendo como produto de entrada a R$ 35 para pegar reputação, mas não é negócio: margem fina contra injeção em escala.</p></div>
+    <div class="card"><h3>A regra por trás dos cortes</h3><p>Categoria vazia de concorrente 3D não é oportunidade por si só. Se o mais vendido é o mais barato, o comprador de lá decide por preço — e contra injetado você nunca vai ser o mais barato.</p></div>
+  </div>
+</section>
+
+<p class="foot">Faixas de preço medidas na primeira página completa de dez buscas no Mercado Livre Brasil em 19 de setembro de 2026 (569 anúncios). Gramas, unidades por placa e horas são estimativas de engenharia respeitando uma vazão de 24 a 30 g/h na Bambu Lab A1 — confirme no Bambu Studio. Licenças lidas individualmente na página de cada modelo. Lucro calculado com filamento a R$ 95/kg mais 5% de purga, energia R$ 0,12/h, manutenção e depreciação R$ 0,80/h, refugo 8%, embalagem R$ 2,20, 5% de ads, 5% de imposto, 3% de devolução, e comissão de 12% mais logística DBA de R$ 5,50 na Amazon ou 13% mais tarifa fixa de R$ 6,50 no Mercado Livre (R$ 25 de frete acima de R$ 79). Mão de obra não contabilizada.</p>
+
+</div>
+
+<script>
+const D=[{"produto": "Vaso decorativo geométrico", "anuncios": 2059, "piso": 20, "p25": 33, "med": 43, "p75": 62, "lider": 59, "vendas_lider": "+5 mil", "razao": 1.37, "itens": [{"nome": "Set of 9 Geometric Vases — 4hobbyPrinting", "url": "https://cults3d.com/en/3d-model/home/set-of-9-geometric-vases-vase-mode", "lic": "CULTS CU", "preco_arquivo": 11.93, "preco": 59, "g": 50, "un": 2, "h": 4.0, "dif": "Nove vasos da mesma altura no mesmo arquivo, feitos para ficar bonitos em conjunto.", "estrategia": "Este é o seu carro-chefe. Imprima o mesmo modelo em três escalas e crie três anúncios: P a R$ 49, M a R$ 59 e G a R$ 89. Um arquivo de R$ 11,93 vira nove formas × três tamanhos = 27 SKUs.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.0, "custo": 7.37, "base": 9.57, "lucro_ml": 27.59, "lucro_amz": 29.18, "rsh_ml": 13.79, "rsh_amz": 14.59, "placa_amz": 58.35, "vazao": 25.0, "arq_txt": "R$ 11,93"}, {"nome": "Wavy Spiral Flower Vase — Noktla", "url": "https://cults3d.com/en/3d-model/home/wavy-spiral-flower-vase-watertight-vase-mode-support-noktla-v-2", "lic": "CULTS CU", "preco_arquivo": 0, "preco": 78.9, "g": 55, "un": 2, "h": 4.5, "dif": "Estanque de verdade: aceita flor natural com água, o que quase nenhum vase mode aguenta.", "estrategia": "O argumento de anúncio está pronto e nenhum concorrente tem: 'aceita flor natural, não vaza'. Coloque isso no título. É o que justifica R$ 78,90 num mercado de mediana R$ 43.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 0, "h_un": 2.25, "custo": 8.16, "base": 10.36, "lucro_ml": 41.53, "lucro_amz": 43.31, "rsh_ml": 18.46, "rsh_amz": 19.25, "placa_amz": 86.63, "vazao": 24.4, "arq_txt": "preço livre"}, {"nome": "Tall Soft Waves Vase — Helo3D", "url": "https://cults3d.com/en/3d-model/home/tall-soft-waves-vase", "lic": "CULTS CU", "preco_arquivo": 9.97, "preco": 89, "g": 70, "un": 2, "h": 5.0, "dif": "Alto e esguio — proporção vertical que domina a foto do anúncio.", "estrategia": "Venda com flor seca inclusa (custa R$ 8 no atacado e sobe o ticket em R$ 20). Peça alta fotografa melhor que peça baixa e sustenta preço acima do 3º quartil.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 1, "h_un": 2.5, "custo": 10.03, "base": 12.23, "lucro_ml": 28.63, "lucro_amz": 49.02, "rsh_ml": 11.45, "rsh_amz": 19.61, "placa_amz": 98.05, "vazao": 28.0, "arq_txt": "R$ 9,97"}, {"nome": "Finned Spherical Vase — loayessawy", "url": "https://cults3d.com/en/3d-model/home/finned-spherical-vase-pot-pencil-holder-or-planter-loayessawy", "lic": "CULTS CU-ND", "preco_arquivo": 8.94, "preco": 69, "g": 45, "un": 3, "h": 4.5, "dif": "Esfera com aletas radiais; escalando vira porta-lápis, cachepô ou vaso grande.", "estrategia": "Três anúncios de um arquivo só, mudando apenas a escala: porta-lápis R$ 49, cachepô R$ 69, vaso grande R$ 99. Atenção: é CU-ND, então escala uniforme sim, remix não.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 1, "h_un": 1.5, "custo": 6.34, "base": 8.54, "lucro_ml": 36.02, "lucro_amz": 37.71, "rsh_ml": 24.01, "rsh_amz": 25.14, "placa_amz": 113.14, "vazao": 30.0, "arq_txt": "R$ 8,94"}, {"nome": "Modern Japandi Plant Pot — Helo3D", "url": "https://cults3d.com/en/3d-model/home/modern-japandi-style-plant-pot-geometric", "lic": "CULTS CU", "preco_arquivo": 9.98, "preco": 69, "g": 50, "un": 2, "h": 4.0, "dif": "Estética japandi — o público de decoração procura por esse nome específico.", "estrategia": "Coloque 'japandi' e 'escandinavo' no título: são termos de busca de quem já decidiu que vai pagar mais. Vende bem em conjunto de 2 tamanhos.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 1, "h_un": 2.0, "custo": 7.37, "base": 9.57, "lucro_ml": 34.99, "lucro_amz": 36.68, "rsh_ml": 17.49, "rsh_amz": 18.34, "placa_amz": 73.35, "vazao": 25.0, "arq_txt": "R$ 9,98"}]}, {"produto": "Expositor de brincos", "anuncios": 18, "piso": 19, "p25": 39, "med": 67, "p75": 101, "lider": 62, "vendas_lider": "+5 mil", "razao": 0.93, "itens": [{"nome": "Earring display tipo arara — luciadigiano", "url": "https://cults3d.com/en/3d-model/jewelry/exhibidor-de-aros-pendientes-en-forma-de-percha-alto", "lic": "CULTS CU", "preco_arquivo": 17.01, "preco": 79, "g": 60, "un": 2, "h": 4.5, "dif": "Mini cabides de roupa pendurados numa arara — o brinco vira peça de vitrine.", "estrategia": "O mais diferenciado dos cinco e o único que não tem nada parecido nos 18 anúncios da categoria. Venda o conjunto completo, não peças soltas. A página informa 160×120 mm no conjunto e cabides de 40×23 mm.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.25, "custo": 8.7, "base": 10.9, "lucro_ml": 22.56, "lucro_amz": 42.85, "rsh_ml": 10.03, "rsh_amz": 19.04, "placa_amz": 85.7, "vazao": 26.7, "arq_txt": "R$ 17,01"}, {"nome": "Hand for jewelry — AERO3D", "url": "https://cults3d.com/en/3d-model/jewelry/hand-for-jewelry-3dcouple_", "lic": "CULTS CU-ND", "preco_arquivo": 17.88, "preco": 89, "g": 80, "un": 1, "h": 3.0, "dif": "Mão escultórica erguida — é objeto de decoração antes de ser porta-joia.", "estrategia": "Anuncie na categoria de decoração, não de organização. Quem compra escultura de mão não compara preço com organizador de acrílico — e é assim que você sai da briga.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 3.0, "custo": 11.6, "base": 13.8, "lucro_ml": 27.06, "lucro_amz": 47.45, "rsh_ml": 9.02, "rsh_amz": 15.82, "placa_amz": 47.45, "vazao": 26.7, "arq_txt": "R$ 17,88"}, {"nome": "Earring Holder Hanger — Ryan Millar", "url": "https://www.printables.com/model/84458-earring-holder-hanger-organizer", "lic": "CC BY · comercial ✔", "preco_arquivo": 0, "preco": 69, "g": 95, "un": 1, "h": 3.5, "dif": "Painel de parede que segura 24 pares de uma vez, 200×200×12 mm.", "estrategia": "O argumento é capacidade: '24 pares' no título. Arquivo gratuito, então o custo de testar é zero. Exige crédito ao designer numa linha da descrição.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 0, "h_un": 3.5, "custo": 13.71, "base": 15.91, "lucro_ml": 28.65, "lucro_amz": 30.34, "rsh_ml": 8.19, "rsh_amz": 8.67, "placa_amz": 30.34, "vazao": 27.1, "arq_txt": "grátis"}, {"nome": "Earring Holder 3 fileiras — POLYCUTZ", "url": "https://www.printables.com/model/838816-earring-holder-earring-stand", "lic": "CC BY · comercial ✔", "preco_arquivo": 0, "preco": 55, "g": 55, "un": 2, "h": 4.0, "dif": "Display vertical de bancada de 3 fileiras — formato de expositor de feira e loja.", "estrategia": "Este é o seu produto B2B: venda para quem tem loja de bijuteria e vende em feira. Anuncie em kit de 2 a R$ 99 falando com o lojista, não com a consumidora final.", "pos": "abaixo da mediana", "risco": "Confortável", "payback": 0, "h_un": 2.0, "custo": 7.91, "base": 10.11, "lucro_ml": 24.09, "lucro_amz": 25.64, "rsh_ml": 12.04, "rsh_amz": 12.82, "placa_amz": 51.28, "vazao": 27.5, "arq_txt": "grátis"}, {"nome": "Earring Stand / Display — Imagine That", "url": "https://www.printables.com/model/735642-earring-stand-display", "lic": "CC BY-SA · comercial ✔", "preco_arquivo": 0, "preco": 59, "g": 60, "un": 2, "h": 4.5, "dif": "Laterais triangulares com travessas de encaixe por interferência, sem cola.", "estrategia": "Monta e desmonta: cabe em embalagem pequena e baixa a faixa de frete. É o de melhor margem logística dos cinco.", "pos": "abaixo da mediana", "risco": "Confortável", "payback": 0, "h_un": 2.25, "custo": 8.7, "base": 10.9, "lucro_ml": 26.26, "lucro_amz": 27.85, "rsh_ml": 11.67, "rsh_amz": 12.38, "placa_amz": 55.7, "vazao": 26.7, "arq_txt": "grátis"}]}, {"produto": "Suporte de cabo de carro elétrico Tipo 2", "anuncios": 228, "piso": 30, "p25": 49, "med": 60, "p75": 80, "lider": 40, "vendas_lider": "+1 mil", "razao": 0.67, "itens": [{"nome": "Electric Car Charger Holder — WardHill3DP", "url": "https://www.printables.com/model/513494-electric-car-charger-holder", "lic": "CC BY · comercial ✔", "preco_arquivo": 0, "preco": 99, "g": 150, "un": 1, "h": 5.0, "dif": "Raio vazado na placa + carretel para enrolar o cabo + gancho para a caixa: três funções numa peça.", "estrategia": "O mais completo dos cinco e o que justifica o maior preço. O recorte de raio é o que vende a foto. PETG obrigatório — fica em garagem com calor.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 0, "h_un": 5.0, "custo": 21.13, "base": 23.33, "lucro_ml": 24.93, "lucro_amz": 45.42, "rsh_ml": 4.99, "rsh_amz": 9.08, "placa_amz": 45.42, "vazao": 30.0, "arq_txt": "grátis"}, {"nome": "Mennekes type 2 connector Holder — OK1HRA", "url": "https://www.printables.com/model/1209608-mennekes-type-2-connector-holder", "lic": "CC BY-SA · comercial ✔", "preco_arquivo": 0, "preco": 89, "g": 150, "un": 1, "h": 5.0, "dif": "Trava flexível que segura o conector mais gancho integrado — o mais 'produto de loja' do conjunto.", "estrategia": "A página informa 150 g de PETG e fixação com 2 parafusos 5×25 mm. Venda com os parafusos inclusos: custa R$ 1,50 e elimina a objeção de 'e como eu prendo?'.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 0, "h_un": 5.0, "custo": 21.13, "base": 23.33, "lucro_ml": 17.53, "lucro_amz": 37.92, "rsh_ml": 3.51, "rsh_amz": 7.58, "placa_amz": 37.92, "vazao": 30.0, "arq_txt": "grátis"}, {"nome": "EV Cable Holder / Tidy — asteven5", "url": "https://www.printables.com/model/39739-ev-cable-holder-tidy", "lic": "CC BY · comercial ✔", "preco_arquivo": 0, "preco": 79, "g": 145, "un": 1, "h": 5.0, "dif": "Berço curvo que abraça o cabo enrolado inteiro, em vez de só pendurar.", "estrategia": "Compatível com a furação do Wallbox Pulsar Plus — coloque o nome do wallbox no título. Imprime sem suporte, o que é raro nessa categoria.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 0, "h_un": 5.0, "custo": 20.59, "base": 22.79, "lucro_ml": 10.67, "lucro_amz": 30.96, "rsh_ml": 2.13, "rsh_amz": 6.19, "placa_amz": 30.96, "vazao": 29.0, "arq_txt": "grátis"}, {"nome": "Tesla wall charger plug holder — Totor", "url": "https://www.printables.com/model/908457-tesla-wall-charger-plug-holder", "lic": "CC BY · comercial ✔", "preco_arquivo": 0, "preco": 69, "g": 90, "un": 1, "h": 3.0, "dif": "Berço fechado e limpo para o plugue Tipo 2 do cabo Tesla.", "estrategia": "Peça menor e mais rápida: é o seu produto de entrada nesse nicho. 'Tesla' no título atrai o público que menos pechincha, mas não use a logo nem a marca como marca do anúncio.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 0, "h_un": 3.0, "custo": 12.68, "base": 14.88, "lucro_ml": 29.68, "lucro_amz": 31.37, "rsh_ml": 9.89, "rsh_amz": 10.46, "placa_amz": 31.37, "vazao": 30.0, "arq_txt": "grátis"}, {"nome": "EV Charger Type 2 — husjon", "url": "https://www.printables.com/model/458034-ev-charger-type-2", "lic": "CC BY-SA · comercial ✔", "preco_arquivo": 0, "preco": 59, "g": 70, "un": 2, "h": 5.0, "dif": "Vem com um 'testfit' — recorte simplificado do encaixe para testar a folga antes de gastar a peça inteira.", "estrategia": "Imprima o testfit antes de qualquer venda: é o que evita devolução por encaixe frouxo, que é o BO clássico dessa categoria. Preço de entrada, para pegar as primeiras avaliações.", "pos": "abaixo da mediana", "risco": "Confortável", "payback": 0, "h_un": 2.5, "custo": 10.03, "base": 12.23, "lucro_ml": 24.93, "lucro_amz": 26.52, "rsh_ml": 9.97, "rsh_amz": 10.61, "placa_amz": 53.05, "vazao": 28.0, "arq_txt": "grátis"}]}, {"produto": "Porta-óculos de mesa", "anuncios": 548, "piso": 19, "p25": 33, "med": 45, "p75": 66, "lider": 32, "vendas_lider": "+1 mil", "razao": 0.71, "itens": [{"nome": "Panda Glasses Holder — MySweetHouse3D", "url": "https://cults3d.com/en/3d-model/fashion/panda-glasses-holder-porta-oculos-decorativo-stl", "lic": "CULTS CU", "preco_arquivo": 4.0, "preco": 49, "g": 55, "un": 2, "h": 4.0, "dif": "Panda minimalista em peça única, sem suporte.", "estrategia": "Preço logo acima da mediana (R$ 45) porque o líder da categoria cobra R$ 32 — aqui o preço pesa. Panda é o formato de maior apelo e o de impressão mais limpa: comece por ele.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.0, "custo": 7.91, "base": 10.11, "lucro_ml": 19.65, "lucro_amz": 21.14, "rsh_ml": 9.82, "rsh_amz": 10.57, "placa_amz": 42.28, "vazao": 27.5, "arq_txt": "R$ 4,00"}, {"nome": "Eyeglass holder moai — megustaen3d", "url": "https://cults3d.com/en/3d-model/art/soporte-para-anteojos", "lic": "CULTS CU", "preco_arquivo": 2.98, "preco": 55, "g": 60, "un": 2, "h": 4.5, "dif": "Cabeça moai da Ilha de Páscoa — os óculos 'vestem' a escultura.", "estrategia": "É o único escultural em vez de fofo, e fala com o público masculino, que essa categoria não atende. Anuncie como decoração de mesa de escritório, não como organizador.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.25, "custo": 8.7, "base": 10.9, "lucro_ml": 23.3, "lucro_amz": 24.85, "rsh_ml": 10.36, "rsh_amz": 11.04, "placa_amz": 49.7, "vazao": 26.7, "arq_txt": "R$ 2,98"}, {"nome": "Cartoon Dog Specs Holder — SARK_3D", "url": "https://cults3d.com/en/3d-model/tool/cartoon-dog-specs-holder-3d-printable-desk-organizer", "lic": "CULTS CU", "preco_arquivo": 21.47, "preco": 59, "g": 70, "un": 2, "h": 5.0, "dif": "Cachorro sentado com as patinhas erguidas; os óculos apoiam no focinho.", "estrategia": "O arquivo mais caro dos cinco (R$ 21,47) mas superfícies lisas e geometria simples, o que reduz refugo. Faça uma versão por raça se vender — é aí que vira linha.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.5, "custo": 10.03, "base": 12.23, "lucro_ml": 24.93, "lucro_amz": 26.52, "rsh_ml": 9.97, "rsh_amz": 10.61, "placa_amz": 53.05, "vazao": 28.0, "arq_txt": "R$ 21,47"}, {"nome": "Giraffe Glasses Stand — Vogel3DCrafts", "url": "https://cults3d.com/en/3d-model/art/giraffe-glasses-stand", "lic": "CULTS CU-ND", "preco_arquivo": 61.83, "preco": 79, "g": 95, "un": 1, "h": 3.0, "dif": "Girafa alta em que os óculos ficam no pescoço — ocupa pouca mesa e chama atenção de longe.", "estrategia": "O mais arriscado: arquivo de R$ 61,83, precisa de suporte em árvore (+15% de material e pós-processamento) e o preço fica acima do 3º quartil. Só teste depois que outro já estiver vendendo.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 1.6, "h_un": 3.0, "custo": 13.22, "base": 15.42, "lucro_ml": 18.04, "lucro_amz": 38.33, "rsh_ml": 6.01, "rsh_amz": 12.78, "placa_amz": 38.33, "vazao": 31.7, "arq_txt": "R$ 61,83"}, {"nome": "Modular eyeglass display — SEEKER", "url": "https://cults3d.com/en/3d-model/fashion/exhibidor-de-anteojos-modular", "lic": "CULTS CU", "preco_arquivo": 5.09, "preco": 45, "g": 50, "un": 2, "h": 4.0, "dif": "Módulos que encaixam: base mais N módulos, para 2, 3 ou 4 óculos.", "estrategia": "Ticket escalonado de um arquivo só: base+2 a R$ 45, base+4 a R$ 79. E é o único da lista que serve para vender a ótica, que compra em quantidade.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.0, "custo": 7.37, "base": 9.57, "lucro_ml": 17.23, "lucro_amz": 18.68, "rsh_ml": 8.61, "rsh_amz": 9.34, "placa_amz": 37.35, "vazao": 25.0, "arq_txt": "R$ 5,09"}]}, {"produto": "Porta-caneta decorativo temático", "anuncios": 3696, "piso": 15, "p25": 25, "med": 37, "p75": 60, "lider": 45, "vendas_lider": "+10 mil", "razao": 1.22, "itens": [{"nome": "Low-Poly Skull Stand — 3Dream4Fan", "url": "https://cults3d.com/en/3d-model/art/low-poly-skull-stand-the-ultimate-pen-headset-organizer", "lic": "CULTS CU", "preco_arquivo": 0, "preco": 79, "g": 90, "un": 1, "h": 3.5, "dif": "Caveira low-poly 2 em 1: canetas nas órbitas, headset no topo.", "estrategia": "Duas funções justificam preço acima do 3º quartil (R$ 60) num mercado onde o líder cobra R$ 45. Arquivo gratuito. Anuncie em setup gamer, não em papelaria.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 0, "h_un": 3.5, "custo": 13.17, "base": 15.37, "lucro_ml": 18.09, "lucro_amz": 38.38, "rsh_ml": 5.17, "rsh_amz": 10.96, "placa_amz": 38.38, "vazao": 25.7, "arq_txt": "grátis"}, {"nome": "Hoodie Pen Holder — VoxelVaultSTL", "url": "https://cults3d.com/en/3d-model/home/hoodie-pen-holder-stl-stylish-desk-organizer-for-office-home-3d-printabl", "lic": "CULTS CU", "preco_arquivo": 5.96, "preco": 59, "g": 65, "un": 2, "h": 4.5, "dif": "Moletom com capuz esculpido; o bolso canguru vira compartimento.", "estrategia": "Tema streetwear que não existe na categoria. Fotografe em mesa de home office com notebook — o comprador tem que se ver usando.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.25, "custo": 9.24, "base": 11.44, "lucro_ml": 25.72, "lucro_amz": 27.31, "rsh_ml": 11.43, "rsh_amz": 12.14, "placa_amz": 54.62, "vazao": 28.9, "arq_txt": "R$ 5,96"}, {"nome": "Lizard Multi-Purpose Holder — Decorart0r", "url": "https://cults3d.com/en/3d-model/home/lizard-multi-purpose-holder-functional-3d-home-decor", "lic": "CULTS CU-ND", "preco_arquivo": 0, "preco": 65, "g": 75, "un": 2, "h": 5.0, "dif": "Lagarto enrolado num tronco oco texturizado — casca e escamas entregam detalhe sem tinta.", "estrategia": "Preço livre no arquivo, então pode sair de graça. A textura é o que faz funcionar em filamento cru: escolha um filamento fosco, não brilhante.", "pos": "acima do 3º quartil", "risco": "Exige foto excepcional", "payback": 0, "h_un": 2.5, "custo": 10.56, "base": 12.76, "lucro_ml": 28.84, "lucro_amz": 30.49, "rsh_ml": 11.53, "rsh_amz": 12.19, "placa_amz": 60.97, "vazao": 30.0, "arq_txt": "preço livre"}, {"nome": "Porta-lápis caneta-tinteiro — kanosc", "url": "https://cults3d.com/en/3d-model/home/portalapices-forma-de-pluma-estilografca", "lic": "CULTS CU", "preco_arquivo": 5.96, "preco": 55, "g": 60, "un": 2, "h": 4.5, "dif": "Uma caneta-tinteiro gigante deitada que guarda canetas — piada visual que lê em miniatura.", "estrategia": "Funciona como presente de escritório e Dia dos Professores. É o único que se explica sozinho na miniatura da busca, sem precisar abrir o anúncio.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.25, "custo": 8.7, "base": 10.9, "lucro_ml": 23.3, "lucro_amz": 24.85, "rsh_ml": 10.36, "rsh_amz": 11.04, "placa_amz": 49.7, "vazao": 26.7, "arq_txt": "R$ 5,96"}, {"nome": "Dwarf Viking Barrel — BrassarKing", "url": "https://cults3d.com/en/3d-model/home/dwarf-viking-barrel-pen-holder-planter", "lic": "CULTS CU", "preco_arquivo": 4.0, "preco": 49, "g": 55, "un": 2, "h": 4.0, "dif": "Barril viking com aduelas e arcos em alto relevo.", "estrategia": "Atenção técnica: o arquivo tem erro de unidade (vem em metros) e precisa ser escalado ×1000 no fatiador antes de imprimir. Fica ótimo em filamento madeira.", "pos": "entre a mediana e o 3º quartil", "risco": "Confortável", "payback": 1, "h_un": 2.0, "custo": 7.91, "base": 10.11, "lucro_ml": 19.65, "lucro_amz": 21.14, "rsh_ml": 9.82, "rsh_amz": 10.57, "placa_amz": 42.28, "vazao": 27.5, "arq_txt": "R$ 4,00"}]}];
+const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
+const el=document.getElementById('prods');
+D.forEach(p=>{
+  const s=document.createElement('div'); s.className='prod';
+  const itens=p.itens.slice().sort((a,b)=>b.rsh_amz-a.rsh_amz);
+  s.innerHTML=`<div class="prodhead"><h2>${p.produto}</h2>
+    <p class="eyebrow">${p.anuncios.toLocaleString('pt-BR')} anúncios · líder vende ${p.vendas_lider} a ${brl(p.lider)} · razão líder ÷ mediana ${p.razao.toFixed(2)}</p></div>
+    <div class="faixa">
+      <div><span>Piso</span><b>R$ ${p.piso}</b></div>
+      <div><span>1º quartil</span><b>R$ ${p.p25}</b></div>
+      <div><span>Mediana</span><b>R$ ${p.med}</b></div>
+      <div><span>3º quartil</span><b>R$ ${p.p75}</b></div>
+      <div><span>Líder de vendas</span><b>R$ ${p.lider}</b></div>
+    </div>` +
+    itens.map(i=>`<div class="stl${i.pos==='acima do 3º quartil'?' warn':''}">
+      <div>
+        <h3><a href="${i.url}" target="_blank" rel="noopener">${i.nome}</a></h3>
+        <p class="meta">${i.lic} · arquivo ${i.arq_txt} · ${i.g} g · ${i.un} por placa de ${i.h} h${i.payback?' · paga o arquivo em '+i.payback+' venda'+(i.payback>1?'s':''):''}</p>
+        <p class="dif">${i.dif}</p>
+        <p>${i.estrategia}</p>
+      </div>
+      <div class="pricebox">
+        <p class="lbl">Vender a</p>
+        <p class="big">${brl(i.preco)}</p>
+        <span class="pos ${i.pos==='acima do 3º quartil'?'alerta':'ok'}">${i.pos}</span>
+        <div class="break" style="margin-top:12px">
+          <div><span>Custo da peça</span><span>${brl(i.custo)}</span></div>
+          <div><span>Lucro na Amazon</span><span>${brl(i.lucro_amz)}</span></div>
+          <div><span>Lucro no Mercado Livre</span><span>${brl(i.lucro_ml)}</span></div>
+          <div class="tot"><span>R$ por hora de placa</span><span>${brl(i.rsh_amz)}</span></div>
+        </div>
+      </div>
+    </div>`).join('');
+  el.appendChild(s);
+});
+</script>
+</body>
+</html>

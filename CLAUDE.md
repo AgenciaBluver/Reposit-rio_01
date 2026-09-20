@@ -22,6 +22,8 @@ Instruções que valem para qualquer sessão neste repositório.
 | `docs/3d/05-glossario.md` | **O vocabulário aprovado.** Use só estes termos |
 | `docs/3d/06-politica-de-preco.md` | Faixas de preço, o cálculo exato do degrau dos R$ 79, árvore de decisão, critérios de aprovação |
 | `docs/3d/07-placa-e-kit.md` | Peças por placa, preço mínimo de venda avulsa, quando o kit é obrigatório |
+| `docs/3d/08-termometro-de-preco.md` | **Se vale entrar na categoria.** Líder ÷ mediana. Vem antes de qualquer cálculo de preço |
+| `docs/3d/09-canais.md` | Amazon, Shopee, Magalu, Americanas. Taxas por canal e onde cada ticket rende mais |
 
 `docs/3d/fontes/` é onde entram documentos crus (prints do ML, tabelas de taxas,
 PDFs). Leia quando a pergunta depender deles; não são leitura obrigatória.
@@ -41,10 +43,17 @@ PDFs). Leia quando a pergunta depender deles; não são leitura obrigatória.
   Studio. Diga isso toda vez.
 - **Sempre calcule por placa, não por peça.** O tempo de cada unidade é o tempo da
   placa dividido pelas peças que cabem nela (`07-placa-e-kit.md`).
+- **Antes de precificar, passe no termômetro.** Se o anúncio mais vendido da
+  categoria é dos mais baratos (razão abaixo de 0,80), não entre — por melhor que
+  seja o lucro por hora (`08-termometro-de-preco.md`). Categoria vazia de
+  concorrente 3D **não é oportunidade por si só**.
 - **Nunca recomende R$ 79 sem comparar com R$ 78,90 e com um preço acima do ponto
   de equivalência** (`06-politica-de-preco.md`, seção 2).
 - **Nunca trate comissão, tarifa fixa ou frete como número universal.** O valor
   oficial é o do simulador de custos do próprio anúncio.
+- **Número que veio de estudo de fora é hipótese, não resultado.** Os estudos do
+  Claude in Chrome usam régua própria (filamento R$ 95/kg, frete R$ 25, comissão
+  13%). Recalcule na nossa (`01-custos.md`) antes de endossar qualquer preço.
 - **Faturamento não é lucro.** Ao simular, mostre premissas, fórmula, lucro por
   produto, margem de lucro e lucro por hora de impressora.
 - Quando um número novo virar decisão (custo, taxa, veredito de produto),
